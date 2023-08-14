@@ -14,10 +14,13 @@ def obtener_ip_del_host():
     ruta_json = "C:/Users/rtoapanta/PycharmProjects/quanterraProject/json_files/host_codes.json"
     nombres_de_hosts = obtener_nombres_de_hosts_desde_json(ruta_json)
     print(nombres_de_hosts)
+    direcciones_ips = []  # Aquí almacenaremos las direcciones IP
     for host_name in nombres_de_hosts:
         host_ip = get_host_ip(host_name, zabbix_url, auth_token)
         print(f"La dirección IP de {host_name} es: {host_ip}")
-    return host_ip
+        direcciones_ips.append(host_ip)  # Agregamos la dirección IP a la lista
+
+    return direcciones_ips  # Devolvemos la lista de direcciones IP
 
 
 def enviar_datos_zabbix(zabbix_server, zabbix_port, keys, data):
@@ -27,9 +30,7 @@ def enviar_datos_zabbix(zabbix_server, zabbix_port, keys, data):
     for key, value in data.items():
         if key in keys:
             zabbix_key = keys[key]
-            # print(f"ZABBIX KEYS: {zabbix_key}")
             host = data['station.code']  # Obtener el valor del station code
-            # print(f"HOST: {host}")
             metrics.append(ZabbixMetric(host + '_QA', zabbix_key, value))
 
     # Imprimir los datos que se van a enviar a Zabbix
