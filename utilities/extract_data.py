@@ -35,5 +35,4 @@ def extraer_datos_zabbix(page_content):
                 data[key] = match.group(1)
         else:
             data[key] = None
-    print(f"XXXXXXXXX {data}")
     return data

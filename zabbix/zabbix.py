@@ -11,7 +11,8 @@ def obtener_ip_del_host():
     zabbix_url = config.get('zabbix', 'zabbix_api_url')
     auth_token = config.get('zabbix', 'auth_token')
     # Ruta al archivo JSON
-    ruta_json = "C:/Users/rtoapanta/PycharmProjects/quanterraProject/json_files/host_codes.json"
+    #ruta_json = "C:/Users/rtoapanta/PycharmProjects/quanterraProject/json_files/host_codes.json"
+    ruta_json = "C:/Users/rtoapanta/PycharmProjects/quanterraProject/json_files/connected_hosts_reachable.json"
     nombres_de_hosts = obtener_nombres_de_hosts_desde_json(ruta_json)
     print(nombres_de_hosts)
     direcciones_ips = []  # Aquí almacenaremos las direcciones IP
@@ -45,4 +46,3 @@ def enviar_datos_zabbix(zabbix_server, zabbix_port, keys, data):
         print(f"Datos enviados a Zabbix: {result}")
     except Exception as e:
         print(f"Error al enviar datos a Zabbix: {e}")
-

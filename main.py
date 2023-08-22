@@ -24,7 +24,6 @@ def obtener_contenido_pagina(host_ip):
 if __name__ == "__main__":
     host_ips = obtener_ip_del_host()
     print(f"Direcciones IPs del host: {host_ips}")
-    print(type(host_ips))
 
     # Lista para almacenar los contenidos de las páginas
     all_page_contents = []
