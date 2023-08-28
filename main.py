@@ -9,7 +9,7 @@ from zabbix.zabbix import obtener_ip_del_host
 def obtener_contenido_pagina(host_ip):
     # Construir la URL de la página web utilizando la dirección IP del host
     url_host = f"http://{host_ip}:6381/stats.html"
-    print(f"URL {url_host}")
+    #print(f"URL {url_host}")
 
     # Realizar solicitud HTTP y obtener el contenido de la página
     try:
@@ -57,8 +57,6 @@ if __name__ == "__main__":
         keys = {
             'serial.number': config.get('zabbix', 'key_serial_number'),
             'station.code': config.get('zabbix', 'key_station_code'),
-            #'media.site1': config.get('zabbix', 'key_media_site1'),
-            #'media.site2': config.get('zabbix', 'key_media_site2'),
             'media.site1.space.occupied': config.get('zabbix', 'key_media_site1_space_occupied'),
             'media.site2.space.occupied': config.get('zabbix', 'key_media_site2_space_occupied'),
             'q330.serial': config.get('zabbix', 'key_q330_serial'),
