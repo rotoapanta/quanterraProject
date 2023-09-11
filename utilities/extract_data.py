@@ -28,6 +28,7 @@ def extraer_datos_zabbix(page_content):
                 data['station.code'] = match.group(2)
             elif key == 'media.site1' or key == 'media.site2':
                 space_free = float(match.group(1))
+                print(space_free)
                 space_total = 100.0  # Supongamos que el espacio total es 100
                 space_occupied = space_total - space_free
                 data[key + '.space.occupied'] = space_occupied
