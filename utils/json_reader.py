@@ -1,5 +1,4 @@
 import json
-import os
 
 
 def obtener_nombres_de_hosts_desde_json(json_file):
