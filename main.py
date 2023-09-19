@@ -1,27 +1,30 @@
 import sys
 import requests
 import configparser
-from utilities.extract_data import extraer_datos_zabbix
+from utils.extract_data import extraer_datos_zabbix
 from zabbix.zabbix import enviar_datos_zabbix
 from zabbix.zabbix import obtener_ip_del_host
-
+from utils.zabbix_host_processing import zbx_host_processing
 
 def obtener_contenido_pagina(host_ip):
     # Construir la URL de la página web utilizando la dirección IP del host
     url_host = f"http://{host_ip}:6381/stats.html"
-    #print(f"URL {url_host}")
 
     # Realizar solicitud HTTP y obtener el contenido de la página
     try:
         response = requests.get(url_host)
         response.raise_for_status()  # Verificar si hubo errores en la solicitud
         return response.text
+
     except requests.exceptions.RequestException as e:
         print(f"Error al obtener el contenido de la página: {e}")
         return None
 
 
 if __name__ == "__main__":
+    # Llama a la función para procesar los hosts de Zabbix
+    zbx_host_processing()
+
     host_ips = obtener_ip_del_host()
     print(f"Direcciones IPs del host: {host_ips}")
 

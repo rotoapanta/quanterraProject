@@ -7,6 +7,6 @@ setup(
     url='',
     license='MIT',
     author='rtoapanta',
-    author_email='robertocarlos.toapantagmail.com',
+    author_email='robertocarlos.toapant@gmail.com',
     description='Quanterra Project'
 )

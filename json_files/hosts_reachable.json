@@ -11,6 +11,7 @@
         "URCU",
         "CUIC",
         "VCES",
+        "PIS1",
         "ILLI",
         "PPLP",
         "JIPI",
@@ -33,6 +34,7 @@
         "CAB1",
         "FLF",
         "TAMH",
+        "PORT",
         "SNLR",
         "ISPG"
     ]
