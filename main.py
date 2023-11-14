@@ -1,74 +1,83 @@
-import sys
-import requests
 import configparser
-from utils.extract_data import extraer_datos_zabbix
-from zabbix.zabbix import enviar_datos_zabbix
-from zabbix.zabbix import obtener_ip_del_host
-from utils.zabbix_host_processing import zbx_host_processing
+import logging
+import os
+from api.api_zbx_processing import get_ip_hostname_dict, get_values
+from zabbix.zabbix_sender import send_data_to_zabbix
+import datetime
 
-def obtener_contenido_pagina(host_ip):
-    # Construir la URL de la página web utilizando la dirección IP del host
-    url_host = f"http://{host_ip}:6381/stats.html"
 
-    # Realizar solicitud HTTP y obtener el contenido de la página
+def main():
+    """
+    The 'main' function serves as the entry point of the GPS NetRS monitoring program. It performs the following tasks:
+    1. Obtains the current date in the desired format (Year-Month-Day).
+    2. Configures the error logging system and creates log files.
+    3. Calls the 'get_ip_hostname_dict' function to retrieve the IP - Hostname dictionary.
+    4. Defines a list of common arguments as strings.
+    5. Creates a dictionary to store data for each host.
+    6. Iterates through the IP - Hostname dictionary, calling 'get_values' function for each host and collecting data.
+    7. Reads Zabbix configuration from 'config.ini'.
+    8. Sends collected data to Zabbix using the 'send_data_to_zabbix' function.
+    9. Logs errors and completion messages.
+
+    This function does not accept any parameters.
+
+    :returns: None
+    :raises: subprocess.CalledProcessError (if command execution fails), Exception (if any other error occurs during
+    execution)
+    """
+    # Get the current date in the desired format (Year-Month-Day)
+    current_date = datetime.date.today().strftime("%Y-%m-%d")
+    # Get the full path to the '_gps_netrs.log' file in the 'logs' folder
+    logs_folder = 'logs'
+    if not os.path.exists(logs_folder):
+        os.makedirs(logs_folder)
+
+    # File name of the log file with the date
+    log_file = os.path.join(logs_folder, f'{current_date}_gps_netrs.log')
+    # Configure the error logging system
+    logging.basicConfig(filename=log_file, level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %('
+                                                                       'message)s')
+    logger = logging.getLogger(__name__)
+
+    logger.info("Inicio del programa")  # Add a startup message
     try:
-        response = requests.get(url_host)
-        response.raise_for_status()  # Verificar si hubo errores en la solicitud
-        return response.text
+        # Call the function to obtain the IP - Hostname dictionary
+        ip_hostname_dict = get_ip_hostname_dict()
 
-    except requests.exceptions.RequestException as e:
-        print(f"Error al obtener el contenido de la página: {e}")
-        return None
+        # Define common arguments as a string
+        arguments = ["StationCode", "SerialNumber", "InputVoltage", "SystemTemp", "SatUsed", "MediaSite1SpaceOccupied", "MediaSite2SpaceOccupied", "Q330Serial",
+                     "MainCurrent", "ClockQuality"]
 
+        # Create a dictionary to store data for each host
+        all_data = {}
 
-if __name__ == "__main__":
-    # Llama a la función para procesar los hosts de Zabbix
-    zbx_host_processing()
+        for ip, hostname in ip_hostname_dict.items():
+            try:
+                data = get_values(ip, arguments)
+                if data:
+                    all_data[hostname] = data
+                else:
+                    logger.error(f"Error al obtener valores para {hostname} ({ip})")
+            except Exception as e:
+                logger.error(f"Error al obtener valores para {hostname} ({ip}): {e}")
 
-    host_ips = obtener_ip_del_host()
-    print(f"Direcciones IPs del host: {host_ips}")
-
-    # Lista para almacenar los contenidos de las páginas
-    all_page_contents = []
-
-    # Obtener los contenidos de las páginas para cada dirección IP
-    for host_ip in host_ips:
-        page_content = obtener_contenido_pagina(host_ip)
-        if page_content is not None:
-            all_page_contents.append(page_content)
-
-    if not all_page_contents:
-        print("No se pudieron obtener los contenidos de las páginas.")
-        sys.exit(1)
-
-    # Procesar y enviar los datos a Zabbix para cada estación
-    for idx, page_content in enumerate(all_page_contents, start=1):
-        data = extraer_datos_zabbix(page_content)
-
-        print(f"Procesando datos para la estación {host_ips[idx-1]}:")
-        for key, value in data.items():
-            print(f"Key: {key}, Value: {value}")
-
-        # Leer la configuración de Zabbix desde config.ini
+        # Read Zabbix configuration from config.ini
         config = configparser.ConfigParser()
         config.read('config.ini')
 
         zabbix_server = config.get('zabbix', 'zabbix_server')
         zabbix_port = int(config.get('zabbix', 'zabbix_port'))
 
-        # Leer las claves (keys) desde config.ini
-        keys = {
-            'serial.number': config.get('zabbix', 'key_serial_number'),
-            'station.code': config.get('zabbix', 'key_station_code'),
-            'media.site1.space.occupied': config.get('zabbix', 'key_media_site1_space_occupied'),
-            'media.site2.space.occupied': config.get('zabbix', 'key_media_site2_space_occupied'),
-            'q330.serial': config.get('zabbix', 'key_q330_serial'),
-            'clock.quality': config.get('zabbix', 'key_clock_quality'),
-            'input.voltage': config.get('zabbix', 'key_input_voltage'),
-            'system.temp': config.get('zabbix', 'key_system_temp'),
-            'main.current': config.get('zabbix', 'key_main_current'),
-            'sat.used': config.get('zabbix', 'key_sat_used'),
-        }
+        try:
+            # Send data to Zabbix using the "zabbix.py" script
+            send_data_to_zabbix(zabbix_server, zabbix_port, all_data)
+        except Exception as e:
+            logger.error(f"Error al enviar datos a Zabbix: {e}")
+    except Exception as e:
+        logger.error(f"Error en la ejecución principal: {e}")
+    finally:
+        logger.info("Fin del programa")  # Add a completion message
 
-        # Enviar datos a Zabbix utilizando el script "zabbix.py"
-        enviar_datos_zabbix(zabbix_server, zabbix_port, keys, data)
+
+if __name__ == "__main__":
+    main()
