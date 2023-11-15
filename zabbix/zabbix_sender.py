@@ -20,49 +20,18 @@ logger = logging.getLogger(__name__)
 
 def send_data_to_zabbix(zabbix_server, zabbix_port, all_data):
     """
-    The 'send_data_to_zabbix' function sends collected data to a Zabbix server. It performs the following tasks:
-    1. Constructs Zabbix metrics for the provided data.
-    2. Attempts to send the metrics to the specified Zabbix server.
-    3. Logs success or error messages.
+    Envia los datos recopilados al servidor Zabbix.
 
-    :param zabbix_server: The URL or IP address of the Zabbix server.
-    :type zabbix_server: str
-    :param zabbix_port: The port number used for communication with the Zabbix server.
-    :type zabbix_port: int
-    :param all_data: A dictionary containing the collected data for different hosts.
-    :type all_data: dict
-    :returns: None
-    :raises: Exception (if any error occurs during the data sending process)
+    :param zabbix_server: URL o dirección IP del servidor Zabbix.
+    :param zabbix_port: Puerto del servidor Zabbix.
+    :param all_data: Diccionario con los datos recopilados de cada host.
     """
     metrics = []
-
     for host, data in all_data.items():
-        # Obtain the values for this station
-        station_code = data['station.code']
-        serial_number = data['serial.number']
-        input_voltage = data['input.voltage']
-        system_temp = data['system.temp']
-        sat_used = data['sat.used']
-        q330_serial = data['q330.serial']
-        media_site1_space_occupied = data['media.site1.space.occupied']
-        media_site2_space_occupied = data['media.site2.space.occupied']
-        main_current = data['main.current']
-        clock_quality = data['clock.quality']
+        for key, value in data.items():
+            metrics.append(ZabbixMetric(host, key, value))
 
-
-        # Create metrics for each value
-        metrics.append(ZabbixMetric(host, 'station.code', station_code))
-        metrics.append(ZabbixMetric(host, 'serial.number', serial_number))
-        metrics.append(ZabbixMetric(host, 'input.voltage', input_voltage))
-        metrics.append(ZabbixMetric(host, 'system.temp', system_temp))
-        metrics.append(ZabbixMetric(host, 'sat.used', sat_used))
-        metrics.append(ZabbixMetric(host, 'q330.serial', q330_serial))
-        metrics.append(ZabbixMetric(host, 'media.site1.space.occupied', media_site1_space_occupied))
-        metrics.append(ZabbixMetric(host, 'media.site2.space.occupied', media_site2_space_occupied))
-        metrics.append(ZabbixMetric(host, 'main.current', main_current))
-        metrics.append(ZabbixMetric(host, 'clock.quality', clock_quality))
     try:
-        # Create a ZabbixSender object and send the data to Zabbix
         zabbix_sender = ZabbixSender(zabbix_server=zabbix_server, zabbix_port=zabbix_port)
         result = zabbix_sender.send(metrics)
         logging.info(f"Datos enviados a Zabbix: {result}")

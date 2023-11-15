@@ -1,7 +1,7 @@
 import configparser
 import logging
 import os
-from api.api_zbx_processing import get_ip_hostname_dict, get_values
+from api.api_zbx_processing import get_ip_hostname_dict, get_values, get_values_concurrently
 from zabbix.zabbix_sender import send_data_to_zabbix
 import datetime
 
@@ -43,24 +43,15 @@ def main():
     try:
         # Call the function to obtain the IP - Hostname dictionary
         ip_hostname_dict = get_ip_hostname_dict()
-
         # Define common arguments as a string
-        arguments = ["StationCode", "SerialNumber", "InputVoltage", "SystemTemp", "SatUsed", "MediaSite1SpaceOccupied", "MediaSite2SpaceOccupied", "Q330Serial",
-                     "MainCurrent", "ClockQuality"]
+        arguments = ["StationCode", "SerialNumber", "InputVoltage", "SystemTemp", "SatUsed", "MediaSite1",
+                     "MediaSite2", "Q330Serial", "MainCurrent", "ClockQuality"]
 
-        # Create a dictionary to store data for each host
-        all_data = {}
-
-        for ip, hostname in ip_hostname_dict.items():
-            try:
-                data = get_values(ip, arguments)
-                if data:
-                    all_data[hostname] = data
-                else:
-                    logger.error(f"Error al obtener valores para {hostname} ({ip})")
-            except Exception as e:
-                logger.error(f"Error al obtener valores para {hostname} ({ip}): {e}")
-
+        # Llamar a la función para obtener los datos de manera concurrente
+        all_data = get_values_concurrently(ip_hostname_dict.keys(), arguments)
+        print("1")
+        print(all_data)
+        print("2")
         # Read Zabbix configuration from config.ini
         config = configparser.ConfigParser()
         config.read('config.ini')

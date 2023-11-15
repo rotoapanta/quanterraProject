@@ -6,6 +6,7 @@ import logging
 import os
 from utils import utilities
 import datetime
+import concurrent.futures
 
 # Get the current date in the desired format (Year-Month-Day)
 current_date = datetime.date.today().strftime("%Y-%m-%d")
@@ -52,7 +53,6 @@ def get_ip_hostname_dict():
             print(f"LIST {ip_list}")
 
             ping_results = utilities.ping_multiple_stations(ip_list)
-            print(f"PING_RESULTS {ping_results}")
 
             # Mapear los resultados de ping a IPs
             ping_results_dict = {result[0]: result[1] for result in ping_results}
@@ -86,7 +86,6 @@ def get_ip_hostname_dict():
 
 
 def get_values(ip, arguments):
-    print(ip)
     """
     The 'get_values' function retrieves specific metrics from a GPS NetRS device by making HTTP requests.
     It takes the IP address of the device and a list of requested arguments as parameters.
@@ -134,12 +133,11 @@ def get_values(ip, arguments):
         for argument in arguments:
             full_url = f"{url_base}"
             try:
-                response = requests.get(full_url)
+                response = requests.get(full_url, timeout=10)
                 response.raise_for_status()
                 response_text = response.text
                 for arg, pattern in patterns.items():
                     match = re.search(pattern, response_text)
-                    # print(f"MATCH: {match}")
                     if match:
                         if arg == "StationCode":
                             results["station.code"] = match.group(1)
@@ -151,22 +149,20 @@ def get_values(ip, arguments):
                             results["system.temp"] = match.group(1)
                         elif arg == "SatUsed":
                             results["sat.used"] = match.group(1)
-                        elif arg == "MediaSite1SpaceOccupied":
-                            media_site1_value = float(match.group(1))
-                            results["media.site1"] = media_site1_value
-                            # Calcular el espacio ocupado
-                            results["media.site1.space.occupied"] = 100 - media_site1_value
-                        elif arg == "MediaSite2SpaceOccupied":
-                            media_site2_value = float(match.group(1))
-                            results["media.site2"] = media_site2_value
-                            # Calcular el espacio ocupado
-                            results["media.site2.space.occupied"] = 100 - media_site2_value
+                        elif arg == "MediaSite1":
+                            results["media.site1.space.occupied"] = match.group(1)
+                        elif arg == "MediaSite2":
+                            results["media.site2.space.occupied"] = match.group(1)
+                        elif arg == "SatUsed":
+                            results["sat.used"] = match.group(1)
                         elif arg == "Q330Serial":
                             results["q330.serial"] = match.group(1)
                         elif arg == "MainCurrent":
                             results["main.current"] = match.group(1)
                         elif arg == "ClockQuality":
                             results["clock.quality"] = match.group(1)
+            except requests.Timeout:
+                logging.error(f"Timeout al intentar conectarse a {full_url}")
             except requests.exceptions.RequestException as e:
                 logger.error(f"Error al hacer la solicitud HTTP para {argument}: {e}")
             except Exception as e:
@@ -174,4 +170,31 @@ def get_values(ip, arguments):
     except Exception as e:
         logger.error(f"Error al obtener valores para {ip}: {e}")
     print(results)
+    return results
+
+
+def get_values_concurrently(ip_list, arguments):
+    """
+    Realiza solicitudes HTTP en paralelo a múltiples dispositivos GPS NetRS para obtener métricas.
+
+    :param ip_list: Lista de direcciones IP de los dispositivos.
+    :type ip_list: list
+    :param arguments: Argumentos de métricas a recuperar de los dispositivos.
+    :type arguments: list
+    :return: Diccionario con los resultados de cada dispositivo.
+    :rtype: dict
+    """
+    results = {}
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        # Crear un futuro para cada llamada a get_values
+        future_to_ip = {executor.submit(get_values, ip, arguments): ip for ip in ip_list}
+
+        # Recopilar los resultados a medida que se completan las tareas
+        for future in concurrent.futures.as_completed(future_to_ip):
+            ip = future_to_ip[future]
+            try:
+                results[ip] = future.result()
+            except Exception as e:
+                logger.error(f"Error al obtener valores para {ip}: {e}")
+
     return results
