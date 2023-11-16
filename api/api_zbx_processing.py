@@ -150,9 +150,15 @@ def get_values(ip, arguments):
                         elif arg == "SatUsed":
                             results["sat.used"] = match.group(1)
                         elif arg == "MediaSite1":
-                            results["media.site1.space.occupied"] = match.group(1)
+                            media_site1_value = float(match.group(1))
+                            results["media.site1"] = media_site1_value
+                            # Calcular el espacio ocupado
+                            results["media.site1.space.occupied"] = 100 - media_site1_value
                         elif arg == "MediaSite2":
-                            results["media.site2.space.occupied"] = match.group(1)
+                            media_site2_value = float(match.group(1))
+                            results["media.site2"] = media_site2_value
+                            # Calcular el espacio ocupado
+                            results["media.site2.space.occupied"] = 100 - media_site2_value
                         elif arg == "SatUsed":
                             results["sat.used"] = match.group(1)
                         elif arg == "Q330Serial":

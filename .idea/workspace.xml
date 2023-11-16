@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="66108793-4a3b-42a3-a807-b9cc47d9f6df" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Prueva.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/2023-11-16_gps_netrs.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/api_zbx_processing.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/api_zbx_processing.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/2023-11-15_gps_netrs.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/2023-11-15_gps_netrs.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
