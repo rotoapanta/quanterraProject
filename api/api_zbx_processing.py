@@ -188,7 +188,6 @@ def get_values_concurrently(ip_list, arguments):
     with concurrent.futures.ThreadPoolExecutor() as executor:
         # Crear un futuro para cada llamada a get_values
         future_to_ip = {executor.submit(get_values, ip, arguments): ip for ip in ip_list}
-
         # Recopilar los resultados a medida que se completan las tareas
         for future in concurrent.futures.as_completed(future_to_ip):
             ip = future_to_ip[future]
@@ -196,5 +195,14 @@ def get_values_concurrently(ip_list, arguments):
                 results[ip] = future.result()
             except Exception as e:
                 logger.error(f"Error al obtener valores para {ip}: {e}")
-
+    print(f"RESUL {results}")
     return results
+
+
+def transformar_datos_estaciones(datos_estaciones, mapeo_ip_hostname):
+    datos_transformados = {}
+    for ip, datos in datos_estaciones.items():
+        hostname = mapeo_ip_hostname.get(ip)
+        if hostname:
+            datos_transformados[hostname] = datos
+    return datos_transformados

@@ -1,7 +1,8 @@
 import configparser
 import logging
 import os
-from api.api_zbx_processing import get_ip_hostname_dict, get_values, get_values_concurrently
+from api.api_zbx_processing import get_ip_hostname_dict, get_values, get_values_concurrently, \
+    transformar_datos_estaciones
 from zabbix.zabbix_sender import send_data_to_zabbix
 import datetime
 
@@ -43,6 +44,8 @@ def main():
     try:
         # Call the function to obtain the IP - Hostname dictionary
         ip_hostname_dict = get_ip_hostname_dict()
+        print(f"ip_hostname_dict {ip_hostname_dict}")
+
         # Define common arguments as a string
         arguments = ["StationCode", "SerialNumber", "InputVoltage", "SystemTemp", "SatUsed", "MediaSite1",
                      "MediaSite2", "Q330Serial", "MainCurrent", "ClockQuality"]
@@ -52,6 +55,10 @@ def main():
         print("1")
         print(all_data)
         print("2")
+        # Transforma los datos de las estaciones
+        all_data_transformado = transformar_datos_estaciones(all_data, ip_hostname_dict)
+        print(all_data_transformado)
+        print("3")
         # Read Zabbix configuration from config.ini
         config = configparser.ConfigParser()
         config.read('config.ini')
@@ -61,7 +68,7 @@ def main():
 
         try:
             # Send data to Zabbix using the "zabbix.py" script
-            send_data_to_zabbix(zabbix_server, zabbix_port, all_data)
+            send_data_to_zabbix(zabbix_server, zabbix_port, all_data_transformado)
         except Exception as e:
             logger.error(f"Error al enviar datos a Zabbix: {e}")
     except Exception as e:
