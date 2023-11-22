@@ -86,7 +86,6 @@ def get_ip_hostname_dict():
 
 def get_values(ip, arguments):
     results = {}
-    argument = None  # Inicializa argument como None
 
     # Definición de las expresiones regulares para cada argumento
     patterns = {
@@ -140,11 +139,7 @@ def get_values(ip, arguments):
                     results[result_key] = match.group(1)
 
     except Exception as e:
-        # Maneja el error considerando que 'argument' puede ser None
-        if argument:
-            logger.error(f"Error processing argument {argument} for {ip}: {e}")
-        else:
-            logger.error(f"Error before processing arguments for {ip}: {e}")
+        logger.error(f"Error processing argument {argument} for {ip}: {e}")
     print(results)
     return results
 

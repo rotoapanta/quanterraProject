@@ -5,10 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="66108793-4a3b-42a3-a807-b9cc47d9f6df" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/logs/2023-11-16_gps_netrs.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/3.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aaa.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/2023-11-22_gps_netrs.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/api_zbx_processing.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/api_zbx_processing.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/2023-11-15_gps_netrs.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/2023-11-15_gps_netrs.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/2023-11-15_gps_netrs.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/2023-11-16_gps_netrs.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/utilities.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zabbix/zabbix_sender.py" beforeDir="false" afterPath="$PROJECT_DIR$/zabbix/zabbix_sender.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +67,7 @@
     </key>
   </component>
   <component name="RunManager" selected="Python.main">
-    <configuration name="api_zbx_processing (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="aaa" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="quanterraProject" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -69,11 +75,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/api" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/api/api_zbx_processing.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/aaa.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -169,10 +175,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.aaa" />
         <item itemvalue="Python.multiple_ping" />
         <item itemvalue="Python.prueba_ping" />
         <item itemvalue="Python.api_zbx_processing" />
-        <item itemvalue="Python.api_zbx_processing (1)" />
       </list>
     </recent_temporary>
   </component>

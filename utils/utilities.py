@@ -34,7 +34,6 @@ def ping_multiple_stations(ip_list):
                     logger.error(f"Fallo en el ping a {ip}: {result[1]}")
             except Exception as e:
                 logger.error(f"Error al hacer ping a {ip}: {e}")
-    print(f" RESULTADO {results}")
     return results
 
 
