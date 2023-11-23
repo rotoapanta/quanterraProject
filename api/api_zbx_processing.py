@@ -86,18 +86,18 @@ def get_ip_hostname_dict():
 
 def get_values(ip, arguments):
     results = {}
-    argument = None  # Inicializa argument como None
 
-    # Definición de las expresiones regulares para cada argumento
+    # Define the regular expressions here, e.g., using raw strings (r"")
     patterns = {
         "StationCode": r"Station EC-(\w+)",
         "SerialNumber": r"Tag (\d+) - Station EC-(\w+)",
-        "MediaSite": r"MEDIA site \d+ crc=0x\w+ .* capacity=\d+\.?\d*Mb  free=(\d+\.\d+)%",
+        "MediaSite1": r"MEDIA site 1 crc=0x\w+ (?:IN USE state: ACTIVE|IN USE state: READY|RESERVE state: \w+)  "
+                      r"capacity=\d+\.?\d*Mb  free=(\d+\.\d+)%",
+        "MediaSite2": r"MEDIA site 2 crc=0x\w+ (?:IN USE state: ACTIVE|IN USE state: READY|RESERVE state: \w+)  "
+                      r"capacity=\d+\.?\d*Mb  free=(\d+\.\d+)%",
         "Q330Serial": r"Q330 Serial Number: (.+)",
         "ClockQuality": r"Clock Quality: (\d+)%",
         "InputVoltage": r"Input Voltage: (\d+\.\d+)V",
-        "SystemTemp": r"System Temperature: (\d+)C",
-        "MainCurrent": r"Main Current: (\d+)ma",
         "SatUsed": r"Sat. Used: (\d+)"
     }
 
@@ -115,36 +115,29 @@ def get_values(ip, arguments):
         "SatUsed": "sat.used"
     }
 
+    url_base = f"http://{ip}:6381/stats.html"
+    results = {}
+
     try:
-        url_base = f"http://{ip}:6381/stats.html"
-        response = requests.get(url_base, timeout=10)
+        response = requests.get(url_base, timeout=30)
         response.raise_for_status()
         response_text = response.text
 
-        # Procesar MediaSite1 y MediaSite2
-        media_matches = re.findall(patterns["MediaSite"], response_text)
-        if len(media_matches) >= 2:
-            results[key_mapping["MediaSite1"]] = str(100 - float(media_matches[0]))
-            results[key_mapping["MediaSite2"]] = str(100 - float(media_matches[1]))
-        elif len(media_matches) == 1:
-            results[key_mapping["MediaSite1"]] = str(100 - float(media_matches[0]))
-            results[key_mapping["MediaSite2"]] = "No disponible"
-
-        # Procesar otros argumentos
-        for argument in arguments:
-            if argument not in ["MediaSite1", "MediaSite2"]:
-                pattern = patterns.get(argument)
+        for arg in arguments:
+            pattern = patterns.get(arg)
+            if pattern:
                 match = re.search(pattern, response_text)
                 if match:
-                    result_key = key_mapping.get(argument, argument)
-                    results[result_key] = match.group(1)
-
+                    mapped_key = key_mapping.get(arg)
+                    if mapped_key:
+                        results[mapped_key] = match.group(1)
+    except requests.Timeout:
+        logging.error(f"Timeout al intentar conectarse a {url_base}")
+    except requests.exceptions.RequestException as e:
+        logging.error(f"Error al hacer la solicitud HTTP para {url_base}: {e}")
     except Exception as e:
-        # Maneja el error considerando que 'argument' puede ser None
-        if argument:
-            logger.error(f"Error processing argument {argument} for {ip}: {e}")
-        else:
-            logger.error(f"Error before processing arguments for {ip}: {e}")
+        logging.error(f"Error al procesar la solicitud para {ip}: {e}")
+
     print(results)
     return results
 
