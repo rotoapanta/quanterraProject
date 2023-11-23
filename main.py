@@ -47,8 +47,8 @@ def main():
         print(f"ip_hostname_dict {ip_hostname_dict}")
 
         # Define common arguments as a string
-        arguments = ["StationCode", "SerialNumber", "InputVoltage", "SystemTemp", "SatUsed", "MediaSite1", "MediaSite2", "Q330Serial",
-                     "MainCurrent", "ClockQuality"]
+        arguments = ["StationCode", "SerialNumber", "InputVoltage", "SystemTemp", "SatUsed", "MediaSite1", "MediaSite2",
+                     "Q330Serial", "MainCurrent", "ClockQuality"]
 
         # Llamar a la función para obtener los datos de manera concurrente
         all_data = get_values_concurrently(ip_hostname_dict.keys(), arguments)

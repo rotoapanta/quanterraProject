@@ -84,6 +84,21 @@ def get_ip_hostname_dict():
         return {}
 
 
+def process_devices(device_list, arguments):
+    for device_ip in device_list:
+        try:
+            get_values(device_ip, arguments)
+        except requests.Timeout:
+            logging.error(f"Timeout al intentar conectarse a {device_ip}, saltando al siguiente dispositivo.")
+            continue  # Continúa con el siguiente dispositivo
+        except requests.exceptions.RequestException as e:
+            logging.error(f"Error en la conexión con {device_ip}: {e}")
+            continue  # Continúa con el siguiente dispositivo
+        except Exception as e:
+            logging.error(f"Error general al procesar el dispositivo {device_ip}: {e}")
+            continue  # Continúa con el siguiente dispositivo
+
+
 def get_values(ip, arguments):
     results = {}
 
