@@ -1,8 +1,12 @@
-# El comando pip freeze es una herramienta útil en el ecosistema de Python que te permite listar todas las dependencias
-# instaladas en un entorno virtual junto con sus versiones correspondientes.
-# Para crear el archivo de requirements.txt se ejecuta en la terminal pip freeze > requirements.txt
-# Para instalar pip install -r requirements.txt
+# This file lists the necessary Python library dependencies for the project.
+# These libraries are required for the proper functioning of the project's scripts,
+# including interactions with the Zabbix API, making HTTP requests, and handling URLs.
 
+# Zabbix API library for Python
 py-zabbix==1.1.7
+
+# Library for making HTTP requests
 requests==2.31.0
+
+# HTTP client library used by requests
 urllib3==2.0.4
