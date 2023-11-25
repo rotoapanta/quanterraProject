@@ -19,7 +19,7 @@ Welcome to "Quanterra Metrics!" Read on for more details on how to start using t
 # Contents
 
 * [Getting started](#getting-started)
-    * [Getting started with Zabbix and Telegram](#getting-started-with-zabbix-and-telegram)
+    * [Getting started with Zabbix and Quanterra](#getting-started-with-zabbix-and-quanterra)
     * [Requirements](#requirements)
     * [Components Description](#components-description)
 * [Installation](#installation)
@@ -46,18 +46,23 @@ Welcome to the project! This guide will help you get started with setting up and
 The project is a Python-based application designed to obtain the metrics (voltage, current, number of satellites, disk capacity) of Quanterra seismic digitizers. 
 
 Let’s get started!
+
+### Features
+
+- Retrieve various metrics from Quanterra devices.
+- Send collected data to Zabbix for analysis.
+- Easily schedule monitoring tasks using `crontab`.
  
 ## Requirements
 
-* Python 3.10 or higher installed on your system.
-* `python-telegram-bot` library version 13.1 installed.
-* `py-zabbix` library installed to interact with the Zabbix API.
-* `beautifulsoup4` library version 4.12.2 installed.
-* `requests` library version 2.31.0 installed.
-* `urllib3` library version 2.0.4 installed.
-* Access to a Zabbix server and agent with appropriate credentials.
-* Quanterra digitizer.
-* Computer running Anaconda on Windows, Linux or macOS (in this case macOS is used).
+Before you get started, make sure you have the following:
+
+- Python 3.11 or higher installed on your system.
+- [Anaconda](https://www.anaconda.com/) for creating and managing Conda environments.
+- A Zabbix server for storing and analyzing the collected data.
+- Basic knowledge of using `crontab` for scheduling tasks.
+- Quanterra devices
+- Computer running Anaconda on Windows, Linux or macOS (in this case macOS is used).
 
 ## Components Description
 
