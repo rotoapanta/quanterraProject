@@ -6,15 +6,23 @@ Welcome to "Quanterra Metrics!" Read on for more details on how to start using t
 
 ##
 
-![Python 3.10](https://img.shields.io/badge/Python-3.10-blue.svg)
-[![GitHub issues](https://img.shields.io/github/issues/rotoapanta/botZabbixPackage)](https://github.com/rotoapanta/botZabbixPackage/issues)
-![GitHub repo size](https://img.shields.io/github/repo-size/rotoapanta/botZabbixPackage)
-![GitHub last commit](https://img.shields.io/github/last-commit/rotoapanta/botZabbixPackage)
-![GitHub commit merge status](https://img.shields.io/github/commit-status/rotoapanta/botZabbixPackage/master/d8b7bfe)
+[![Python](https://img.shields.io/badge/Python-3.11-brightgreen)](https://www.python.org/)
+[![Zabbix](https://img.shields.io/badge/Zabbix-4.6-orange)](https://www.zabbix.com/)
+![GitHub issues](https://img.shields.io/github/issues/rotoapanta/quanterraProject)
+![GitHub repo size](https://img.shields.io/github/repo-size/rotoapanta/quanterraProject)
+![GitHub last commit](https://img.shields.io/github/last-commit/rotoapanta/quanterraProject)
+![GitHub commit merge status](https://img.shields.io/github/commit-status/rotoapanta/quanterraProject/master/d1e8036)
+![Discord](https://img.shields.io/discord/1104588661321908335)
+[![Discord Invite](https://img.shields.io/badge/discord-join%20now-green)](https://discord.gg/bf6rWDbJ)
+[![Docker](https://img.shields.io/badge/Docker-No-brightgreen)](https://www.docker.com/)
+[![GitHub](https://img.shields.io/badge/GitHub-Project-brightgreen)](https://github.com/rotoapanta/quanterraProject.git)
+[![Linux](https://img.shields.io/badge/Linux-Supported-brightgreen)](https://www.linux.org/)
+[![Windows](https://img.shields.io/badge/Windows-Supported-brightgreen)](https://www.microsoft.com/)
+[![Crontab](https://img.shields.io/badge/Crontab-Supported-brightgreen)](#installation)
+[![Author 1](https://img.shields.io/badge/Roberto%20-Toapanta-brightgreen)](https://www.linkedin.com/in/roberto-carlos-toapanta-g/)
+[![Version](https://img.shields.io/badge/Version-1.4-brightgreen)](#change-log)
+![GitHub forks](https://img.shields.io/github/forks/rotoapanta/quanterraProject?style=social)
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/gpl-2.0)
-![Discord](https://img.shields.io/discord/996422496842694726)
-[![Discord Invite](https://img.shields.io/badge/discord-join%20now-green)](https://discord.gg/Gs9b3HFd)
-![GitHub forks](https://img.shields.io/github/forks/rotoapanta/botZabbixPackage?style=social)
 
 # Contents
 
