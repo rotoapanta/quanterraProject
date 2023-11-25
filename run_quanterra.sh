@@ -3,7 +3,7 @@
 # Define variables
 ENV_NAME="quanterra_env"
 CONDA_PREFIX="/home/rotoapanta/anaconda3/"
-SCRIPT_PATH="/home/rotoapanta/Documentos/Proyects/quanterraProject/"
+SCRIPT_PATH="/home/rotoapanta/Documentos/Projects/quanterraProject/"
 PYTHON_SCRIPT="main.py"
 CONFIG_FILE="config.ini"
 
