@@ -18,10 +18,11 @@ Welcome to "Quanterra Metrics!" Read on for more details on how to start using t
 
 # Contents
 
-* [Getting started](#getting-started)
-    * [Getting started with Zabbix and Quanterra](#getting-started-with-zabbix-and-quanterra)
-    * [Requirements](#requirements)
-    * [Components Description](#components-description)
+- [Getting started](#getting-started)
+  - [Getting started with Zabbix and Quanterra](#getting-started-with-zabbix-and-quanterra)
+  - [Features](#features)
+  - [Requirements](#requirements)
+  - [Components Description](#components-description)
 * [Installation](#installation)
 * [Configuration](#configuration)
 * [Running the Application](#running-the-application)
@@ -66,145 +67,178 @@ Before you get started, make sure you have the following:
 
 ## Components Description
 
-This project consists of the following components:
+The project consists of the following components:
 
-- json_files/
-  - host_reachable.json 
-  - host_rejected.json
-  - utils/
+- gpsNetRsProject/
+  - api/
     - __init__.py
-    - extract_data.py
-    - json_reader.py
-    - zabbix_host_processing.py
-  - zabbix/
-    - __init__.py
-    - zabbix.py
-- config.ini
-- main.py
-- requirements.txt
-- run_zabbix_quanterra.sh
+    - api_zbx_processing.py
+    - logs/
+      - __init__.py
+      - aaaa-mm-dd_gps_netrs.log
+      - gps_netrs.log
+    - templates/
+      - zbx_export_templates.xml
+    - test/
+      - __init__.py
+      - test_gps_netrs_project.py
+    - utils/
+      - __init__.py
+      - utilities.py
+  - config.ini
+  - main.py
+  - requirements.txt
+  - run_gps_netrs.sh
+  - setup.py
+  - zabbix_sender.py
 
-- `utils/`: This directory contains utility modules for the project.
+- `api/`: This package contains modules related to the project's API functionality.
+  - `init.py`: An empty file that marks the directory as a Python package. 
+  - `api_zbx_processing.py`: Module for processing Zabbix data through the API.
+- `logs/`: Directory for storing log files.
   - `init.py`: An empty file that marks the directory as a Python package.
-  - `config_reader.py`: This module is responsible for reading the configuration file (config.ini). It uses the configparser library to parse the file and extract the required configuration parameters.
-  - `logging_utils.py`: A module containing utility functions for logging.
- - `zbx_bot/`: This directory contains modules related to the Zabbix bot functionality.
-   - `init.py`: An empty file that marks the directory as a Python package.
-   - `telegram_bot.py`: A module that handles the Telegram bot functionality.
-   - `zabbix.py`: A module that interacts with the Zabbix monitoring system.
-- `app.py`: The main application file where the bot is initialized and run.
-- `app.log`: A log file where application logs are stored.
-- `config.ini`: A configuration file that contains settings for the application.
-- `requirements.txt`: A file listing the required Python packages and their versions for the project.
-- `run_bot_zabbix.sh`: A shell script used to execute the Zabbix bot, possibly with environment setup and specific commands.
+  - `aaaa-mm-dd_gps_netrs.log`: File is a project log that records events and errors.
+  - `gps_netrs_crontab.log`: Log file that captures the execution details of the project's scheduled tasks.
+- `templates/`: Directory for Zabbix templates.
+- `test/`: Package for unit tests.
+  - `init.py`: An empty file that marks the directory as a Python package.
+  - `test_gps_netrs_project.py`: File contains unit tests for the GPS NetRS Project.
+- `utils/`: Package for utility functions.
+  - `init.py`: An empty file that marks the directory as a Python package.
+  - `utilities.py`: Script containing reusable functions that provide common functionality for the project.
+- `zabbix/`: Package for Zabbix Integration.
+  - `zabbix_sender.py`: A script for sending data to Zabbix
+- `config.ini`: Project configuration file with project-specific details.
+- `main.py`: The main script of the project, which likely contains the core logic.
+- `requirements.txt`: A list of project dependencies, typically used for package management.
+- `run_gps_netrs.sh`: A shell script for executing the project.
+- `setup.py`: A script used for packaging and distribution of the project.
+- `zabbix_sender.py`: A script responsible for sending data to Zabbix.
 
-# Installation
+## Installation
 
-Follow the instructions to set up and run the project. The run_bot_zabbix.sh script takes care of setting up the environment, checking for the existence of directories and files, creating the conda environment if it doesn't already exist, activating the conda environment, installing the dependencies specified in the requirements.txt file, and running the Python script app. .py with the provided configuration file.
 
-1. Clone the repository:
+1. Clone the repository to your local machine:
+  
+  ```bash
+   git clone https://github.com/rotoapanta/quanterraProject.git
+  ```
+2.Create the `config.ini` in the same directory as the project and configure according to your credentials.
 
-```shell
-https://github.com/rotoapanta/botZabbixProject.git
-```
-   
-2. Navigate to the project directory:
-
-```shell
-   cd repository
-```
-
-3. Ensure that Anaconda or Miniconda is installed on your system.
-
-4. Run the script:
-
-```shell
-   ./run_bot_zabbix.sh
-```
-
-# Configuration
+## Configuration
 
 1. Open the config.ini file in the project directory.
 
 2. Configure the Zabbix credentials:
-   - Set the Zabbix URL in the url field.
-   - Enter your Zabbix username in the user field.
-   - Provide your Zabbix password in the password field.
 
-3. Configure the Telegram access token:
-   - Set your Telegram bot token in the token field under the [Telegram] section.
+```ini
+[zabbix]
+zabbix_server = ZABBIX_SERVER_IP_OR_HOSTNAME
+zabbix_port = ZABBIX_SERVER_PORT
+zabbix_url = ZABBIX_SERVER_URL
+zabbix_user = ZABBIX_USERNAME
+zabbix_password = ZABBIX_PASSWORD
+```
 
-# Running the Application
+## Running the Application
 
-1. Run the application using the following command:
+The run_gps_netrs.sh shell script is used to set up the environment, activate the Conda environment, install dependencies, and execute the main project script. The script is responsible for the following tasks:
 
-    ```bash
-      python app.py config.ini
-    ```
-2. The Telegram bot will start and listen for commands.
+- Setting environment variables.
+- Activating the Conda environment.
+- Installing project dependencies.
+- Validating the existence of directories and files.
+- Navigating to the project directory.
+- Running the main project script (main.py).
 
-# Running the Project Automatically with Crontab
+Please review the script's comments for details about its operation and make sure it points to the correct paths for your specific environment.
 
-To run the Zabbix bot project automatically at specified intervals, you can use the `crontab` utility in Unix-like systems. Follow these steps to set up a cron job:
+  ```plaintext
+  Note: Ensure that the script has the necessary permissions to execute.
+  ```
 
-1. Open the terminal and execute the following command to edit the cron jobs for the current user:
+## Running the Project Automatically with Crontab
 
-    ```bash
-      crontab -e
-    ```
+To automate the monitoring process, you can use crontab to schedule the execution of the script at specific intervals. The provided run_gps_netrs.sh shell script helps you set up the environment and run the project under cron. 
 
-2. In the crontab file, add the following line to schedule the execution of the Zabbix bot script:
+Here's how to configure and use crontab with the project:
 
-    ```bash
-    * * * * * while true; do cd /path/to/project && python app.py config.ini; sleep 1; done
-    ````
-Replace /path/to/project with the actual path to the project directory.
+1. Open the crontab configuration for your user by running the following command
 
-3. Save and exit the crontab file. The cron job will be automatically scheduled and executed based on the specified interval.
-Note: Ensure that the `run_bot_zabbix.sh` script has executable permissions. If not, you can set the permissions using the following command:
+  ```bash
+   crontab -e
+  ```
+2. Add an entry to schedule the script to run at regular intervals. For example, to run the script every 10 minutes, add the following line:
+  
+  ```bash
+   */10 * * * * bash /path/to/run_gps_netrs.sh >> /path/to/logs/gps_netrs_crontab.log 2>&1
+  ```
+Be sure to replace /path/to with the actual paths to the run_gps_netrs.sh script and the desired log file.
 
-    ```bash
-    chmod +x /path/to/project/run_bot_zabbix.sh
-    ````
-4. The output of the script will be redirected to the app.log file located in the project directory. You can check this file for any logs or error messages.
+Save and exit the crontab editor.
 
-    ```bash
-    tail -f /path/to/project/app.log
-    ````
-
-That's it! The Zabbix bot project will now be automatically executed at the scheduled intervals defined in the cron job.
+The script will now run automatically at the specified intervals and log its output to the specified log file.
 
 ## Environment Variables
 
 Before running the project, make sure to set the following environment variables:
 
-- `ZABBIX_URL`: The URL of the Zabbix instance.
-- `ZABBIX_USER`: The username for accessing the Zabbix API.
-- `ZABBIX_PASSWORD`: The password for accessing the Zabbix API.
-- `TELEGRAM_TOKEN`: The token for accessing the Telegram Bot API.
-
-You can either set these environment variables manually or create a `.env` file in the root directory of the project and populate it with the required values.
-
-Example `.env` file:
+- `zabbix_url` = ZABBIX_SERVER_URL
+- `zabbix_user` = ZABBIX_USERNAME
+- `zabbix_password` = ZABBIX_PASSWORD
+- `digitizer_username` = DIGITIZER_USERNAME
+- `digitizer_password` = DIGITIZER_PASSWORD
 
 ## Change Log
 
-* Revision: 1.4 - Add run_bot_zabbix.sh
-* Revision: 1.3 - Add requirements.txt
-* Revision: 1.2 - Add app.log
+* Revision: 1.4 - Refactor code
+* Revision: 1.3 - Add test unit
+* Revision: 1.2 - Add run_gps_netrs.sh
 * Revision: 1.1 - Code cleaned.
 * Revision: 1.0 - Initial commit
 
+## Running Tests
+
+To run the tests for this project, you have two options:
+
+### Option 1: Using Test Discovery
+
+You can use Python's built-in test discovery to automatically discover and run all tests that follow the naming convention `test_*.py`. Navigate to your project directory and execute the following command:
+
+```bash
+python -m unittest discover -s tests -p 'test_*.py'
+```
+This command will search for and execute all tests within the tests directory and its subdirectories.
+
+### Option 2: Running Specific Test Modules
+
+If you want to run specific test modules or individual tests, you can use the following command. Replace tests.test_module with the appropriate test module you want to run:
+
+```bash
+python -m unittest tests.test_gps_netrs_project
+```
+This command allows you to execute tests from a particular test module. Adjust test_module to the desired module name.
+
+![Testing](images/img_1.png)
+<p align="center">Figure 1. Testing the code</p>
+
+![Data collected](images/img_2.png)
+<p align="center">Figure 2. Data collected on the Zabbix Server</p>
+
+![Digitizer input voltage](images/img_3.png)
+<p align="center">Figure 3. Digitizer input voltage</p>
+
+![Digitizer temperature](images/img_4.png)
+<p align="center">Figure 4. Digitizer temperature</p>
+
 ## Usage
 
-- Send `/ping` command to the bot in a Telegram chat to initiate a host search and perform a ping test.
-- Follow the prompts and instructions provided by the bot to interact and retrieve information from Zabbix.
+To run the project manually, execute the following command:
 
-## Logging
-
-- The application logs are stored in the app.log file in the same directory as app.py.
-
-- You can refer to this log file to track the application's execution and any errors or exceptions that may occur.
+  ```bash
+   python main.py
+  ```
+For scheduling and automation, refer to the Scheduling with crontab section.
 
 ## Feedback
 
@@ -218,18 +252,16 @@ For support, email robertocarlos.toapanta@gmail.com or join our Discord channel.
 
 [GPL v2](https://www.gnu.org/licenses/gpl-2.0)
 
-## Autors
+## Authors
+
 - [@rotoapanta](https://github.com/rotoapanta)
 
 ## More Info
 
 * [Official documentation for py-zabbix](https://py-zabbix.readthedocs.io/en/latest/)
-* [GitHub py-zabbix](https://github.com/adubkov/py-zabbix)
 * [Install py-zabbix 1.1.7](https://pypi.org/project/pyzabbix/)
-* [Install pyserial 3.5](https://pypi.org/project/pyserial/)
 
 ## Links
+
 [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/roberto-carlos-toapanta-g/)
 [![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/rotoapanta)
-
-
