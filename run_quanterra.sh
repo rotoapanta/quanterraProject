@@ -23,7 +23,7 @@ fi
 
 # Create Conda environment if it doesn't exist
 if ! conda env list | grep -q "${ENV_NAME}"; then
-    conda create --name ${ENV_NAME} python=3.10
+    conda create --name ${ENV_NAME} python=3.10 -y
 fi
 
 # Activate Conda environment
@@ -35,7 +35,7 @@ if [ $? != 0 ]; then
 fi
 
 # Install all dependencies from 'requirements.txt'
-pip install -r ${SCRIPT_PATH}/requirements.txt
+pip install -r ${SCRIPT_PATH}/requirements.txt -y
 
 # Validate the existence of paths and files
 if [ ! -d "${SCRIPT_PATH}" ]; then
