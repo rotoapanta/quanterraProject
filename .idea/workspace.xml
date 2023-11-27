@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="66108793-4a3b-42a3-a807-b9cc47d9f6df" name="Changes" comment="" />
+    <list default="true" id="66108793-4a3b-42a3-a807-b9cc47d9f6df" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/logs/2023-11-27_quanterra.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/api_zbx_processing.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/api_zbx_processing.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -164,10 +168,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
-        <item itemvalue="Python.aaa" />
-        <item itemvalue="Python.multiple_ping" />
         <item itemvalue="Python.prueba_ping" />
+        <item itemvalue="Python.multiple_ping" />
         <item itemvalue="Python.api_zbx_processing" />
+        <item itemvalue="Python.aaa" />
       </list>
     </recent_temporary>
   </component>

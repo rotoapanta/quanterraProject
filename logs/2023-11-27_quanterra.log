@@ -1,0 +1,2995 @@
+2023-11-27 15:03:49,327 - __main__ - INFO - Starting the program
+2023-11-27 15:03:49,327 - pyzabbix.api - DEBUG - ZabbixAPI.login(uzabbix,********)
+2023-11-27 15:03:49,328 - pyzabbix.api - DEBUG - Call user.login method
+2023-11-27 15:03:49,328 - pyzabbix.api - DEBUG - urllib2.Request(http://192.168.1.115/zabbix/api_jsonrpc.php, {"jsonrpc": "2.0", "method": "user.login", "params": {"user": "uzabbix", "password": "********"}, "id": "1"})
+2023-11-27 15:03:49,454 - pyzabbix.api - DEBUG - Response Body: {
+    "jsonrpc": "2.0",
+    "result": "********",
+    "id": "1"
+}
+2023-11-27 15:03:49,455 - pyzabbix.api - DEBUG - JSON-PRC Server: http://192.168.1.115/zabbix/api_jsonrpc.php
+2023-11-27 15:03:49,455 - pyzabbix.api - DEBUG - Call template.get method
+2023-11-27 15:03:49,455 - pyzabbix.api - DEBUG - urllib2.Request(http://192.168.1.115/zabbix/api_jsonrpc.php, {"jsonrpc": "2.0", "method": "template.get", "params": {"filter": {"host": "Template Quanterra"}}, "id": "1", "auth": "********"})
+2023-11-27 15:03:49,547 - pyzabbix.api - DEBUG - Response Body: {
+    "jsonrpc": "2.0",
+    "result": [
+        {
+            "proxy_hostid": "0",
+            "host": "Template Quanterra",
+            "status": "3",
+            "disable_until": "0",
+            "error": "",
+            "available": "0",
+            "errors_from": "0",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Template Quanterra",
+            "flags": "0",
+            "templateid": "10358",
+            "description": "",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1"
+        }
+    ],
+    "id": "1"
+}
+2023-11-27 15:03:49,547 - pyzabbix.api - DEBUG - Call host.get method
+2023-11-27 15:03:49,548 - pyzabbix.api - DEBUG - urllib2.Request(http://192.168.1.115/zabbix/api_jsonrpc.php, {"jsonrpc": "2.0", "method": "host.get", "params": {"templateids": ["10358"], "selectInterfaces": ["ip", "host"]}, "id": "1", "auth": "********"})
+2023-11-27 15:03:49,648 - pyzabbix.api - DEBUG - Response Body: {
+    "jsonrpc": "2.0",
+    "result": [
+        {
+            "hostid": "10270",
+            "proxy_hostid": "0",
+            "host": "ANTG_QA",
+            "status": "0",
+            "disable_until": "1691461658",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461643",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Antisana Guamani - ANTG_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.17.51"
+                },
+                {
+                    "ip": "192.168.17.51"
+                }
+            ]
+        },
+        {
+            "hostid": "10267",
+            "proxy_hostid": "0",
+            "host": "ANTM_QA",
+            "status": "0",
+            "disable_until": "1691461658",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461643",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Antisana Mica - ANTM_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica / Repetidora",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.17.52"
+                },
+                {
+                    "ip": "192.168.17.52"
+                }
+            ]
+        },
+        {
+            "hostid": "10271",
+            "proxy_hostid": "0",
+            "host": "ANTS_QA",
+            "status": "0",
+            "disable_until": "1691461661",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461646",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Antisana Sarahuasi - ANTS_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.17.53"
+                },
+                {
+                    "ip": "192.168.17.53"
+                }
+            ]
+        },
+        {
+            "hostid": "10371",
+            "proxy_hostid": "0",
+            "host": "FER1_QA",
+            "status": "0",
+            "disable_until": "1691461692",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461677",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Punta Espinoza - FER1_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.32.55"
+                },
+                {
+                    "ip": "192.168.32.55"
+                }
+            ]
+        },
+        {
+            "hostid": "10374",
+            "proxy_hostid": "0",
+            "host": "FER2_QA",
+            "status": "0",
+            "disable_until": "1691461699",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461684",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Punta Mangle - FER2_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.32.56"
+                },
+                {
+                    "ip": "192.168.32.56"
+                }
+            ]
+        },
+        {
+            "hostid": "10388",
+            "proxy_hostid": "0",
+            "host": "ALCE_QA",
+            "status": "0",
+            "disable_until": "1691461702",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461687",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "1551123258",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "1551123243",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Punta Alfaro - ALCE_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.32.51"
+                },
+                {
+                    "ip": "192.168.32.51"
+                }
+            ]
+        },
+        {
+            "hostid": "10389",
+            "proxy_hostid": "0",
+            "host": "CEAZ_QA",
+            "status": "0",
+            "disable_until": "1691461721",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461706",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Caleta Web - CEAZ_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.32.54"
+                },
+                {
+                    "ip": "192.168.32.54"
+                }
+            ]
+        },
+        {
+            "hostid": "10390",
+            "proxy_hostid": "0",
+            "host": "VCH1_QA",
+            "status": "0",
+            "disable_until": "1691461723",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461708",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Volcan Chico - VCH1_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica / C\u00e1mara / Repetidora",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.32.52"
+                },
+                {
+                    "ip": "192.168.32.52"
+                }
+            ]
+        },
+        {
+            "hostid": "10419",
+            "proxy_hostid": "0",
+            "host": "MORR_QA",
+            "status": "0",
+            "disable_until": "1691461695",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461680",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "1551358969",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "1551358927",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "El Morro - MORR_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica / Repetidora / GPS",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.6.53"
+                },
+                {
+                    "ip": "192.168.6.53"
+                }
+            ]
+        },
+        {
+            "hostid": "10452",
+            "proxy_hostid": "0",
+            "host": "PULU_QA",
+            "status": "0",
+            "disable_until": "1691461696",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461681",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "1552268574",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "1552268559",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Pululahua - PULU_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica / Repetidora / GPS",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.16.61"
+                },
+                {
+                    "ip": "192.168.16.61"
+                }
+            ]
+        },
+        {
+            "hostid": "10464",
+            "proxy_hostid": "0",
+            "host": "CUIC_QA",
+            "status": "0",
+            "disable_until": "1691461697",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461682",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "1552340786",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "1552340771",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Cuicocha Domo - CUIC_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica / Gases / GPS",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.16.68"
+                },
+                {
+                    "ip": "192.168.16.68"
+                }
+            ]
+        },
+        {
+            "hostid": "10482",
+            "proxy_hostid": "0",
+            "host": "VCES_QA",
+            "status": "0",
+            "disable_until": "1691461727",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461712",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "1552703587",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "1552703572",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "El Morro Cotopaxi - VCES_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.16.67"
+                },
+                {
+                    "ip": "192.168.16.67"
+                }
+            ]
+        },
+        {
+            "hostid": "10484",
+            "proxy_hostid": "0",
+            "host": "PIS1_QA",
+            "status": "0",
+            "disable_until": "1691461699",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461684",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Pisayambo - PIS1_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.16.66"
+                },
+                {
+                    "ip": "192.168.16.66"
+                }
+            ]
+        },
+        {
+            "hostid": "10456",
+            "proxy_hostid": "0",
+            "host": "IMBA_QA",
+            "status": "0",
+            "disable_until": "1691461702",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461687",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "San Roque - IMBA_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.16.64"
+                },
+                {
+                    "ip": "192.168.16.64"
+                }
+            ]
+        },
+        {
+            "hostid": "10454",
+            "proxy_hostid": "0",
+            "host": "PAC1_QA",
+            "status": "0",
+            "disable_until": "1691461703",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461688",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Pacto - PAC1_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica / Acelerogr\u00e1fica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.16.71"
+                },
+                {
+                    "ip": "192.168.16.71"
+                }
+            ]
+        },
+        {
+            "hostid": "10458",
+            "proxy_hostid": "0",
+            "host": "URCU_QA",
+            "status": "0",
+            "disable_until": "1691461722",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461707",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Urcuqui - URCU_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.16.62"
+                },
+                {
+                    "ip": "192.168.16.62"
+                }
+            ]
+        },
+        {
+            "hostid": "10451",
+            "proxy_hostid": "0",
+            "host": "YAHU_QA",
+            "status": "0",
+            "disable_until": "1691461727",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461712",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Yahuarcocha - YAHU_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.16.63"
+                },
+                {
+                    "ip": "192.168.16.63"
+                }
+            ]
+        },
+        {
+            "hostid": "10526",
+            "proxy_hostid": "0",
+            "host": "ILLI_QA",
+            "status": "0",
+            "disable_until": "1691461729",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461714",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Ilinizas Rasayacu - ILLI_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.16.65"
+                },
+                {
+                    "ip": "192.168.16.65"
+                }
+            ]
+        },
+        {
+            "hostid": "10555",
+            "proxy_hostid": "0",
+            "host": "PPLP_QA",
+            "status": "0",
+            "disable_until": "1691461730",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461715",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Puerto Lopez - PPLP_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica / Acelerogr\u00e1fica / Repetidora",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.33.51"
+                },
+                {
+                    "ip": "192.168.33.51"
+                }
+            ]
+        },
+        {
+            "hostid": "10565",
+            "proxy_hostid": "0",
+            "host": "JIPI_QA",
+            "status": "0",
+            "disable_until": "1691461733",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461718",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Jipijapa - JIPI_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.33.54"
+                },
+                {
+                    "ip": "192.168.33.54"
+                }
+            ]
+        },
+        {
+            "hostid": "10567",
+            "proxy_hostid": "0",
+            "host": "CSOL_QA",
+            "status": "0",
+            "disable_until": "1691461752",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461737",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Cascol - CSOL_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.33.53"
+                },
+                {
+                    "ip": "192.168.33.53"
+                }
+            ]
+        },
+        {
+            "hostid": "10592",
+            "proxy_hostid": "0",
+            "host": "REVS_QA",
+            "status": "0",
+            "disable_until": "1691461754",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461739",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Copete - REVS_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica / C\u00e1mara / Repetidora / Infrasonido",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.30.53"
+                },
+                {
+                    "ip": "192.168.30.53"
+                }
+            ]
+        },
+        {
+            "hostid": "10594",
+            "proxy_hostid": "0",
+            "host": "REVN_QA",
+            "status": "0",
+            "disable_until": "1691461628",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461613",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Reventador Norte Azuela - REVN_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica / C\u00e1mara",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.30.60"
+                },
+                {
+                    "ip": "192.168.30.60"
+                }
+            ]
+        },
+        {
+            "hostid": "10596",
+            "proxy_hostid": "0",
+            "host": "CASC_QA",
+            "status": "0",
+            "disable_until": "1691461630",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461615",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Dorado de Cascales - CASC_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica / GPS",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.16.79"
+                },
+                {
+                    "ip": "192.168.16.79"
+                }
+            ]
+        },
+        {
+            "hostid": "10654",
+            "proxy_hostid": "0",
+            "host": "SUSE_QA",
+            "status": "0",
+            "disable_until": "1691461632",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461617",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Susudel - SUSE_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.6.68"
+                },
+                {
+                    "ip": "192.168.6.68"
+                }
+            ]
+        },
+        {
+            "hostid": "10661",
+            "proxy_hostid": "0",
+            "host": "COHC_QA",
+            "status": "0",
+            "disable_until": "1691461635",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461620",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "1585805788",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "1585805773",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Cochancay - COHC_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica / GPS",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.6.59"
+                },
+                {
+                    "ip": "192.168.6.59"
+                }
+            ]
+        },
+        {
+            "hostid": "10672",
+            "proxy_hostid": "0",
+            "host": "PCRA_QA",
+            "status": "0",
+            "disable_until": "1691461637",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461622",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Pucara - PCRA_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica / Repetidora",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.6.60"
+                },
+                {
+                    "ip": "192.168.6.60"
+                }
+            ]
+        },
+        {
+            "hostid": "10675",
+            "proxy_hostid": "0",
+            "host": "GONZ_QA",
+            "status": "0",
+            "disable_until": "1691461639",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461624",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Gonzanama - GONZ_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.6.66"
+                },
+                {
+                    "ip": "192.168.6.66"
+                }
+            ]
+        },
+        {
+            "hostid": "10677",
+            "proxy_hostid": "0",
+            "host": "LAMO_QA",
+            "status": "0",
+            "disable_until": "1691461670",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461655",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Alamor - LAMO_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica / Acelerogr\u00e1fica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.6.73"
+                },
+                {
+                    "ip": "192.168.6.73"
+                }
+            ]
+        },
+        {
+            "hostid": "10695",
+            "proxy_hostid": "0",
+            "host": "TULM_QA",
+            "status": "0",
+            "disable_until": "1691461658",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461643",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Chalpatan - TULM_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica / Repetidora / GPS",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.6.63"
+                },
+                {
+                    "ip": "192.168.6.63"
+                }
+            ]
+        },
+        {
+            "hostid": "10739",
+            "proxy_hostid": "0",
+            "host": "JSCH_QA",
+            "status": "0",
+            "disable_until": "1691461665",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461650",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "1589755087",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "1589755072",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Cascha Totoras - JSCH_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica / Repetidora",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.217.47"
+                },
+                {
+                    "ip": "192.168.217.47"
+                }
+            ]
+        },
+        {
+            "hostid": "10821",
+            "proxy_hostid": "0",
+            "host": "GGPT_QA",
+            "status": "0",
+            "disable_until": "1691461670",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461655",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Toaza - GGPT_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.16.78"
+                },
+                {
+                    "ip": "192.168.16.78"
+                }
+            ]
+        },
+        {
+            "hostid": "10843",
+            "proxy_hostid": "0",
+            "host": "GGPC_QA",
+            "status": "0",
+            "disable_until": "1691461689",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461674",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Guagua Pichincha Refugio - GGPC_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica / GPS",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.16.75"
+                },
+                {
+                    "ip": "192.168.16.75"
+                }
+            ]
+        },
+        {
+            "hostid": "10872",
+            "proxy_hostid": "0",
+            "host": "CHSH_QA",
+            "status": "0",
+            "disable_until": "1691461691",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461676",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Chimborazo Sur - CHSH_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.6.67"
+                },
+                {
+                    "ip": "192.168.6.67"
+                }
+            ]
+        },
+        {
+            "hostid": "10890",
+            "proxy_hostid": "0",
+            "host": "CAB1_QA",
+            "status": "0",
+            "disable_until": "1691461695",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461680",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Cabo Pasado - CAB1_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica / GPS",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.217.56"
+                },
+                {
+                    "ip": "192.168.217.56"
+                }
+            ]
+        },
+        {
+            "hostid": "10891",
+            "proxy_hostid": "0",
+            "host": "FLF1_QA",
+            "status": "0",
+            "disable_until": "1691461695",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461680",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Flavio Alfaro - FLF1_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica / GPS",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.217.57"
+                },
+                {
+                    "ip": "192.168.217.57"
+                }
+            ]
+        },
+        {
+            "hostid": "10925",
+            "proxy_hostid": "0",
+            "host": "TAMH_QA",
+            "status": "0",
+            "disable_until": "1691461696",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461681",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Tambohuasha - TAMH_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.16.73"
+                },
+                {
+                    "ip": "192.168.16.73"
+                }
+            ]
+        },
+        {
+            "hostid": "10926",
+            "proxy_hostid": "0",
+            "host": "PORT_QA",
+            "status": "0",
+            "disable_until": "1691461697",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461682",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Portal - PORT_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica / GPS",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.16.72"
+                },
+                {
+                    "ip": "192.168.16.72"
+                }
+            ]
+        },
+        {
+            "hostid": "11003",
+            "proxy_hostid": "0",
+            "host": "ARDO_QA",
+            "status": "1",
+            "disable_until": "0",
+            "error": "",
+            "available": "0",
+            "errors_from": "0",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Tena - ARDO_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.6.51"
+                },
+                {
+                    "ip": "192.168.6.51"
+                }
+            ]
+        },
+        {
+            "hostid": "11010",
+            "proxy_hostid": "0",
+            "host": "SAGA_QA",
+            "status": "0",
+            "disable_until": "1691461729",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461714",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Volcan Sangay - SAGA_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica / C\u00e1mara / Gases",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.27.51"
+                },
+                {
+                    "ip": "192.168.27.51"
+                }
+            ]
+        },
+        {
+            "hostid": "11012",
+            "proxy_hostid": "0",
+            "host": "ISPG_QA",
+            "status": "0",
+            "disable_until": "1691461702",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461687",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Isla Puna - ISPG_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica / Acelerogr\u00e1fica / GPS",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.6.75"
+                },
+                {
+                    "ip": "192.168.6.75"
+                }
+            ]
+        },
+        {
+            "hostid": "11017",
+            "proxy_hostid": "0",
+            "host": "ZUMB_QA",
+            "status": "0",
+            "disable_until": "1691461733",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461718",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Zumba - ZUMB_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.28.51"
+                },
+                {
+                    "ip": "192.168.28.51"
+                }
+            ]
+        },
+        {
+            "hostid": "11023",
+            "proxy_hostid": "0",
+            "host": "BOSC_QA",
+            "status": "0",
+            "disable_until": "1691461752",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461737",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "San Juan Bosco - BOSC_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica / Acelerogr\u00e1fica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.25.51"
+                },
+                {
+                    "ip": "192.168.25.51"
+                }
+            ]
+        },
+        {
+            "hostid": "10746",
+            "proxy_hostid": "0",
+            "host": "GRDI_QA",
+            "status": "0",
+            "disable_until": "1691461753",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461738",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Las Guardias - GRDI_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.217.48"
+                },
+                {
+                    "ip": "192.168.217.48"
+                }
+            ]
+        },
+        {
+            "hostid": "11090",
+            "proxy_hostid": "0",
+            "host": "MILO_QA",
+            "status": "0",
+            "disable_until": "1691461759",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461744",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Milagro Astudillo - MILO_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.217.50"
+                },
+                {
+                    "ip": "192.168.217.50"
+                }
+            ]
+        },
+        {
+            "hostid": "11091",
+            "proxy_hostid": "0",
+            "host": "MCRA_QA",
+            "status": "0",
+            "disable_until": "1691461760",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461745",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Macara - MCRA_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.29.51"
+                },
+                {
+                    "ip": "192.168.29.51"
+                }
+            ]
+        },
+        {
+            "hostid": "11109",
+            "proxy_hostid": "0",
+            "host": "BONI_QA",
+            "status": "0",
+            "disable_until": "1691461763",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461748",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "La Bonita - BONI_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.35.51"
+                },
+                {
+                    "ip": "192.168.35.51"
+                }
+            ]
+        },
+        {
+            "hostid": "11128",
+            "proxy_hostid": "0",
+            "host": "PTGL_QA",
+            "status": "0",
+            "disable_until": "1691461806",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461767",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Punta Galera - PTGL_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica / GPS",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.21.52"
+                },
+                {
+                    "ip": "192.168.21.52"
+                }
+            ]
+        },
+        {
+            "hostid": "11145",
+            "proxy_hostid": "0",
+            "host": "PIAT_QA",
+            "status": "0",
+            "disable_until": "1691461812",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461769",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Ana Tenorio - PIAT_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.31.51"
+                },
+                {
+                    "ip": "192.168.31.51"
+                }
+            ]
+        },
+        {
+            "hostid": "11167",
+            "proxy_hostid": "0",
+            "host": "RVRD_QA",
+            "status": "0",
+            "disable_until": "1691461658",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461643",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Rio Verde - RVRD_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica / GPS",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.19.52"
+                },
+                {
+                    "ip": "192.168.19.52"
+                }
+            ]
+        },
+        {
+            "hostid": "11005",
+            "proxy_hostid": "0",
+            "host": "SNLR_QA",
+            "status": "0",
+            "disable_until": "1691461630",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461615",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "San Lorenzo - SNLR_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica / Acelerogr\u00e1fica / GPS",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.217.42"
+                },
+                {
+                    "ip": "192.168.217.42"
+                }
+            ]
+        },
+        {
+            "hostid": "10490",
+            "proxy_hostid": "0",
+            "host": "LNGL_QA",
+            "status": "1",
+            "disable_until": "1691461632",
+            "error": "",
+            "available": "0",
+            "errors_from": "1691461617",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "1554152150",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "1554152135",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "El Angel - LNGL_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica / GPS / Infrasonido",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.16.80"
+                },
+                {
+                    "ip": "192.168.16.80"
+                }
+            ]
+        },
+        {
+            "hostid": "10710",
+            "proxy_hostid": "0",
+            "host": "PUYO_QA",
+            "status": "0",
+            "disable_until": "0",
+            "error": "",
+            "available": "0",
+            "errors_from": "0",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Puyo - PUYO_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica / GPS",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.6.52"
+                },
+                {
+                    "ip": "192.168.6.52"
+                }
+            ]
+        },
+        {
+            "hostid": "11143",
+            "proxy_hostid": "0",
+            "host": "PKYU_QA",
+            "status": "0",
+            "disable_until": "0",
+            "error": "",
+            "available": "0",
+            "errors_from": "0",
+            "lastaccess": "0",
+            "ipmi_authtype": "-1",
+            "ipmi_privilege": "2",
+            "ipmi_username": "",
+            "ipmi_password": "",
+            "ipmi_disable_until": "0",
+            "ipmi_available": "0",
+            "snmp_disable_until": "0",
+            "snmp_available": "0",
+            "maintenanceid": "0",
+            "maintenance_status": "0",
+            "maintenance_type": "0",
+            "maintenance_from": "0",
+            "ipmi_errors_from": "0",
+            "snmp_errors_from": "0",
+            "ipmi_error": "",
+            "snmp_error": "",
+            "jmx_disable_until": "0",
+            "jmx_available": "0",
+            "jmx_errors_from": "0",
+            "jmx_error": "",
+            "name": "Pacayaku - PKYU_QA",
+            "flags": "0",
+            "templateid": "0",
+            "description": "S\u00edsmica",
+            "tls_connect": "1",
+            "tls_accept": "1",
+            "tls_issuer": "",
+            "tls_subject": "",
+            "tls_psk_identity": "",
+            "tls_psk": "",
+            "proxy_address": "",
+            "auto_compress": "1",
+            "interfaces": [
+                {
+                    "ip": "192.168.6.76"
+                },
+                {
+                    "ip": "192.168.6.76"
+                }
+            ]
+        }
+    ],
+    "id": "1"
+}
+2023-11-27 15:03:49,663 - utils.utilities - INFO - Successful connection to 192.168.217.42
+2023-11-27 15:03:49,679 - utils.utilities - INFO - Successful ping to 192.168.217.42
+2023-11-27 15:03:49,701 - utils.utilities - INFO - Successful connection to 192.168.6.59
+2023-11-27 15:03:49,701 - utils.utilities - INFO - Successful ping to 192.168.6.59
+2023-11-27 15:03:49,712 - utils.utilities - INFO - Successful connection to 192.168.33.51
+2023-11-27 15:03:49,713 - utils.utilities - INFO - Successful ping to 192.168.33.51
+2023-11-27 15:03:49,726 - utils.utilities - INFO - Successful connection to 192.168.217.47
+2023-11-27 15:03:49,726 - utils.utilities - INFO - Successful ping to 192.168.217.47
+2023-11-27 15:03:49,730 - utils.utilities - INFO - Successful connection to 192.168.6.63
+2023-11-27 15:03:49,730 - utils.utilities - INFO - Successful ping to 192.168.6.63
+2023-11-27 15:03:49,736 - utils.utilities - INFO - Successful connection to 192.168.217.48
+2023-11-27 15:03:49,736 - utils.utilities - INFO - Successful ping to 192.168.217.48
+2023-11-27 15:03:49,737 - utils.utilities - INFO - Successful connection to 192.168.16.73
+2023-11-27 15:03:49,737 - utils.utilities - INFO - Successful ping to 192.168.16.73
+2023-11-27 15:03:49,746 - utils.utilities - INFO - Successful connection to 192.168.16.78
+2023-11-27 15:03:49,746 - utils.utilities - INFO - Successful ping to 192.168.16.78
+2023-11-27 15:03:49,763 - utils.utilities - INFO - Successful connection to 192.168.6.75
+2023-11-27 15:03:49,764 - utils.utilities - INFO - Successful ping to 192.168.6.75
+2023-11-27 15:03:49,770 - utils.utilities - INFO - Successful connection to 192.168.6.60
+2023-11-27 15:03:49,770 - utils.utilities - INFO - Successful ping to 192.168.6.60
+2023-11-27 15:03:49,770 - utils.utilities - INFO - Successful connection to 192.168.6.52
+2023-11-27 15:03:49,770 - utils.utilities - INFO - Successful ping to 192.168.6.52
+2023-11-27 15:03:49,774 - utils.utilities - INFO - Successful connection to 192.168.16.63
+2023-11-27 15:03:49,774 - utils.utilities - INFO - Successful ping to 192.168.16.63
+2023-11-27 15:03:49,783 - utils.utilities - INFO - Successful connection to 192.168.16.67
+2023-11-27 15:03:49,784 - utils.utilities - INFO - Successful ping to 192.168.16.67
+2023-11-27 15:03:49,784 - utils.utilities - INFO - Successful connection to 192.168.17.52
+2023-11-27 15:03:49,784 - utils.utilities - INFO - Successful ping to 192.168.17.52
+2023-11-27 15:03:49,790 - utils.utilities - INFO - Successful connection to 192.168.16.65
+2023-11-27 15:03:49,790 - utils.utilities - INFO - Successful ping to 192.168.16.65
+2023-11-27 15:03:49,791 - utils.utilities - INFO - Successful connection to 192.168.6.66
+2023-11-27 15:03:49,791 - utils.utilities - INFO - Successful ping to 192.168.6.66
+2023-11-27 15:03:49,795 - utils.utilities - INFO - Successful connection to 192.168.16.64
+2023-11-27 15:03:49,795 - utils.utilities - INFO - Successful ping to 192.168.16.64
+2023-11-27 15:03:49,805 - utils.utilities - INFO - Successful connection to 192.168.6.67
+2023-11-27 15:03:49,805 - utils.utilities - INFO - Successful ping to 192.168.6.67
+2023-11-27 15:03:49,815 - utils.utilities - INFO - Successful connection to 192.168.217.57
+2023-11-27 15:03:49,815 - utils.utilities - INFO - Successful ping to 192.168.217.57
+2023-11-27 15:03:49,818 - utils.utilities - INFO - Successful connection to 192.168.6.68
+2023-11-27 15:03:49,818 - utils.utilities - INFO - Successful ping to 192.168.6.68
+2023-11-27 15:03:49,822 - utils.utilities - INFO - Successful connection to 192.168.217.56
+2023-11-27 15:03:49,822 - utils.utilities - INFO - Successful ping to 192.168.217.56
+2023-11-27 15:03:49,828 - utils.utilities - INFO - Successful connection to 192.168.16.72
+2023-11-27 15:03:49,829 - utils.utilities - INFO - Successful ping to 192.168.16.72
+2023-11-27 15:03:49,844 - utils.utilities - INFO - Successful connection to 192.168.6.53
+2023-11-27 15:03:49,844 - utils.utilities - INFO - Successful ping to 192.168.6.53
+2023-11-27 15:03:49,862 - utils.utilities - INFO - Successful connection to 192.168.17.53
+2023-11-27 15:03:49,863 - utils.utilities - INFO - Successful ping to 192.168.17.53
+2023-11-27 15:03:49,868 - utils.utilities - INFO - Successful connection to 192.168.17.51
+2023-11-27 15:03:49,868 - utils.utilities - INFO - Successful ping to 192.168.17.51
+2023-11-27 15:03:49,870 - utils.utilities - INFO - Successful connection to 192.168.16.66
+2023-11-27 15:03:49,870 - utils.utilities - INFO - Successful ping to 192.168.16.66
+2023-11-27 15:03:49,877 - utils.utilities - INFO - Successful connection to 192.168.6.73
+2023-11-27 15:03:49,877 - utils.utilities - INFO - Successful ping to 192.168.6.73
+2023-11-27 15:03:50,357 - utils.utilities - INFO - Successful connection to 192.168.33.54
+2023-11-27 15:03:50,357 - utils.utilities - INFO - Successful ping to 192.168.33.54
+2023-11-27 15:03:50,403 - utils.utilities - INFO - Successful connection to 192.168.33.53
+2023-11-27 15:03:50,403 - utils.utilities - INFO - Successful ping to 192.168.33.53
+2023-11-27 15:03:59,657 - utils.utilities - ERROR - Error executing ping command for 192.168.16.61: Command '['ping', '-c', '1', '192.168.16.61']' returned non-zero exit status 1.
+2023-11-27 15:03:59,657 - utils.utilities - ERROR - Ping failed to 192.168.16.61: Command '['ping', '-c', '1', '192.168.16.61']' returned non-zero exit status 1.
+2023-11-27 15:03:59,657 - utils.utilities - ERROR - Error executing ping command for 192.168.16.68: Command '['ping', '-c', '1', '192.168.16.68']' returned non-zero exit status 1.
+2023-11-27 15:03:59,658 - utils.utilities - ERROR - Ping failed to 192.168.16.68: Command '['ping', '-c', '1', '192.168.16.68']' returned non-zero exit status 1.
+2023-11-27 15:03:59,658 - utils.utilities - ERROR - Error executing ping command for 192.168.21.52: Command '['ping', '-c', '1', '192.168.21.52']' returned non-zero exit status 1.
+2023-11-27 15:03:59,658 - utils.utilities - ERROR - Ping failed to 192.168.21.52: Command '['ping', '-c', '1', '192.168.21.52']' returned non-zero exit status 1.
+2023-11-27 15:03:59,659 - utils.utilities - ERROR - Error executing ping command for 192.168.32.51: Command '['ping', '-c', '1', '192.168.32.51']' returned non-zero exit status 1.
+2023-11-27 15:03:59,659 - utils.utilities - ERROR - Ping failed to 192.168.32.51: Command '['ping', '-c', '1', '192.168.32.51']' returned non-zero exit status 1.
+2023-11-27 15:03:59,660 - utils.utilities - ERROR - Error executing ping command for 192.168.16.75: Command '['ping', '-c', '1', '192.168.16.75']' returned non-zero exit status 1.
+2023-11-27 15:03:59,660 - utils.utilities - ERROR - Ping failed to 192.168.16.75: Command '['ping', '-c', '1', '192.168.16.75']' returned non-zero exit status 1.
+2023-11-27 15:03:59,661 - utils.utilities - ERROR - Error executing ping command for 192.168.28.51: Command '['ping', '-c', '1', '192.168.28.51']' returned non-zero exit status 1.
+2023-11-27 15:03:59,661 - utils.utilities - ERROR - Ping failed to 192.168.28.51: Command '['ping', '-c', '1', '192.168.28.51']' returned non-zero exit status 1.
+2023-11-27 15:03:59,665 - utils.utilities - ERROR - Error executing ping command for 192.168.19.52: Command '['ping', '-c', '1', '192.168.19.52']' returned non-zero exit status 1.
+2023-11-27 15:03:59,665 - utils.utilities - ERROR - Ping failed to 192.168.19.52: Command '['ping', '-c', '1', '192.168.19.52']' returned non-zero exit status 1.
+2023-11-27 15:03:59,665 - utils.utilities - ERROR - Error executing ping command for 192.168.29.51: Command '['ping', '-c', '1', '192.168.29.51']' returned non-zero exit status 1.
+2023-11-27 15:03:59,665 - utils.utilities - ERROR - Ping failed to 192.168.29.51: Command '['ping', '-c', '1', '192.168.29.51']' returned non-zero exit status 1.
+2023-11-27 15:03:59,666 - utils.utilities - ERROR - Error executing ping command for 192.168.32.56: Command '['ping', '-c', '1', '192.168.32.56']' returned non-zero exit status 1.
+2023-11-27 15:03:59,666 - utils.utilities - ERROR - Ping failed to 192.168.32.56: Command '['ping', '-c', '1', '192.168.32.56']' returned non-zero exit status 1.
+2023-11-27 15:03:59,667 - utils.utilities - ERROR - Error executing ping command for 192.168.25.51: Command '['ping', '-c', '1', '192.168.25.51']' returned non-zero exit status 1.
+2023-11-27 15:03:59,667 - utils.utilities - ERROR - Ping failed to 192.168.25.51: Command '['ping', '-c', '1', '192.168.25.51']' returned non-zero exit status 1.
+2023-11-27 15:03:59,667 - utils.utilities - ERROR - Error executing ping command for 192.168.32.55: Command '['ping', '-c', '1', '192.168.32.55']' returned non-zero exit status 1.
+2023-11-27 15:03:59,667 - utils.utilities - ERROR - Ping failed to 192.168.32.55: Command '['ping', '-c', '1', '192.168.32.55']' returned non-zero exit status 1.
+2023-11-27 15:03:59,668 - utils.utilities - ERROR - Error executing ping command for 192.168.31.51: Command '['ping', '-c', '1', '192.168.31.51']' returned non-zero exit status 1.
+2023-11-27 15:03:59,668 - utils.utilities - ERROR - Ping failed to 192.168.31.51: Command '['ping', '-c', '1', '192.168.31.51']' returned non-zero exit status 1.
+2023-11-27 15:03:59,668 - utils.utilities - ERROR - Error executing ping command for 192.168.6.76: Command '['ping', '-c', '1', '192.168.6.76']' returned non-zero exit status 1.
+2023-11-27 15:03:59,668 - utils.utilities - ERROR - Ping failed to 192.168.6.76: Command '['ping', '-c', '1', '192.168.6.76']' returned non-zero exit status 1.
+2023-11-27 15:03:59,669 - utils.utilities - ERROR - Error executing ping command for 192.168.30.53: Command '['ping', '-c', '1', '192.168.30.53']' returned non-zero exit status 1.
+2023-11-27 15:03:59,669 - utils.utilities - ERROR - Ping failed to 192.168.30.53: Command '['ping', '-c', '1', '192.168.30.53']' returned non-zero exit status 1.
+2023-11-27 15:03:59,670 - utils.utilities - ERROR - Error executing ping command for 192.168.32.54: Command '['ping', '-c', '1', '192.168.32.54']' returned non-zero exit status 1.
+2023-11-27 15:03:59,670 - utils.utilities - ERROR - Ping failed to 192.168.32.54: Command '['ping', '-c', '1', '192.168.32.54']' returned non-zero exit status 1.
+2023-11-27 15:03:59,671 - utils.utilities - ERROR - Error executing ping command for 192.168.6.51: Command '['ping', '-c', '1', '192.168.6.51']' returned non-zero exit status 1.
+2023-11-27 15:03:59,671 - utils.utilities - ERROR - Ping failed to 192.168.6.51: Command '['ping', '-c', '1', '192.168.6.51']' returned non-zero exit status 1.
+2023-11-27 15:03:59,672 - utils.utilities - ERROR - Error executing ping command for 192.168.27.51: Command '['ping', '-c', '1', '192.168.27.51']' returned non-zero exit status 1.
+2023-11-27 15:03:59,672 - utils.utilities - ERROR - Ping failed to 192.168.27.51: Command '['ping', '-c', '1', '192.168.27.51']' returned non-zero exit status 1.
+2023-11-27 15:03:59,674 - utils.utilities - ERROR - Error executing ping command for 192.168.32.52: Command '['ping', '-c', '1', '192.168.32.52']' returned non-zero exit status 1.
+2023-11-27 15:03:59,674 - utils.utilities - ERROR - Ping failed to 192.168.32.52: Command '['ping', '-c', '1', '192.168.32.52']' returned non-zero exit status 1.
+2023-11-27 15:03:59,674 - utils.utilities - ERROR - Error executing ping command for 192.168.16.71: Command '['ping', '-c', '1', '192.168.16.71']' returned non-zero exit status 1.
+2023-11-27 15:03:59,674 - utils.utilities - ERROR - Ping failed to 192.168.16.71: Command '['ping', '-c', '1', '192.168.16.71']' returned non-zero exit status 1.
+2023-11-27 15:03:59,675 - utils.utilities - ERROR - Error executing ping command for 192.168.16.79: Command '['ping', '-c', '1', '192.168.16.79']' returned non-zero exit status 1.
+2023-11-27 15:03:59,675 - utils.utilities - ERROR - Ping failed to 192.168.16.79: Command '['ping', '-c', '1', '192.168.16.79']' returned non-zero exit status 1.
+2023-11-27 15:03:59,676 - utils.utilities - ERROR - Error executing ping command for 192.168.35.51: Command '['ping', '-c', '1', '192.168.35.51']' returned non-zero exit status 1.
+2023-11-27 15:03:59,676 - utils.utilities - ERROR - Ping failed to 192.168.35.51: Command '['ping', '-c', '1', '192.168.35.51']' returned non-zero exit status 1.
+2023-11-27 15:03:59,678 - utils.utilities - ERROR - Error executing ping command for 192.168.16.80: Command '['ping', '-c', '1', '192.168.16.80']' returned non-zero exit status 1.
+2023-11-27 15:03:59,678 - utils.utilities - ERROR - Ping failed to 192.168.16.80: Command '['ping', '-c', '1', '192.168.16.80']' returned non-zero exit status 1.
+2023-11-27 15:03:59,678 - utils.utilities - ERROR - Error executing ping command for 192.168.30.60: Command '['ping', '-c', '1', '192.168.30.60']' returned non-zero exit status 1.
+2023-11-27 15:03:59,679 - utils.utilities - ERROR - Ping failed to 192.168.30.60: Command '['ping', '-c', '1', '192.168.30.60']' returned non-zero exit status 1.
+2023-11-27 15:03:59,714 - utils.utilities - ERROR - Error executing ping command for 192.168.16.62: Command '['ping', '-c', '1', '192.168.16.62']' returned non-zero exit status 1.
+2023-11-27 15:03:59,714 - utils.utilities - ERROR - Ping failed to 192.168.16.62: Command '['ping', '-c', '1', '192.168.16.62']' returned non-zero exit status 1.
+2023-11-27 15:03:59,728 - utils.utilities - ERROR - Error executing ping command for 192.168.217.50: Command '['ping', '-c', '1', '192.168.217.50']' returned non-zero exit status 1.
+2023-11-27 15:03:59,728 - utils.utilities - ERROR - Ping failed to 192.168.217.50: Command '['ping', '-c', '1', '192.168.217.50']' returned non-zero exit status 1.
+2023-11-27 15:03:59,729 - pyzabbix.api - DEBUG - Call user.logout method
+2023-11-27 15:03:59,729 - pyzabbix.api - DEBUG - urllib2.Request(http://192.168.1.115/zabbix/api_jsonrpc.php, {"jsonrpc": "2.0", "method": "user.logout", "params": {}, "id": "1", "auth": "********"})
+2023-11-27 15:03:59,822 - pyzabbix.api - DEBUG - Response Body: {
+    "jsonrpc": "2.0",
+    "result": true,
+    "id": "1"
+}
+2023-11-27 15:03:59,827 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 192.168.17.53:6381
+2023-11-27 15:03:59,828 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 192.168.6.66:6381
+2023-11-27 15:03:59,828 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 192.168.6.53:6381
+2023-11-27 15:03:59,829 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 192.168.6.73:6381
+2023-11-27 15:03:59,829 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 192.168.16.67:6381
+2023-11-27 15:03:59,829 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 192.168.6.63:6381
+2023-11-27 15:03:59,830 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 192.168.17.51:6381
+2023-11-27 15:03:59,830 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 192.168.6.59:6381
+2023-11-27 15:03:59,831 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 192.168.16.66:6381
+2023-11-27 15:03:59,831 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 192.168.16.64:6381
+2023-11-27 15:03:59,831 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 192.168.217.47:6381
+2023-11-27 15:03:59,832 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 192.168.16.63:6381
+2023-11-27 15:03:59,832 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 192.168.16.78:6381
+2023-11-27 15:03:59,833 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 192.168.6.60:6381
+2023-11-27 15:03:59,833 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 192.168.17.52:6381
+2023-11-27 15:03:59,833 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 192.168.33.51:6381
+2023-11-27 15:03:59,834 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 192.168.16.65:6381
+2023-11-27 15:03:59,834 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 192.168.33.54:6381
+2023-11-27 15:03:59,834 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 192.168.33.53:6381
+2023-11-27 15:03:59,835 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 192.168.6.68:6381
+2023-11-27 15:04:08,680 - urllib3.connectionpool - DEBUG - http://192.168.17.52:6381 "GET /stats.html HTTP/1.1" 200 7270
+2023-11-27 15:04:09,041 - urllib3.connectionpool - DEBUG - http://192.168.33.51:6381 "GET /stats.html HTTP/1.1" 200 9777
+2023-11-27 15:04:09,103 - urllib3.connectionpool - DEBUG - http://192.168.6.59:6381 "GET /stats.html HTTP/1.1" 200 9762
+2023-11-27 15:04:09,135 - urllib3.connectionpool - DEBUG - http://192.168.16.78:6381 "GET /stats.html HTTP/1.1" 200 9655
+2023-11-27 15:04:09,193 - urllib3.connectionpool - DEBUG - http://192.168.217.47:6381 "GET /stats.html HTTP/1.1" 200 8676
+2023-11-27 15:04:09,225 - urllib3.connectionpool - DEBUG - http://192.168.6.63:6381 "GET /stats.html HTTP/1.1" 200 9473
+2023-11-27 15:04:09,241 - urllib3.connectionpool - DEBUG - http://192.168.6.60:6381 "GET /stats.html HTTP/1.1" 200 9240
+2023-11-27 15:04:09,245 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 192.168.6.67:6381
+2023-11-27 15:04:09,248 - urllib3.connectionpool - DEBUG - http://192.168.16.64:6381 "GET /stats.html HTTP/1.1" 200 10227
+2023-11-27 15:04:09,342 - urllib3.connectionpool - DEBUG - http://192.168.16.65:6381 "GET /stats.html HTTP/1.1" 200 9595
+2023-11-27 15:04:09,350 - urllib3.connectionpool - DEBUG - http://192.168.16.67:6381 "GET /stats.html HTTP/1.1" 200 7259
+2023-11-27 15:04:09,474 - urllib3.connectionpool - DEBUG - http://192.168.6.66:6381 "GET /stats.html HTTP/1.1" 200 9462
+2023-11-27 15:04:09,504 - urllib3.connectionpool - DEBUG - http://192.168.6.53:6381 "GET /stats.html HTTP/1.1" 200 9454
+2023-11-27 15:04:09,596 - urllib3.connectionpool - DEBUG - http://192.168.16.66:6381 "GET /stats.html HTTP/1.1" 200 10199
+2023-11-27 15:04:09,607 - urllib3.connectionpool - DEBUG - http://192.168.6.73:6381 "GET /stats.html HTTP/1.1" 200 9479
+2023-11-27 15:04:09,695 - urllib3.connectionpool - DEBUG - http://192.168.17.53:6381 "GET /stats.html HTTP/1.1" 200 7647
+2023-11-27 15:04:09,710 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 192.168.217.56:6381
+2023-11-27 15:04:10,062 - urllib3.connectionpool - DEBUG - http://192.168.6.68:6381 "GET /stats.html HTTP/1.1" 200 9641
+2023-11-27 15:04:10,092 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 192.168.217.57:6381
+2023-11-27 15:04:10,570 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 192.168.16.73:6381
+2023-11-27 15:04:10,674 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 192.168.16.72:6381
+2023-11-27 15:04:11,101 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 192.168.6.75:6381
+2023-11-27 15:04:11,146 - root - ERROR - HTTP request error for http://192.168.33.53:6381/stats.html: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2023-11-27 15:04:11,147 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 192.168.217.48:6381
+2023-11-27 15:04:11,160 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 192.168.217.42:6381
+2023-11-27 15:04:11,264 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): 192.168.6.52:6381
+2023-11-27 15:04:11,582 - urllib3.connectionpool - DEBUG - http://192.168.16.63:6381 "GET /stats.html HTTP/1.1" 200 10755
+2023-11-27 15:04:12,104 - urllib3.connectionpool - DEBUG - http://192.168.17.51:6381 "GET /stats.html HTTP/1.1" 200 9889
+2023-11-27 15:04:12,211 - urllib3.connectionpool - DEBUG - http://192.168.33.54:6381 "GET /stats.html HTTP/1.1" 200 10446
+2023-11-27 15:04:16,720 - urllib3.connectionpool - DEBUG - http://192.168.6.52:6381 "GET /stats.html HTTP/1.1" 200 7258
+2023-11-27 15:04:18,954 - urllib3.connectionpool - DEBUG - http://192.168.6.67:6381 "GET /stats.html HTTP/1.1" 200 10187
+2023-11-27 15:04:19,154 - urllib3.connectionpool - DEBUG - http://192.168.217.56:6381 "GET /stats.html HTTP/1.1" 200 11494
+2023-11-27 15:04:19,549 - urllib3.connectionpool - DEBUG - http://192.168.217.57:6381 "GET /stats.html HTTP/1.1" 200 11005
+2023-11-27 15:04:19,900 - urllib3.connectionpool - DEBUG - http://192.168.16.73:6381 "GET /stats.html HTTP/1.1" 200 9775
+2023-11-27 15:04:20,277 - urllib3.connectionpool - DEBUG - http://192.168.217.42:6381 "GET /stats.html HTTP/1.1" 200 9766
+2023-11-27 15:04:20,518 - urllib3.connectionpool - DEBUG - http://192.168.217.48:6381 "GET /stats.html HTTP/1.1" 200 9473
+2023-11-27 15:04:20,634 - urllib3.connectionpool - DEBUG - http://192.168.6.75:6381 "GET /stats.html HTTP/1.1" 200 9758
+2023-11-27 15:04:21,940 - urllib3.connectionpool - DEBUG - http://192.168.16.72:6381 "GET /stats.html HTTP/1.1" 200 9768

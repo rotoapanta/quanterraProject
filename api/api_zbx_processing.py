@@ -210,8 +210,8 @@ def get_values(ip, arguments):
     key_mapping = {
         "StationCode": "station.code",
         "SerialNumber": "serial.number",
-        "MediaSite1": "media.site1.space.occupied",
-        "MediaSite2": "media.site2.space.occupied",
+        "MediaSite1": "media.site1.free.space",
+        "MediaSite2": "media.site2.free.space",
         "Q330Serial": "q330.serial",
         "ClockQuality": "clock.quality",
         "InputVoltage": "input.voltage",
@@ -241,8 +241,7 @@ def get_values(ip, arguments):
                         # Para MediaSite1 y MediaSite2, calcula el espacio ocupado
                         if arg in ["MediaSite1", "MediaSite2"]:
                             free_space = float(match.group(1))
-                            occupied_space = 100 - free_space
-                            results[mapped_key] = str(occupied_space)
+                            results[mapped_key] = str(free_space)
                         else:
                             results[mapped_key] = match.group(1)
     except requests.Timeout:
