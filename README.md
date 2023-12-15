@@ -1,8 +1,6 @@
-# <p align="center">Quanterra Metrics
+# <p align="center">Quanterra with Zabbix
 
-<p align="center">The "Quanterra Metrics" project focuses on collecting and monitoring data related to Quanterra seismic digitizers using the Zabbix monitoring platform. This project allows monitoring the status and performance of Quanterra digitizers, providing IT administrators with a detailed view of the equipment status.
-The main objective of this project is to automate the collection of key information from Quanterra seismic digitizers, and then present this data in an organized and accessible manner through the Zabbix platform. This makes it easier to identify problems early, track performance, and make informed decisions for equipment maintenance.
-Welcome to "Quanterra Metrics!" Read on for more details on how to start using this project to improve the management of your Quanterra seismic digitizers and other devices.</p>
+<p align="center">This project aims to monitor the health status of Quanterra using Zabbix.</p>
 
 ##
 
@@ -15,13 +13,13 @@ Welcome to "Quanterra Metrics!" Read on for more details on how to start using t
 ![Discord](https://img.shields.io/discord/1104588661321908335)
 [![Discord Invite](https://img.shields.io/badge/discord-join%20now-green)](https://discord.gg/bf6rWDbJ)
 [![Docker](https://img.shields.io/badge/Docker-No-brightgreen)](https://www.docker.com/)
-[![GitHub](https://img.shields.io/badge/GitHub-Project-brightgreen)](https://github.com/rotoapanta/quanterraProject.git)
+[![GitHub](https://img.shields.io/badge/GitHub-Project-brightgreen)](https://github.com/rotoapanta/gpsNetRsProject.git)
 [![Linux](https://img.shields.io/badge/Linux-Supported-brightgreen)](https://www.linux.org/)
 [![Windows](https://img.shields.io/badge/Windows-Supported-brightgreen)](https://www.microsoft.com/)
 [![Crontab](https://img.shields.io/badge/Crontab-Supported-brightgreen)](#installation)
 [![Author 1](https://img.shields.io/badge/Roberto%20-Toapanta-brightgreen)](https://www.linkedin.com/in/roberto-carlos-toapanta-g/)
 [![Version](https://img.shields.io/badge/Version-1.4-brightgreen)](#change-log)
-![GitHub forks](https://img.shields.io/github/forks/rotoapanta/quanterraProject?style=social)
+![GitHub forks](https://img.shields.io/github/forks/rotoapanta/gpsNetRsProject?style=social)
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/gpl-2.0)
 
 # Contents
@@ -77,28 +75,29 @@ Before you get started, make sure you have the following:
 
 The project consists of the following components:
 
-- gpsNetRsProject/
+- quanterraProject/
   - api/
     - __init__.py
     - api_zbx_processing.py
-    - logs/
-      - __init__.py
-      - aaaa-mm-dd_gps_netrs.log
-      - gps_netrs.log
-    - templates/
-      - zbx_export_templates.xml
-    - test/
-      - __init__.py
-      - test_gps_netrs_project.py
-    - utils/
-      - __init__.py
-      - utilities.py
+  - logs/
+    - __init__.py
+    - aaaa-mm-dd_quanterra.log
+  - templates/
+    - zbx_export_templates.xml
+  - test/
+    - __init__.py
+    - test_quanterra_project.py
+  - utils/
+    - __init__.py
+    - utilities.py
+  - zabbix/
+    - __init__.py
+    - zabbix_sender.py
   - config.ini
   - main.py
   - requirements.txt
-  - run_gps_netrs.sh
+  - run_quanterra.sh
   - setup.py
-  - zabbix_sender.py
 
 - `api/`: This package contains modules related to the project's API functionality.
   - `init.py`: An empty file that marks the directory as a Python package. 
