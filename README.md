@@ -149,7 +149,7 @@ zabbix_password = ZABBIX_PASSWORD
 
 ## Running the Application
 
-The run_gps_netrs.sh shell script is used to set up the environment, activate the Conda environment, install dependencies, and execute the main project script. The script is responsible for the following tasks:
+The run_quanterra.sh shell script is used to set up the environment, activate the Conda environment, install dependencies, and execute the main project script. The script is responsible for the following tasks:
 
 - Setting environment variables.
 - Activating the Conda environment.
@@ -178,9 +178,9 @@ Here's how to configure and use crontab with the project:
 2. Add an entry to schedule the script to run at regular intervals. For example, to run the script every 10 minutes, add the following line:
   
   ```bash
-   */10 * * * * bash /path/to/run_gps_netrs.sh >> /path/to/logs/gps_netrs_crontab.log 2>&1
+   */10 * * * * bash /path/to/run_quanterra.sh >> /path/to/logs/quanterra_crontab.log 2>&1
   ```
-Be sure to replace /path/to with the actual paths to the run_gps_netrs.sh script and the desired log file.
+Be sure to replace /path/to with the actual paths to the run_quanterra.sh script and the desired log file.
 
 Save and exit the crontab editor.
 
@@ -222,7 +222,7 @@ This command will search for and execute all tests within the tests directory an
 If you want to run specific test modules or individual tests, you can use the following command. Replace tests.test_module with the appropriate test module you want to run:
 
 ```bash
-python -m unittest tests.test_gps_netrs_project
+python -m unittest tests.test_quanterra_project
 ```
 This command allows you to execute tests from a particular test module. Adjust test_module to the desired module name.
 
