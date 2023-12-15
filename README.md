@@ -9,7 +9,7 @@
 ![GitHub issues](https://img.shields.io/github/issues/rotoapanta/quanterraProject)
 ![GitHub repo size](https://img.shields.io/github/repo-size/rotoapanta/quanterraProject)
 ![GitHub last commit](https://img.shields.io/github/last-commit/rotoapanta/quanterraProject)
-![GitHub commit merge status](https://img.shields.io/github/commit-status/rotoapanta/quanterraProject/master/d1e8036)
+![GitHub commit merge status](https://img.shields.io/github/commit-status/rotoapanta/quanterraProject/master/9b53f1d)
 ![Discord](https://img.shields.io/discord/1104588661321908335)
 [![Discord Invite](https://img.shields.io/badge/discord-join%20now-green)](https://discord.gg/bf6rWDbJ)
 [![Docker](https://img.shields.io/badge/Docker-No-brightgreen)](https://www.docker.com/)
