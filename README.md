@@ -25,7 +25,7 @@
 # Contents
 
 - [Getting started](#getting-started)
-  - [Getting started with Zabbix and Quanterra](#getting-started-with-zabbix-and-quanterra)
+  - [Getting started using Quanterra with Zabbix](#getting-started-using-quanterra-with-zabbix)
   - [Features](#features)
   - [Requirements](#requirements)
   - [Components Description](#components-description)
@@ -46,7 +46,7 @@
 
 # Getting started
 
-## Getting started with Zabbix and Quanterra
+## Getting started using Quanterra with Zabbix
 
 Welcome to the project! This guide will help you get started with setting up and running the application.
 
@@ -104,12 +104,12 @@ The project consists of the following components:
   - `api_zbx_processing.py`: Module for processing Zabbix data through the API.
 - `logs/`: Directory for storing log files.
   - `init.py`: An empty file that marks the directory as a Python package.
-  - `aaaa-mm-dd_gps_netrs.log`: File is a project log that records events and errors.
-  - `gps_netrs_crontab.log`: Log file that captures the execution details of the project's scheduled tasks.
+  - `aaaa-mm-dd_quanterra.log`: File is a project log that records events and errors.
+  - `quanterra_crontab.log`: Log file that captures the execution details of the project's scheduled tasks.
 - `templates/`: Directory for Zabbix templates.
 - `test/`: Package for unit tests.
   - `init.py`: An empty file that marks the directory as a Python package.
-  - `test_gps_netrs_project.py`: File contains unit tests for the GPS NetRS Project.
+  - `test_quanterra_project.py`: File contains unit tests for the Quanterra Project.
 - `utils/`: Package for utility functions.
   - `init.py`: An empty file that marks the directory as a Python package.
   - `utilities.py`: Script containing reusable functions that provide common functionality for the project.
@@ -118,9 +118,8 @@ The project consists of the following components:
 - `config.ini`: Project configuration file with project-specific details.
 - `main.py`: The main script of the project, which likely contains the core logic.
 - `requirements.txt`: A list of project dependencies, typically used for package management.
-- `run_gps_netrs.sh`: A shell script for executing the project.
+- `run_quanterra.sh`: A shell script for executing the project.
 - `setup.py`: A script used for packaging and distribution of the project.
-- `zabbix_sender.py`: A script responsible for sending data to Zabbix.
 
 ## Installation
 
