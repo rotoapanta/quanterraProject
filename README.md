@@ -165,7 +165,7 @@ Please review the script's comments for details about its operation and make sur
 
 ## Running the Project Automatically with Crontab
 
-To automate the monitoring process, you can use crontab to schedule the execution of the script at specific intervals. The provided run_gps_netrs.sh shell script helps you set up the environment and run the project under cron. 
+To automate the monitoring process, you can use crontab to schedule the execution of the script at specific intervals. The provided run_quanterra.sh shell script helps you set up the environment and run the project under cron. 
 
 Here's how to configure and use crontab with the project:
 
