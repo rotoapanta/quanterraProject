@@ -199,7 +199,7 @@ Before running the project, make sure to set the following environment variables
 
 * Revision: 1.4 - Refactor code
 * Revision: 1.3 - Add test unit
-* Revision: 1.2 - Add run_gps_netrs.sh
+* Revision: 1.2 - Add quanterra.sh
 * Revision: 1.1 - Code cleaned.
 * Revision: 1.0 - Initial commit
 
