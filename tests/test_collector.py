@@ -272,30 +272,39 @@ class PipelineTests(unittest.TestCase):
         self.assertEqual(item.to_json()['key'], 'input.voltage')
 
     @patch('collector.runtime.send_data_to_zabbix')
-    @patch('collector.runtime.collect_devices')
+    @patch('collector.runtime.iter_collected_devices')
     @patch('collector.runtime.discover_devices')
     def test_cycle_device_failure_is_reported(self, discover, collect, send):
         discover.return_value = [Device('A', '192.0.2.1'), Device('B', '')]
-        collect.return_value = {'A': parse_stats(HTML), 'B': {}}
+        collect.return_value = iter([(Device('A', '192.0.2.1'), parse_stats(HTML)), (Device('B', ''), {})])
         self.assertFalse(run_cycle(self.settings))
         self.assertTrue(healthy(self.settings.health_file, 60))
-        data = send.call_args_list[0].args[2]
-        self.assertEqual(data['A']['q330.collect.metrics'], 10)
-        self.assertEqual(data['B']['q330.collect.success'], 0)
-        self.assertEqual(send.call_args_list[1].args[2][self.settings.collector_host]['collector.devices.failed'], 1)
+        data_a = send.call_args_list[0].args[2]
+        data_b = send.call_args_list[1].args[2]
+        collector_data = send.call_args_list[2].args[2][self.settings.collector_host]
+
+        self.assertEqual(data_a['A']['q330.collect.metrics'], 10)
+        self.assertEqual(data_a['A']['q330.collect.success'], 1)
+
+        self.assertEqual(data_b['B']['q330.collect.metrics'], 0)
+        self.assertEqual(data_b['B']['q330.collect.success'], 0)
+
+        self.assertEqual(collector_data['collector.devices.failed'], 1)
+        self.assertEqual(collector_data['collector.devices.total'], 2)
+        self.assertEqual(collector_data['collector.cycle.success'], 0)
 
     @patch('collector.runtime.send_data_to_zabbix', side_effect=RuntimeError)
-    @patch('collector.runtime.collect_devices', return_value={'A': parse_stats(HTML)})
+    @patch('collector.runtime.iter_collected_devices', return_value=iter([(Device('A', '192.0.2.1'), parse_stats(HTML))]))
     @patch('collector.runtime.discover_devices', return_value=[Device('A', '192.0.2.1')])
     def test_sender_failure_marks_unhealthy(self, *_):
         self.assertFalse(run_cycle(self.settings))
         self.assertFalse(healthy(self.settings.health_file, 60))
 
     @patch('collector.runtime.send_data_to_zabbix')
-    @patch('collector.runtime.collect_devices')
+    @patch('collector.runtime.iter_collected_devices')
     @patch('collector.runtime.discover_devices', return_value=[Device('A', '192.0.2.1')])
     def test_empty_serial_makes_cycle_incomplete(self, discover, collect, send):
-        collect.return_value = {'A': parse_stats(HTML.replace('010000AABBCC', ''))}
+        collect.return_value = iter([(Device('A', '192.0.2.1'), parse_stats(HTML.replace('010000AABBCC', '')))])
         self.assertFalse(run_cycle(self.settings))
         values = send.call_args_list[0].args[2]['A']
         self.assertNotIn('q330.serial', values)
@@ -303,7 +312,7 @@ class PipelineTests(unittest.TestCase):
         self.assertEqual(values['q330.collect.success'], 0)
 
     @patch('collector.runtime.send_data_to_zabbix')
-    @patch('collector.runtime.collect_devices')
+    @patch('collector.runtime.iter_collected_devices')
     @patch('collector.runtime.discover_devices', return_value=[Device('A', '192.0.2.1')])
     def test_overheat_remains_monitorable_with_single_media(self, discover, collect, send):
         html = '\n'.join(
@@ -311,9 +320,9 @@ class PipelineTests(unittest.TestCase):
             if 'MEDIA site 2' not in line
         )
 
-        collect.return_value = {
-            'A': parse_stats(html.replace('25C', '80C'))
-        }
+        collect.return_value = iter([
+            (Device('A', '192.0.2.1'), parse_stats(html.replace('25C', '80C')))
+        ])
 
         self.assertTrue(run_cycle(self.settings))
 
@@ -347,7 +356,7 @@ class PipelineTests(unittest.TestCase):
         )
 
     @patch('collector.runtime.send_data_to_zabbix')
-    @patch('collector.runtime.collect_devices')
+    @patch('collector.runtime.iter_collected_devices')
     @patch('collector.runtime.discover_devices', return_value=[Device('A', '192.0.2.1')])
     def test_single_media_site_is_complete(self, discover, collect, send):
         html = '\n'.join(
@@ -355,7 +364,7 @@ class PipelineTests(unittest.TestCase):
             if 'MEDIA site 2' not in line
         )
 
-        collect.return_value = {'A': parse_stats(html)}
+        collect.return_value = iter([(Device('A', '192.0.2.1'), parse_stats(html))])
 
         self.assertTrue(run_cycle(self.settings))
 
@@ -368,10 +377,12 @@ class PipelineTests(unittest.TestCase):
 
 
     @patch('collector.runtime.send_data_to_zabbix')
-    @patch('collector.runtime.collect_devices')
+    @patch('collector.runtime.iter_collected_devices')
     @patch('collector.runtime.discover_devices', return_value=[Device('A', '192.0.2.1')])
     def test_two_media_sites_are_complete(self, discover, collect, send):
-        collect.return_value = {'A': parse_stats(HTML)}
+        collect.return_value = iter([
+            (Device('A', '192.0.2.1'), parse_stats(HTML))
+        ])
 
         self.assertTrue(run_cycle(self.settings))
 
@@ -384,7 +395,7 @@ class PipelineTests(unittest.TestCase):
 
 
     @patch('collector.runtime.send_data_to_zabbix')
-    @patch('collector.runtime.collect_devices')
+    @patch('collector.runtime.iter_collected_devices')
     @patch('collector.runtime.discover_devices', return_value=[Device('A', '192.0.2.1')])
     def test_no_media_site_is_incomplete(self, discover, collect, send):
         html = '\n'.join(
@@ -393,7 +404,7 @@ class PipelineTests(unittest.TestCase):
             and 'MEDIA site 2' not in line
         )
 
-        collect.return_value = {'A': parse_stats(html)}
+        collect.return_value = iter([(Device('A', '192.0.2.1'), parse_stats(html))])
 
         self.assertFalse(run_cycle(self.settings))
 
@@ -404,6 +415,54 @@ class PipelineTests(unittest.TestCase):
         self.assertEqual(values['q330.collect.metrics'], 8)
         self.assertEqual(values['q330.collect.success'], 0)
 
+
+    @patch('collector.runtime.send_data_to_zabbix')
+    @patch('collector.runtime.iter_collected_devices')
+    @patch('collector.runtime.discover_devices')
+    def test_sender_failure_for_one_device_does_not_block_others(
+            self, discover, collect, send):
+
+        device_a = Device('A', '192.0.2.1')
+        device_b = Device('B', '192.0.2.2')
+
+        discover.return_value = [device_a, device_b]
+
+        collect.return_value = iter([
+            (device_a, parse_stats(HTML)),
+            (device_b, parse_stats(HTML)),
+        ])
+
+        def sender_side_effect(server, port, data, timeout):
+            if 'A' in data:
+                raise RuntimeError('simulated sender failure')
+            return Mock()
+
+        send.side_effect = sender_side_effect
+
+        self.assertFalse(run_cycle(self.settings))
+
+        sent_hosts = [
+            next(iter(call.args[2]))
+            for call in send.call_args_list
+        ]
+
+        self.assertIn('A', sent_hosts)
+        self.assertIn('B', sent_hosts)
+        self.assertIn(self.settings.collector_host, sent_hosts)
+
+        self.assertLess(
+            sent_hosts.index('A'),
+            sent_hosts.index('B'),
+        )
+
+        collector_data = send.call_args_list[-1].args[2][
+            self.settings.collector_host
+        ]
+
+        self.assertEqual(
+            collector_data['collector.devices.failed'],
+            1,
+        )
 
     def test_thresholds_use_only_their_own_recent_metric(self):
         template = yaml.safe_load((ROOT / 'templates/quanterra_zabbix7.yaml').read_text())['zabbix_export']['templates'][0]

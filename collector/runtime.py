@@ -3,7 +3,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
 import time
-from api.api_zbx_processing import discover_devices, collect_devices
+from api.api_zbx_processing import discover_devices, iter_collected_devices
 from collector.q330 import KEYS
 from zabbix.zabbix_sender import send_data_to_zabbix
 
@@ -40,7 +40,6 @@ def run_cycle(settings):
     ok = False
     try:
         devices = discover_devices(settings)
-        data = collect_devices(devices, settings)
         failed = 0
 
         media_keys = {
@@ -49,7 +48,7 @@ def run_cycle(settings):
         }
         required_keys = set(KEYS.values()) - media_keys
 
-        for values in data.values():
+        for device, values in iter_collected_devices(devices, settings):
             collected_metrics = len(values)
 
             has_required = required_keys.issubset(values)
@@ -60,7 +59,21 @@ def run_cycle(settings):
             failed += not complete
             values['q330.collect.success'] = int(complete)
             values['q330.collect.metrics'] = collected_metrics
-        send_data_to_zabbix(settings.server, settings.port, data, settings.timeout)
+
+            try:
+                send_data_to_zabbix(
+                    settings.server,
+                    settings.port,
+                    {device.host: values},
+                    settings.timeout,
+                )
+            except Exception as exc:
+                logger.error(
+                    'Zabbix send failed host=%s error=%s',
+                    device.host,
+                    type(exc).__name__,
+                )
+                failed += complete
         metrics = {
             'collector.heartbeat': int(time.time()),
             'collector.uptime': round(time.monotonic() - STARTED, 3),

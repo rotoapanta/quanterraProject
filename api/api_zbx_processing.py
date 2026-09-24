@@ -114,16 +114,38 @@ def get_values(ip, arguments=None, timeout=20, port=6381):
 ADAPTERS = {'q330': get_values}
 
 
-def collect_devices(devices, settings):
-    results = {}
+def iter_collected_devices(devices, settings):
+    """Yield each device result as soon as its concurrent collection finishes."""
     with ThreadPoolExecutor(max_workers=settings.workers) as executor:
-        futures = {executor.submit(ADAPTERS[d.family], d.address, timeout=settings.timeout,
-                                   port=settings.device_port): d for d in devices}
+        futures = {
+            executor.submit(
+                ADAPTERS[device.family],
+                device.address,
+                timeout=settings.timeout,
+                port=settings.device_port,
+            ): device
+            for device in devices
+        }
+
         for future in as_completed(futures):
             device = futures[future]
+
             try:
-                results[device.host] = future.result()
+                values = future.result()
             except Exception as exc:
-                logger.warning('Collection failed host=%s error=%s', device.host, type(exc).__name__)
-                results[device.host] = {}
-    return results
+                logger.warning(
+                    'Collection failed host=%s error=%s',
+                    device.host,
+                    type(exc).__name__,
+                )
+                values = {}
+
+            yield device, values
+
+
+def collect_devices(devices, settings):
+    """Collect all devices while preserving the legacy dictionary interface."""
+    return {
+        device.host: values
+        for device, values in iter_collected_devices(devices, settings)
+    }
