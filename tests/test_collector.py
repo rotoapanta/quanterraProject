@@ -94,6 +94,81 @@ class ParserTests(unittest.TestCase):
         self.assertEqual(values['q330.serial'], '010000AABBCC')
 
 
+class MediaOccupiedTests(unittest.TestCase):
+    """Tests for media occupied percentage derived by the collector."""
+
+    def test_present_media_calculates_occupied(self):
+        from collector.runtime import add_media_occupied
+
+        values = {
+            "media.site1.capacity": "61042.500",
+            "media.site1.free.space": "34.040",
+        }
+
+        add_media_occupied(values)
+
+        self.assertEqual(
+            values["media.site1.space.occupied"],
+            65.960,
+        )
+
+    def test_absent_media_does_not_generate_occupied(self):
+        from collector.runtime import add_media_occupied
+
+        values = {
+            "media.site2.capacity": "0.000",
+            "media.site2.free.space": "0.000",
+        }
+
+        add_media_occupied(values)
+
+        self.assertNotIn(
+            "media.site2.space.occupied",
+            values,
+        )
+
+    def test_two_present_media_are_calculated(self):
+        from collector.runtime import add_media_occupied
+
+        values = {
+            "media.site1.capacity": "15264.500",
+            "media.site1.free.space": "25.952",
+            "media.site2.capacity": "30520.000",
+            "media.site2.free.space": "50.154",
+        }
+
+        add_media_occupied(values)
+
+        self.assertEqual(
+            values["media.site1.space.occupied"],
+            74.048,
+        )
+        self.assertEqual(
+            values["media.site2.space.occupied"],
+            49.846,
+        )
+
+    def test_invalid_or_incomplete_media_does_not_generate_occupied(self):
+        from collector.runtime import add_media_occupied
+
+        values = {
+            "media.site1.capacity": "invalid",
+            "media.site1.free.space": "50",
+            "media.site2.capacity": "15264.500",
+        }
+
+        add_media_occupied(values)
+
+        self.assertNotIn(
+            "media.site1.space.occupied",
+            values,
+        )
+        self.assertNotIn(
+            "media.site2.space.occupied",
+            values,
+        )
+
+
 class PipelineTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
@@ -347,6 +422,17 @@ class PipelineTests(unittest.TestCase):
         self.assertEqual(values['system.temp'], '80')
         self.assertIn('media.site1.free.space', values)
         self.assertNotIn('media.site2.free.space', values)
+
+        # Derived OCCUPIED metric must reach the Zabbix Sender payload.
+        self.assertIn('media.site1.space.occupied', values)
+        self.assertNotIn('media.site2.space.occupied', values)
+        self.assertEqual(
+            values['media.site1.space.occupied'],
+            round(100.0 - float(values['media.site1.free.space']), 3),
+        )
+
+        # collect.metrics counts metrics collected from the Q330,
+        # not locally derived metrics.
         self.assertEqual(values['q330.collect.metrics'], 10)
         self.assertEqual(values['q330.collect.success'], 1)
 
@@ -406,6 +492,21 @@ class PipelineTests(unittest.TestCase):
 
         self.assertIn('media.site1.free.space', values)
         self.assertIn('media.site2.free.space', values)
+
+        # Both derived OCCUPIED metrics must reach the Sender payload.
+        self.assertIn('media.site1.space.occupied', values)
+        self.assertIn('media.site2.space.occupied', values)
+
+        self.assertEqual(
+            values['media.site1.space.occupied'],
+            round(100.0 - float(values['media.site1.free.space']), 3),
+        )
+        self.assertEqual(
+            values['media.site2.space.occupied'],
+            round(100.0 - float(values['media.site2.free.space']), 3),
+        )
+
+        # collect.metrics counts source metrics only.
         self.assertEqual(values['q330.collect.metrics'], 12)
         self.assertEqual(values['q330.collect.success'], 1)
 
@@ -481,16 +582,107 @@ class PipelineTests(unittest.TestCase):
         )
 
     def test_thresholds_use_only_their_own_recent_metric(self):
-        template = yaml.safe_load((ROOT / 'templates/quanterra_zabbix7.yaml').read_text())['zabbix_export']['templates'][0]
-        keys = {'input.voltage', 'system.temp', 'sat.used', 'clock.quality',
-                'media.site1.free.space', 'media.site2.free.space'}
+        template = yaml.safe_load(
+            (ROOT / 'templates/quanterra_zabbix7.yaml').read_text()
+        )['zabbix_export']['templates'][0]
+
+        keys = {
+            'input.voltage',
+            'system.temp',
+            'sat.used',
+            'clock.quality',
+        }
+
         for item in template['items']:
             if item['key'] not in keys:
                 continue
+
             with self.subTest(key=item['key']):
-                expression = item['triggers'][0]['expression']
-                self.assertNotIn('q330.collect.success', expression)
-                self.assertIn(f"nodata(/{template['template']}/{item['key']},{{$COLLECTOR.NODATA}})=0", expression)
+                self.assertTrue(item.get('triggers'))
+
+                for trigger in item['triggers']:
+                    expression = trigger['expression']
+
+                    self.assertNotIn(
+                        'q330.collect.success',
+                        expression,
+                    )
+
+                    self.assertIn(
+                        f"nodata(/{template['template']}/{item['key']},"
+                        "{$COLLECTOR.NODATA})=0",
+                        expression,
+                    )
+
+    def test_media_occupied_triggers(self):
+        template = yaml.safe_load(
+            (ROOT / 'templates/quanterra_zabbix7.yaml').read_text()
+        )['zabbix_export']['templates'][0]
+
+        items = {
+            item['key']: item
+            for item in template['items']
+        }
+
+        # FREE SPACE remains available as telemetry, but must no longer
+        # generate capacity alarms.
+        for site in (1, 2):
+            free_key = f'media.site{site}.free.space'
+
+            with self.subTest(key=free_key):
+                self.assertEqual(
+                    items[free_key].get('triggers', []),
+                    [],
+                )
+
+        # Capacity alarms are based exclusively on OCCUPIED percentage.
+        for site in (1, 2):
+            key = f'media.site{site}.space.occupied'
+            other_site = 2 if site == 1 else 1
+            other_key = f'media.site{other_site}.space.occupied'
+
+            with self.subTest(key=key):
+                triggers = items[key].get('triggers', [])
+
+                self.assertEqual(len(triggers), 2)
+
+                warning = next(
+                    trigger for trigger in triggers
+                    if trigger['priority'] == 'WARNING'
+                )
+                high = next(
+                    trigger for trigger in triggers
+                    if trigger['priority'] == 'HIGH'
+                )
+
+                expected_warning = (
+                    f"last(/{template['template']}/{key})>=60 and "
+                    f"last(/{template['template']}/{key})<80"
+                )
+
+                expected_high = (
+                    f"last(/{template['template']}/{key})>=80"
+                )
+
+                self.assertEqual(
+                    warning['expression'],
+                    expected_warning,
+                )
+
+                self.assertEqual(
+                    high['expression'],
+                    expected_high,
+                )
+
+                for trigger in triggers:
+                    expression = trigger['expression']
+
+                    self.assertIn(key, expression)
+                    self.assertNotIn(other_key, expression)
+                    self.assertNotIn(
+                        'q330.collect.success',
+                        expression,
+                    )
 
     def test_health_missing_stale_corrupt_and_future(self):
         path = self.settings.health_file
@@ -533,7 +725,16 @@ class PipelineTests(unittest.TestCase):
                     check_uuids(value)
         check_uuids(export)
         device, collector = export['templates']
-        self.assertEqual({i['key'] for i in device['items']}, set(KEYS.values()) | {'q330.collect.success', 'q330.collect.metrics'})
+        expected_device_keys = set(KEYS.values()) | {
+            'q330.collect.success',
+            'q330.collect.metrics',
+            'media.site1.space.occupied',
+            'media.site2.space.occupied',
+        }
+        self.assertEqual(
+            {i['key'] for i in device['items']},
+            expected_device_keys,
+        )
         self.assertEqual(len(collector['items']), 6)
         ids = []
         for template in export['templates']:

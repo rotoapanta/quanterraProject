@@ -120,12 +120,6 @@ zabbix_export:
       value_type: FLOAT
       allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
       units: '%'
-      triggers:
-      - uuid: ef8078f6a3fe45e8b43da2d8eca37a0b
-        expression: last(/Quanterra Q330 by collector/media.site1.free.space)<{$Q330.MEDIA.MIN}
-          and nodata(/Quanterra Q330 by collector/media.site1.free.space,{$COLLECTOR.NODATA})=0
-        name: 'Q330: Media site 1 free space low'
-        priority: WARNING
     - uuid: e40f86ed4d9b4fd3ad6d325737132657
       name: Media site 2 free space
       type: TRAP
@@ -136,12 +130,6 @@ zabbix_export:
       value_type: FLOAT
       allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
       units: '%'
-      triggers:
-      - uuid: b62f10351e5041b0b46e7559324e1d09
-        expression: last(/Quanterra Q330 by collector/media.site2.free.space)<{$Q330.MEDIA.MIN}
-          and nodata(/Quanterra Q330 by collector/media.site2.free.space,{$COLLECTOR.NODATA})=0
-        name: 'Q330: Media site 2 free space low'
-        priority: WARNING
     - uuid: c6a8a356a0cd43e9961af4cca972cbdf
       name: Media site 1 capacity
       type: TRAP
@@ -162,6 +150,44 @@ zabbix_export:
       value_type: FLOAT
       allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
       units: MB
+    - uuid: 2c962597c2344d6cae584f4866ad8802
+      name: Media site 1 space occupied
+      type: TRAP
+      key: media.site1.space.occupied
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+      units: '%'
+      triggers:
+      - uuid: 48d9175db35a492891a2fcee8783e1c1
+        expression: last(/Quanterra Q330 by collector/media.site1.space.occupied)>=60 and last(/Quanterra Q330 by collector/media.site1.space.occupied)<80
+        name: Media Site 1 Space Usage 60-80%
+        priority: WARNING
+      - uuid: 989856e94aea44d78379231233f8c555
+        expression: last(/Quanterra Q330 by collector/media.site1.space.occupied)>=80
+        name: Media Site 1 Space Usage >=80%
+        priority: HIGH
+    - uuid: 9eaf6384f9d6433cbbdc0b1af07bbd26
+      name: Media site 2 space occupied
+      type: TRAP
+      key: media.site2.space.occupied
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+      units: '%'
+      triggers:
+      - uuid: 4b57951b0a124be7b78953de595754ec
+        expression: last(/Quanterra Q330 by collector/media.site2.space.occupied)>=60 and last(/Quanterra Q330 by collector/media.site2.space.occupied)<80
+        name: Media Site 2 Space Usage 60-80%
+        priority: WARNING
+      - uuid: 374fa259fc204a7d93e2c032ec1f265e
+        expression: last(/Quanterra Q330 by collector/media.site2.space.occupied)>=80
+        name: Media Site 2 Space Usage >=80%
+        priority: HIGH
     - uuid: c6bf6a8b568941febdaecec070d236b2
       name: Complete Q330 collection
       type: TRAP

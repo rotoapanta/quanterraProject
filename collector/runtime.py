@@ -35,6 +35,34 @@ def healthy(path, max_age):
         return False
 
 
+def add_media_occupied(values):
+    """Add media occupied percentage only for physically present media.
+
+    A Q330/PB44 reports capacity=0 and free=0 for an absent media site.
+    Such a site must not be represented as 100% occupied.
+    """
+    for site in (1, 2):
+        capacity_key = f'media.site{site}.capacity'
+        free_key = f'media.site{site}.free.space'
+        occupied_key = f'media.site{site}.space.occupied'
+
+        try:
+            capacity = float(values[capacity_key])
+            free = float(values[free_key])
+        except (KeyError, TypeError, ValueError):
+            continue
+
+        if capacity <= 0:
+            values.pop(occupied_key, None)
+            continue
+
+        if not 0 <= free <= 100:
+            values.pop(occupied_key, None)
+            continue
+
+        values[occupied_key] = round(100.0 - free, 3)
+
+
 def run_cycle(settings):
     started = time.monotonic()
     ok = False
@@ -54,6 +82,7 @@ def run_cycle(settings):
 
         for device, values in iter_collected_devices(devices, settings):
             collected_metrics = len(values)
+            add_media_occupied(values)
 
             has_required = required_keys.issubset(values)
             has_media = any(key in values for key in media_keys)
