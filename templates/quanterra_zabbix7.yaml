@@ -142,6 +142,26 @@ zabbix_export:
           and nodata(/Quanterra Q330 by collector/media.site2.free.space,{$COLLECTOR.NODATA})=0
         name: 'Q330: Media site 2 free space low'
         priority: WARNING
+    - uuid: c6a8a356a0cd43e9961af4cca972cbdf
+      name: Media site 1 capacity
+      type: TRAP
+      key: media.site1.capacity
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+      units: MB
+    - uuid: 358d4d6663b24f02b1e9f61fcee49f52
+      name: Media site 2 capacity
+      type: TRAP
+      key: media.site2.capacity
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+      units: MB
     - uuid: c6bf6a8b568941febdaecec070d236b2
       name: Complete Q330 collection
       type: TRAP

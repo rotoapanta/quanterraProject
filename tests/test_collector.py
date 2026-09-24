@@ -24,7 +24,8 @@ class ParserTests(unittest.TestCase):
             'station.code': 'TEST', 'serial.number': '001234', 'q330.serial': '010000AABBCC',
             'input.voltage': '13.4', 'system.temp': '25', 'main.current': '125',
             'clock.quality': '100', 'sat.used': '8',
-            'media.site1.free.space': '74.5', 'media.site2.free.space': '100.0'})
+            'media.site1.free.space': '74.5', 'media.site2.free.space': '100.0',
+            'media.site1.capacity': '1024.0', 'media.site2.capacity': '1024.0'})
 
     def test_format_variants(self):
         html = HTML.replace('25C', '-2.5 °C').replace('13.4V', '13 V').replace('74.5%', '74%')
@@ -56,10 +57,25 @@ class ParserTests(unittest.TestCase):
             values['media.site1.free.space'],
             '62.943'
         )
+        self.assertEqual(
+            values['media.site1.capacity'],
+            '61042.500'
+        )
         self.assertNotIn(
             'media.site2.free.space',
             values
         )
+
+    def test_media_capacity_does_not_cross_sites(self):
+        values = parse_stats(
+            'MEDIA site 1 capacity=61042.500Mb free=34.040%\n'
+            'MEDIA site 2 capacity=0.000Mb free=0.000%'
+        )
+
+        self.assertEqual(values['media.site1.capacity'], '61042.500')
+        self.assertEqual(values['media.site1.free.space'], '34.040')
+        self.assertEqual(values['media.site2.capacity'], '0.000')
+        self.assertEqual(values['media.site2.free.space'], '0.000')
 
     def test_media_does_not_cross_sites(self):
         values = parse_stats('MEDIA site 1 missing\nMEDIA site 2 free=40%')
@@ -195,7 +211,7 @@ class PipelineTests(unittest.TestCase):
         response = get.return_value.__enter__.return_value
         response.status_code = 200
         response.text = HTML
-        self.assertEqual(len(get_values('2001:db8::1')), 10)
+        self.assertEqual(len(get_values('2001:db8::1')), 12)
         self.assertEqual(get.call_args.args[0], 'http://[2001:db8::1]:6381/stats.html')
         get.side_effect = requests.Timeout
         result = collect_devices([Device('A', '192.0.2.1')], self.settings)
@@ -219,7 +235,7 @@ class PipelineTests(unittest.TestCase):
 
         values = get_values('192.0.2.1')
 
-        self.assertEqual(len(values), 10)
+        self.assertEqual(len(values), 12)
         self.assertEqual(values['station.code'], 'TEST')
         self.assertEqual(get.call_count, 2)
 
@@ -250,7 +266,7 @@ class PipelineTests(unittest.TestCase):
 
         values = get_values('192.0.2.1')
 
-        self.assertEqual(len(values), 10)
+        self.assertEqual(len(values), 12)
         self.assertEqual(values['station.code'], 'TEST')
         self.assertEqual(get.call_count, 2)
 
@@ -283,7 +299,7 @@ class PipelineTests(unittest.TestCase):
         data_b = send.call_args_list[1].args[2]
         collector_data = send.call_args_list[2].args[2][self.settings.collector_host]
 
-        self.assertEqual(data_a['A']['q330.collect.metrics'], 10)
+        self.assertEqual(data_a['A']['q330.collect.metrics'], 12)
         self.assertEqual(data_a['A']['q330.collect.success'], 1)
 
         self.assertEqual(data_b['B']['q330.collect.metrics'], 0)
@@ -308,7 +324,7 @@ class PipelineTests(unittest.TestCase):
         self.assertFalse(run_cycle(self.settings))
         values = send.call_args_list[0].args[2]['A']
         self.assertNotIn('q330.serial', values)
-        self.assertEqual(values['q330.collect.metrics'], 9)
+        self.assertEqual(values['q330.collect.metrics'], 11)
         self.assertEqual(values['q330.collect.success'], 0)
 
     @patch('collector.runtime.send_data_to_zabbix')
@@ -331,7 +347,7 @@ class PipelineTests(unittest.TestCase):
         self.assertEqual(values['system.temp'], '80')
         self.assertIn('media.site1.free.space', values)
         self.assertNotIn('media.site2.free.space', values)
-        self.assertEqual(values['q330.collect.metrics'], 9)
+        self.assertEqual(values['q330.collect.metrics'], 10)
         self.assertEqual(values['q330.collect.success'], 1)
 
         template = yaml.safe_load(
@@ -372,7 +388,7 @@ class PipelineTests(unittest.TestCase):
 
         self.assertIn('media.site1.free.space', values)
         self.assertNotIn('media.site2.free.space', values)
-        self.assertEqual(values['q330.collect.metrics'], 9)
+        self.assertEqual(values['q330.collect.metrics'], 10)
         self.assertEqual(values['q330.collect.success'], 1)
 
 
@@ -390,7 +406,7 @@ class PipelineTests(unittest.TestCase):
 
         self.assertIn('media.site1.free.space', values)
         self.assertIn('media.site2.free.space', values)
-        self.assertEqual(values['q330.collect.metrics'], 10)
+        self.assertEqual(values['q330.collect.metrics'], 12)
         self.assertEqual(values['q330.collect.success'], 1)
 
 

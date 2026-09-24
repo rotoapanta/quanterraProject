@@ -46,7 +46,11 @@ def run_cycle(settings):
             'media.site1.free.space',
             'media.site2.free.space',
         }
-        required_keys = set(KEYS.values()) - media_keys
+        optional_keys = media_keys | {
+            'media.site1.capacity',
+            'media.site2.capacity',
+        }
+        required_keys = set(KEYS.values()) - optional_keys
 
         for device, values in iter_collected_devices(devices, settings):
             collected_metrics = len(values)

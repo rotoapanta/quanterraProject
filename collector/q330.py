@@ -5,6 +5,8 @@ from html.parser import HTMLParser
 KEYS = {
     'StationCode': 'station.code', 'SerialNumber': 'serial.number',
     'MediaSite1': 'media.site1.free.space', 'MediaSite2': 'media.site2.free.space',
+    'MediaSite1Capacity': 'media.site1.capacity',
+    'MediaSite2Capacity': 'media.site2.capacity',
     'Q330Serial': 'q330.serial', 'ClockQuality': 'clock.quality',
     'InputVoltage': 'input.voltage', 'SystemTemp': 'system.temp',
     'MainCurrent': 'main.current', 'SatUsed': 'sat.used',
@@ -22,12 +24,23 @@ PATTERNS = {
     'SatUsed': r'Sat\.?\s+Used\s*:\s*(\d+)\b',
 }
 for site in (1, 2):
-    PATTERNS[f'MediaSite{site}'] = (
+    site_prefix = (
         rf'MEDIA\s+site\s+{site}\b'
         rf'(?:(?!MEDIA\s+site).)*?'
-        rf'\b(?:free|mediafree)\s*=\s*'
-        + NUMBER +
-        r'\s*%'
+    )
+
+    PATTERNS[f'MediaSite{site}'] = (
+        site_prefix
+        + rf'\b(?:free|mediafree)\s*=\s*'
+        + NUMBER
+        + r'\s*%'
+    )
+
+    PATTERNS[f'MediaSite{site}Capacity'] = (
+        site_prefix
+        + rf'\b(?:capacity|media\s+capacity)\s*=\s*'
+        + NUMBER
+        + r'\s*(?:MB|Mb)\b'
     )
 
 
