@@ -3,6 +3,7 @@ import argparse
 import os
 import signal
 import threading
+import time
 from collector.config import Settings
 from collector.runtime import healthy, run_cycle, setup_logging, write_health
 
@@ -27,10 +28,17 @@ def main():
     write_health(settings.health_file, False)
     try:
         while not stop.is_set():
+            cycle_started = time.monotonic()
             success = run_cycle(settings)
+
             if not args.daemon:
                 return 0 if success else 1
-            stop.wait(settings.interval)
+
+            elapsed = time.monotonic() - cycle_started
+            remaining = max(0.0, settings.interval - elapsed)
+
+            if remaining:
+                stop.wait(remaining)
     finally:
         if args.daemon:
             write_health(settings.health_file, False)
