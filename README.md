@@ -1,273 +1,357 @@
-# <p align="center">Quanterra with Zabbix
-
-<p align="center">This project aims to monitor the health status of Quanterra using Zabbix.</p>
-
-##
-
-[![Python](https://img.shields.io/badge/Python-3.11-brightgreen)](https://www.python.org/)
-[![Zabbix](https://img.shields.io/badge/Zabbix-4.6-orange)](https://www.zabbix.com/)
-![GitHub issues](https://img.shields.io/github/issues/rotoapanta/quanterraProject)
-![GitHub repo size](https://img.shields.io/github/repo-size/rotoapanta/quanterraProject)
-![GitHub last commit](https://img.shields.io/github/last-commit/rotoapanta/quanterraProject)
-![GitHub commit merge status](https://img.shields.io/github/commit-status/rotoapanta/quanterraProject/master/9b53f1d)
-![Discord](https://img.shields.io/discord/1104588661321908335)
-[![Discord Invite](https://img.shields.io/badge/discord-join%20now-green)](https://discord.gg/bf6rWDbJ)
-[![Docker](https://img.shields.io/badge/Docker-No-brightgreen)](https://www.docker.com/)
-[![GitHub](https://img.shields.io/badge/GitHub-Project-brightgreen)](https://github.com/rotoapanta/gpsNetRsProject.git)
-[![Linux](https://img.shields.io/badge/Linux-Supported-brightgreen)](https://www.linux.org/)
-[![Windows](https://img.shields.io/badge/Windows-Supported-brightgreen)](https://www.microsoft.com/)
-[![Crontab](https://img.shields.io/badge/Crontab-Supported-brightgreen)](#installation)
-[![Author 1](https://img.shields.io/badge/Roberto%20-Toapanta-brightgreen)](https://www.linkedin.com/in/roberto-carlos-toapanta-g/)
-[![Version](https://img.shields.io/badge/Version-1.4-brightgreen)](#change-log)
-![GitHub forks](https://img.shields.io/github/forks/rotoapanta/gpsNetRsProject?style=social)
-[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/gpl-2.0)
-
-# Contents
-
-- [Getting started](#getting-started)
-  - [Getting started using Quanterra with Zabbix](#getting-started-using-quanterra-with-zabbix)
-  - [Features](#features)
-  - [Requirements](#requirements)
-  - [Components Description](#components-description)
-* [Installation](#installation)
-* [Configuration](#configuration)
-* [Running the Application](#running-the-application)
-* [Running the Project Automatically with Crontab](#running-the-project-automatically-with-crontab)
-* [Environment Variables](#environment-variables)
-* [Change Log](#change-log)
-* [Running Tests](#running-tests)
-* [Usage/Examples](#usage-examples)
-* [Feedback](#feedback)
-  * [Support](#support)
-  * [License](#license)
-  * [Autors](#autors)
-  * [More Info](#more-info)
-  * [Links](#links)
-
-# Getting started
-
-## Getting started using Quanterra with Zabbix
-
-Welcome to the project! This guide will help you get started with setting up and running the application.
-
-The project is a Python-based application designed to obtain the metrics (voltage, current, number of satellites, disk capacity) of Quanterra seismic digitizers. 
-
-Let’s get started!
-
-### Features
-
-- Retrieve various metrics from Quanterra devices.
-- Send collected data to Zabbix for analysis.
-- Easily schedule monitoring tasks using `crontab`.
- 
-## Requirements
-
-Before you get started, make sure you have the following:
-
-- Python 3.11 or higher installed on your system.
-- [Anaconda](https://www.anaconda.com/) for creating and managing Conda environments.
-- A Zabbix server for storing and analyzing the collected data.
-- Basic knowledge of using `crontab` for scheduling tasks.
-- Quanterra devices
-- Computer running Anaconda on Windows, Linux or macOS (in this case macOS is used).
-
-## Components Description
-
-The project consists of the following components:
-
-- quanterraProject/
-  - api/
-    - __init__.py
-    - api_zbx_processing.py
-  - logs/
-    - __init__.py
-    - aaaa-mm-dd_quanterra.log
-  - templates/
-    - zbx_export_templates.xml
-  - test/
-    - __init__.py
-    - test_quanterra_project.py
-  - utils/
-    - __init__.py
-    - utilities.py
-  - zabbix/
-    - __init__.py
-    - zabbix_sender.py
-  - config.ini
-  - main.py
-  - requirements.txt
-  - run_quanterra.sh
-  - setup.py
-
-- `api/`: This package contains modules related to the project's API functionality.
-  - `init.py`: An empty file that marks the directory as a Python package. 
-  - `api_zbx_processing.py`: Module for processing Zabbix data through the API.
-- `logs/`: Directory for storing log files.
-  - `init.py`: An empty file that marks the directory as a Python package.
-  - `aaaa-mm-dd_quanterra.log`: File is a project log that records events and errors.
-  - `quanterra_crontab.log`: Log file that captures the execution details of the project's scheduled tasks.
-- `templates/`: Directory for Zabbix templates.
-- `test/`: Package for unit tests.
-  - `init.py`: An empty file that marks the directory as a Python package.
-  - `test_quanterra_project.py`: File contains unit tests for the Quanterra Project.
-- `utils/`: Package for utility functions.
-  - `init.py`: An empty file that marks the directory as a Python package.
-  - `utilities.py`: Script containing reusable functions that provide common functionality for the project.
-- `zabbix/`: Package for Zabbix Integration.
-  - `zabbix_sender.py`: A script for sending data to Zabbix
-- `config.ini`: Project configuration file with project-specific details.
-- `main.py`: The main script of the project, which likely contains the core logic.
-- `requirements.txt`: A list of project dependencies, typically used for package management.
-- `run_quanterra.sh`: A shell script for executing the project.
-- `setup.py`: A script used for packaging and distribution of the project.
+# Quanterra Collector — Zabbix 7
+
+Collector para integrar digitalizadores **Quanterra Q330** con **Zabbix 7**.
+
+El servicio consulta periódicamente:
+
+    http://<Q330>:6381/stats.html
+
+extrae las métricas operativas del Q330, descubre los equipos monitorizados mediante la API de Zabbix 7 y envía los valores al servidor Zabbix mediante Zabbix Sender.
+
+La aplicación se ejecuta en **Docker con Python 3.12**.
+
+## Arquitectura
+
+    Zabbix 7 API
+         │
+         │ descubrimiento de hosts
+         ▼
+    ┌───────────────────────────────┐
+    │ Quanterra Collector - Docker │
+    │                               │
+    │ main.py                       │
+    │   │                           │
+    │   ├── collector/              │
+    │   │    ├── config.py          │
+    │   │    ├── q330.py            │
+    │   │    └── runtime.py         │
+    │   │                           │
+    │   ├── api/                    │
+    │   └── zabbix/                 │
+    └──────────────┬────────────────┘
+                   │
+                   │ HTTP :6381
+                   ▼
+             Quanterra Q330
 
-## Installation
+El envío de métricas se realiza hacia Zabbix Server o Proxy mediante TCP/10051.
 
+## Estructura del proyecto
 
-1. Clone the repository to your local machine:
-  
-  ```bash
-   git clone https://github.com/rotoapanta/quanterraProject.git
-  ```
-2.Create the `config.ini` in the same directory as the project and configure according to your credentials.
+    quanterraProject/
+    ├── api/
+    │   └── api_zbx_processing.py
+    ├── collector/
+    │   ├── config.py
+    │   ├── q330.py
+    │   └── runtime.py
+    ├── zabbix/
+    │   └── zabbix_sender.py
+    ├── templates/
+    │   └── quanterra_zabbix7.yaml
+    ├── tests/
+    │   ├── fixtures/
+    │   │   └── stats.html
+    │   └── test_collector.py
+    ├── main.py
+    ├── requirements.txt
+    ├── Dockerfile
+    ├── compose.yaml
+    ├── .env.example
+    ├── .gitignore
+    ├── .dockerignore
+    └── README.md
 
-## Configuration
+## Métricas Q330
 
-1. Open the config.ini file in the project directory.
+Se conservan las diez claves históricas:
 
-2. Configure the Zabbix credentials:
+| Clave | Descripción |
+| --- | --- |
+| `station.code` | Código de estación |
+| `serial.number` | Serial/tag del equipo |
+| `q330.serial` | Número de serie Q330 |
+| `input.voltage` | Voltaje de entrada [V] |
+| `system.temp` | Temperatura del sistema [°C] |
+| `main.current` | Corriente principal [mA] |
+| `sat.used` | Satélites utilizados |
+| `clock.quality` | Calidad de reloj [%] |
+| `media.site1.free.space` | Espacio libre Site 1 [%] |
+| `media.site2.free.space` | Espacio libre Site 2 [%] |
 
-```ini
-[zabbix]
-zabbix_server = ZABBIX_SERVER_IP_OR_HOSTNAME
-zabbix_port = ZABBIX_SERVER_PORT
-zabbix_url = ZABBIX_SERVER_URL
-zabbix_user = ZABBIX_USERNAME
-zabbix_password = ZABBIX_PASSWORD
-```
+Adicionalmente:
 
-## Running the Application
+| Clave | Descripción |
+| --- | --- |
+| `q330.collect.success` | Estado de recolección del Q330 |
+| `q330.collect.metrics` | Número de métricas obtenidas |
 
-The run_quanterra.sh shell script is used to set up the environment, activate the Conda environment, install dependencies, and execute the main project script. The script is responsible for the following tasks:
+Una recolección completa requiere las diez métricas Q330.
 
-- Setting environment variables.
-- Activating the Conda environment.
-- Installing project dependencies.
-- Validating the existence of directories and files.
-- Navigating to the project directory.
-- Running the main project script (main.py).
+## Métricas del Collector
 
-Please review the script's comments for details about its operation and make sure it points to the correct paths for your specific environment.
+El host del collector recibe:
 
-  ```plaintext
-  Note: Ensure that the script has the necessary permissions to execute.
-  ```
+- `collector.heartbeat`
+- `collector.uptime`
+- `collector.cycle.duration`
+- `collector.devices.total`
+- `collector.devices.failed`
+- `collector.cycle.success`
 
-## Running the Project Automatically with Crontab
+Estas métricas permiten supervisar el propio proceso de adquisición.
 
-To automate the monitoring process, you can use crontab to schedule the execution of the script at specific intervals. The provided run_quanterra.sh shell script helps you set up the environment and run the project under cron. 
+## Template Zabbix 7
 
-Here's how to configure and use crontab with the project:
+Importar:
 
-1. Open the crontab configuration for your user by running the following command
+    templates/quanterra_zabbix7.yaml
 
-  ```bash
-   crontab -e
-  ```
-2. Add an entry to schedule the script to run at regular intervals. For example, to run the script every 10 minutes, add the following line:
-  
-  ```bash
-   */10 * * * * bash /path/to/run_quanterra.sh >> /path/to/logs/quanterra_crontab.log 2>&1
-  ```
-Be sure to replace /path/to with the actual paths to the run_quanterra.sh script and the desired log file.
+desde:
 
-Save and exit the crontab editor.
+**Data collection → Templates → Import**
 
-The script will now run automatically at the specified intervals and log its output to the specified log file.
+El archivo contiene:
 
-## Environment Variables
+- `Quanterra Q330 by collector`
+- `Quanterra collector health`
 
-Before running the project, make sure to set the following environment variables:
+Vincule `Quanterra Q330 by collector` únicamente a los hosts Q330.
 
-- `zabbix_url` = ZABBIX_SERVER_URL
-- `zabbix_user` = ZABBIX_USERNAME
-- `zabbix_password` = ZABBIX_PASSWORD
-- `digitizer_username` = DIGITIZER_USERNAME
-- `digitizer_password` = DIGITIZER_PASSWORD
+Cree además un host habilitado cuyo nombre técnico sea:
 
-## Change Log
+    Quanterra collector
 
-* Revision: 1.4 - Refactor code
-* Revision: 1.3 - Add test unit
-* Revision: 1.2 - Add quanterra.sh
-* Revision: 1.1 - Code cleaned.
-* Revision: 1.0 - Initial commit
+y vincule `Quanterra collector health`.
 
-## Running Tests
+El nombre puede modificarse mediante `COLLECTOR_HOST`.
 
-To run the tests for this project, you have two options:
+## Descubrimiento de Q330
 
-### Option 1: Using Test Discovery
+El collector utiliza un API Token de Zabbix y busca los hosts habilitados asociados al template configurado en:
 
-You can use Python's built-in test discovery to automatically discover and run all tests that follow the naming convention `test_*.py`. Navigate to your project directory and execute the following command:
+    ZABBIX_TEMPLATE
 
-```bash
-python -m unittest discover -s tests -p 'test_*.py'
-```
-This command will search for and execute all tests within the tests directory and its subdirectories.
+Para cada host utiliza su interfaz principal y obtiene la IP o DNS del Q330.
 
-### Option 2: Running Specific Test Modules
+El puerto configurado en la interfaz de Zabbix no se utiliza para consultar el equipo. El acceso HTTP utiliza:
 
-If you want to run specific test modules or individual tests, you can use the following command. Replace tests.test_module with the appropriate test module you want to run:
+    Q330_PORT=6381
 
-```bash
-python -m unittest tests.test_quanterra_project
-```
-This command allows you to execute tests from a particular test module. Adjust test_module to the desired module name.
+## Configuración
 
-![Testing](images/img_1.png)
-<p align="center">Figure 1. Testing the code</p>
+Copiar:
 
-![Data collected](images/img_2.png)
-<p align="center">Figure 2. Data collected on the Zabbix Server</p>
+    cp .env.example .env
 
-![Digitizer input voltage](images/img_3.png)
-<p align="center">Figure 3. Digitizer input voltage</p>
+Variables principales:
 
-![Digitizer temperature](images/img_4.png)
-<p align="center">Figure 4. Digitizer temperature</p>
+| Variable | Uso |
+| --- | --- |
+| `ZABBIX_URL` | URL de la API Zabbix |
+| `ZABBIX_SERVER` | Zabbix Server o Proxy receptor |
+| `ZABBIX_PORT` | Puerto sender, por defecto `10051` |
+| `ZABBIX_TEMPLATE` | Template utilizado para descubrir Q330 |
+| `COLLECTOR_HOST` | Nombre técnico del host collector |
+| `COLLECTOR_INTERVAL` | Intervalo entre ciclos |
+| `COLLECTOR_TIMEOUT` | Timeout de comunicaciones |
+| `COLLECTOR_WORKERS` | Consultas Q330 concurrentes |
+| `COLLECTOR_HEALTH_MAX_AGE` | Edad máxima del último ciclo válido |
+| `Q330_PORT` | Puerto HTTP del Q330, por defecto `6381` |
 
-## Usage
+## API Token
 
-To run the project manually, execute the following command:
+El token no debe almacenarse en Git ni dentro de `.env`.
 
-  ```bash
-   python main.py
-  ```
-For scheduling and automation, refer to the Scheduling with crontab section.
+Crear:
 
-## Feedback
+    mkdir -p secrets
 
-If you have any feedback, please reach out to us at robertocarlos.toapanta@gmail.com
+Guardar exclusivamente el token en:
 
-## Support
+    secrets/zabbix_token
 
-For support, email robertocarlos.toapanta@gmail.com or join our Discord channel.
+sin comillas ni variables adicionales.
 
-## License
+Compose lo monta dentro del contenedor como:
 
-[GPL v2](https://www.gnu.org/licenses/gpl-2.0)
+    /run/secrets/zabbix_token
 
-## Authors
+El usuario asociado al token requiere acceso de lectura a los hosts y templates utilizados por el collector.
 
-- [@rotoapanta](https://github.com/rotoapanta)
+## Seguridad
 
-## More Info
+El contenedor:
 
-* [Official documentation for py-zabbix](https://py-zabbix.readthedocs.io/en/latest/)
-* [Install py-zabbix 1.1.7](https://pypi.org/project/pyzabbix/)
+- se ejecuta con UID `10001`;
+- utiliza filesystem raíz de solo lectura;
+- elimina capabilities Linux;
+- activa `no-new-privileges`;
+- no publica puertos;
+- mantiene el token fuera de la imagen;
+- utiliza `/tmp` mediante `tmpfs`.
 
-## Links
+Los archivos `.env`, `secrets/` y logs están excluidos de Git.
 
-[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/roberto-carlos-toapanta-g/)
-[![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/rotoapanta)
+## Allowed hosts
+
+Los items trapper utilizan:
+
+    {$COLLECTOR.ALLOWED_HOSTS}
+
+El valor inicial del template es:
+
+    127.0.0.1
+
+Antes del despliegue debe cambiarse por la IP o red de origen que realmente observa Zabbix Server/Proxy para las conexiones procedentes del collector.
+
+No abra este parámetro indiscriminadamente a todas las redes.
+
+## Construcción
+
+    docker build -t quanterra-collector:test .
+
+Para reconstrucción completa:
+
+    docker build --no-cache -t quanterra-collector:test .
+
+## Pruebas
+
+Ejecutar:
+
+    docker run --rm \
+      -v "$PWD:/workspace:ro" \
+      -w /workspace \
+      --entrypoint python \
+      quanterra-collector:test \
+      -m unittest discover -s tests -v
+
+Actualmente las pruebas cubren:
+
+- parser Q330;
+- variantes del HTML;
+- respuestas incompletas;
+- validación de métricas;
+- IP y DNS;
+- API Token;
+- timeout HTTP;
+- errores HTTP;
+- Zabbix Sender;
+- healthcheck;
+- correspondencia entre métricas y template Zabbix.
+
+`tests/fixtures/stats.html` es una fixture sintética utilizada para pruebas de regresión.
+
+Además del conjunto automatizado, el parser fue validado contra un Q330 real accesible por HTTP/6381.
+
+## Docker Compose
+
+Validar primero:
+
+    docker compose config --quiet
+
+Arrancar:
+
+    docker compose up -d --build
+
+Ver estado:
+
+    docker compose ps
+
+Logs:
+
+    docker compose logs -f collector
+
+Healthcheck:
+
+    docker compose exec collector python main.py --healthcheck
+
+Detener:
+
+    docker compose down
+
+## Logs
+
+El collector escribe en stdout/stderr y en:
+
+    /app/logs/collector.log
+
+El archivo utiliza rotación automática.
+
+Compose mantiene `/app/logs` mediante el volumen:
+
+    collector_logs
+
+## Healthcheck
+
+Docker ejecuta:
+
+    python main.py --healthcheck
+
+El estado es válido cuando el pipeline terminó recientemente y los envíos hacia Zabbix fueron aceptados.
+
+La indisponibilidad individual de un Q330 no implica que el proceso collector esté detenido. Estas fallas se reflejan mediante:
+
+    q330.collect.success
+    collector.devices.failed
+
+Una falla de API o Zabbix Sender invalida el healthcheck.
+
+## Alertas iniciales
+
+El template incorpora macros iniciales:
+
+    {$Q330.VOLTAGE.MIN}=11
+    {$Q330.TEMP.MAX}=60
+    {$Q330.CLOCK.MIN}=90
+    {$Q330.SAT.MIN}=4
+    {$Q330.MEDIA.MIN}=10
+    {$COLLECTOR.NODATA}=5m
+
+Estos valores son valores iniciales de operación y deben ajustarse de acuerdo con los criterios técnicos definidos para la red.
+
+## Despliegue inicial recomendado
+
+Realizar la integración de forma progresiva:
+
+1. Importar el template Zabbix 7.
+2. Crear el host `Quanterra collector`.
+3. Configurar el API Token.
+4. Configurar `.env`.
+5. Determinar la IP de origen observada por Zabbix Sender.
+6. Configurar `{$COLLECTOR.ALLOWED_HOSTS}`.
+7. Vincular inicialmente un solo Q330.
+8. Ejecutar un ciclo de prueba.
+9. Verificar **Monitoring → Latest data**.
+10. Verificar triggers y healthcheck.
+11. Ampliar posteriormente al resto de Q330.
+
+No ejecutar simultáneamente el collector antiguo y el nuevo sobre los mismos hosts durante la migración.
+
+## Dependencias
+
+`requirements.txt` contiene únicamente:
+
+    requests==2.32.5
+    zabbix_utils==2.0.4
+    PyYAML==6.0.2
+
+`PyYAML` se utiliza para validar el template durante las pruebas automatizadas.
+
+## Estado de la migración
+
+Validado hasta el momento:
+
+- Docker con Python 3.12.
+- Parser Q330.
+- Acceso HTTP/6381 a Q330 real.
+- Diez métricas Q330 obtenidas correctamente.
+- Zabbix API implementada mediante API Token.
+- Zabbix Sender implementado mediante `zabbix_utils`.
+- Template nativo Zabbix 7.
+- Healthcheck del collector.
+- 19 pruebas automatizadas exitosas.
+
+Pendiente de validación de extremo a extremo:
+
+    Q330 → Docker Collector → Zabbix 7 → Latest data → Triggers

@@ -1,0 +1,273 @@
+zabbix_export:
+  version: '7.0'
+  template_groups:
+  - uuid: 24f4d6860dad4e4fa6761babf9d30698
+    name: Templates/Seismology
+  templates:
+  - uuid: 140f452dc3b348c18ee67ab75ce4ad78
+    template: Quanterra Q330 by collector
+    name: Quanterra Q330 by collector
+    groups:
+    - name: Templates/Seismology
+    items:
+    - uuid: 187ceab183134d99bcae10a25b840eab
+      name: Station code
+      type: TRAP
+      key: station.code
+      delay: '0'
+      history: 30d
+      trends: '0'
+      value_type: CHAR
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+    - uuid: e18d826e7a6045ec9a39a35290b47f3e
+      name: Tag serial number
+      type: TRAP
+      key: serial.number
+      delay: '0'
+      history: 30d
+      trends: '0'
+      value_type: CHAR
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+    - uuid: 7f7c140208fe48608a62a520550c817f
+      name: Q330 serial number
+      type: TRAP
+      key: q330.serial
+      delay: '0'
+      history: 30d
+      trends: '0'
+      value_type: CHAR
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+    - uuid: c3b03878cb19487fa3f599ff68935a2a
+      name: Input voltage
+      type: TRAP
+      key: input.voltage
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+      units: V
+      triggers:
+      - uuid: 6f013aa831db4b3caa2733c056739133
+        expression: last(/Quanterra Q330 by collector/input.voltage)<{$Q330.VOLTAGE.MIN}
+          and nodata(/Quanterra Q330 by collector/input.voltage,{$COLLECTOR.NODATA})=0
+        name: 'Q330: Input voltage low'
+        priority: WARNING
+    - uuid: b6dd5b77e767457ba6132a50102b0d3f
+      name: System temperature
+      type: TRAP
+      key: system.temp
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+      units: °C
+      triggers:
+      - uuid: 55d0e279840d451b9844035a8af7aecb
+        expression: last(/Quanterra Q330 by collector/system.temp)>{$Q330.TEMP.MAX}
+          and nodata(/Quanterra Q330 by collector/system.temp,{$COLLECTOR.NODATA})=0
+        name: 'Q330: System temperature high'
+        priority: WARNING
+    - uuid: fd626b1282b84e4ab61e6587bdc19cc9
+      name: Main current
+      type: TRAP
+      key: main.current
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+      units: mA
+    - uuid: 2b95d30edd5542cd89d8cac6e186abe3
+      name: Satellites used
+      type: TRAP
+      key: sat.used
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: UNSIGNED
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+      triggers:
+      - uuid: 23bc6f77eaab4c448ab9b6626ad05056
+        expression: last(/Quanterra Q330 by collector/sat.used)<{$Q330.SAT.MIN} and
+          nodata(/Quanterra Q330 by collector/sat.used,{$COLLECTOR.NODATA})=0
+        name: 'Q330: Too few satellites'
+        priority: WARNING
+    - uuid: 09b9d5d40fc1449f9f79a68c6bfa9453
+      name: Clock quality
+      type: TRAP
+      key: clock.quality
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+      units: '%'
+      triggers:
+      - uuid: d272366681194e56b64598196b3d9472
+        expression: last(/Quanterra Q330 by collector/clock.quality)<{$Q330.CLOCK.MIN}
+          and nodata(/Quanterra Q330 by collector/clock.quality,{$COLLECTOR.NODATA})=0
+        name: 'Q330: Clock quality low'
+        priority: WARNING
+    - uuid: 8e3b386aaa7c42f086570759aa9b1d6c
+      name: Media site 1 free space
+      type: TRAP
+      key: media.site1.free.space
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+      units: '%'
+      triggers:
+      - uuid: ef8078f6a3fe45e8b43da2d8eca37a0b
+        expression: last(/Quanterra Q330 by collector/media.site1.free.space)<{$Q330.MEDIA.MIN}
+          and nodata(/Quanterra Q330 by collector/media.site1.free.space,{$COLLECTOR.NODATA})=0
+        name: 'Q330: Media site 1 free space low'
+        priority: WARNING
+    - uuid: e40f86ed4d9b4fd3ad6d325737132657
+      name: Media site 2 free space
+      type: TRAP
+      key: media.site2.free.space
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+      units: '%'
+      triggers:
+      - uuid: b62f10351e5041b0b46e7559324e1d09
+        expression: last(/Quanterra Q330 by collector/media.site2.free.space)<{$Q330.MEDIA.MIN}
+          and nodata(/Quanterra Q330 by collector/media.site2.free.space,{$COLLECTOR.NODATA})=0
+        name: 'Q330: Media site 2 free space low'
+        priority: WARNING
+    - uuid: c6bf6a8b568941febdaecec070d236b2
+      name: Complete Q330 collection
+      type: TRAP
+      key: q330.collect.success
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: UNSIGNED
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+      triggers:
+      - uuid: 556b040f052648b28c094d635ad9d9bc
+        expression: nodata(/Quanterra Q330 by collector/q330.collect.success,{$COLLECTOR.NODATA})=1
+        name: 'Q330: No collector data'
+        priority: HIGH
+      - uuid: ea5ce9b2cbde46e98bea161f939811e7
+        expression: last(/Quanterra Q330 by collector/q330.collect.success)=0
+        name: 'Q330: Collection failed or incomplete'
+        priority: WARNING
+    - uuid: fd5882bacf634063b81405d4e0a280a0
+      name: Q330 metrics parsed
+      type: TRAP
+      key: q330.collect.metrics
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: UNSIGNED
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+    macros:
+    - macro: '{$COLLECTOR.ALLOWED_HOSTS}'
+      value: 127.0.0.1
+      description: Set the source IP/CIDR seen by Zabbix for this collector.
+    - macro: '{$COLLECTOR.NODATA}'
+      value: 5m
+      description: Must exceed the worst-case cycle duration plus the interval.
+    - macro: '{$Q330.VOLTAGE.MIN}'
+      value: '11'
+      description: Minimum input voltage in V; adapt to installation.
+    - macro: '{$Q330.TEMP.MAX}'
+      value: '60'
+      description: Maximum system temperature in Celsius.
+    - macro: '{$Q330.CLOCK.MIN}'
+      value: '90'
+      description: Minimum clock quality percent.
+    - macro: '{$Q330.SAT.MIN}'
+      value: '4'
+      description: Minimum satellites used.
+    - macro: '{$Q330.MEDIA.MIN}'
+      value: '10'
+      description: Minimum free media percent.
+  - uuid: f20d699c6e584dbd8ea931ff89dd0a38
+    template: Monitoring Data Collector Health
+    name: Monitoring Data Collector Health
+    groups:
+    - name: Templates/Seismology
+    items:
+    - uuid: 808cc3c391cc4e3eb0e3b6f422e653d2
+      name: Collector last acknowledged cycle
+      type: TRAP
+      key: collector.heartbeat
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: UNSIGNED
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+      units: unixtime
+      triggers:
+      - uuid: 95580a95ddde46469b33a2aa9cf799a1
+        expression: nodata(/Monitoring Data Collector Health/collector.heartbeat,{$COLLECTOR.NODATA})=1
+        name: 'Collector: No successful pipeline'
+        priority: HIGH
+    - uuid: fe0397bd9cb24ebdae59ae0e147b3685
+      name: Collector uptime
+      type: TRAP
+      key: collector.uptime
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+      units: s
+    - uuid: 712d4ded71b04e6c9c8e3141b64abdc3
+      name: Collection and device send duration
+      type: TRAP
+      key: collector.cycle.duration
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+      units: s
+    - uuid: caccdae165a44a15a89dc63e34e252fc
+      name: Discovered devices
+      type: TRAP
+      key: collector.devices.total
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: UNSIGNED
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+    - uuid: 2257db4223044d7eac1286cedcb2bc9b
+      name: Failed or incomplete devices
+      type: TRAP
+      key: collector.devices.failed
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: UNSIGNED
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+      triggers:
+      - uuid: f2d94cb2e888454e865896d71b001911
+        expression: last(/Monitoring Data Collector Health/collector.devices.failed)>0
+        name: 'Collector: Devices failed or incomplete'
+        priority: WARNING
+    - uuid: 714fd7c0808e4c46a3a9e9e2d8662368
+      name: All devices collected successfully
+      type: TRAP
+      key: collector.cycle.success
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: UNSIGNED
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+    macros:
+    - macro: '{$COLLECTOR.ALLOWED_HOSTS}'
+      value: 127.0.0.1
+      description: Set the source IP/CIDR seen by Zabbix for this collector.
+    - macro: '{$COLLECTOR.NODATA}'
+      value: 5m
+      description: Must exceed the worst-case cycle duration plus the interval.

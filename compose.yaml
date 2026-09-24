@@ -1,0 +1,31 @@
+services:
+  collector:
+    build: .
+    restart: unless-stopped
+    init: true
+    env_file: .env
+    environment:
+      ZABBIX_TOKEN_FILE: /run/secrets/zabbix_token
+      COLLECTOR_LOG_FILE: /app/logs/collector.log
+      COLLECTOR_HEALTH_FILE: /tmp/quanterra-health.json
+    secrets:
+      - zabbix_token
+    volumes:
+      - collector_logs:/app/logs
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+secrets:
+  zabbix_token:
+    file: ./secrets/zabbix_token
+volumes:
+  collector_logs:
