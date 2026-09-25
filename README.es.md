@@ -245,6 +245,26 @@ Se importa desde **Recolección de datos → Plantillas → Importar**.
 
 ------------------------------------------------------------------------
 
+## 🗺️ Etiquetas de mapas Zabbix
+
+Los hosts Q330/PB44 pueden mostrar sus principales métricas operativas directamente en los mapas de Zabbix. La siguiente etiqueta reutilizable puede asignarse a un elemento de tipo host:
+
+```text
+{HOST.NAME}
+IP: {HOST.CONN}
+Input Voltage: {?last(//input.voltage)}
+Media Site 1 Space Occupied: {?last(//media.site1.space.occupied)}
+Media Site 2 Space Occupied: {?last(//media.site2.space.occupied)}
+Total Space Occupied: {?last(//media.total.space.occupied)}
+Clock Quality: {?last(//clock.quality)}
+Sat. Used: {?last(//sat.used)}
+System Temperature: {?last(//system.temp)}
+```
+
+La sintaxis `//` utiliza el host asociado al elemento actual del mapa, permitiendo reutilizar la misma etiqueta sin escribir nombres de host de forma fija.
+
+------------------------------------------------------------------------
+
 ## 💾 Monitoreo de almacenamiento
 
 El collector monitorea los medios físicos del PB44/Q330 y calcula su

@@ -257,6 +257,26 @@ Import `templates/quanterra_zabbix7.yaml` through **Data collection → Template
 
 ------------------------------------------------------------------------
 
+## 🗺️ Zabbix Map Labels
+
+Q330/PB44 hosts can display their main operational metrics directly inside Zabbix maps. The following reusable label can be assigned to a host element:
+
+```text
+{HOST.NAME}
+IP: {HOST.CONN}
+Input Voltage: {?last(//input.voltage)}
+Media Site 1 Space Occupied: {?last(//media.site1.space.occupied)}
+Media Site 2 Space Occupied: {?last(//media.site2.space.occupied)}
+Total Space Occupied: {?last(//media.total.space.occupied)}
+Clock Quality: {?last(//clock.quality)}
+Sat. Used: {?last(//sat.used)}
+System Temperature: {?last(//system.temp)}
+```
+
+The `//` syntax uses the host associated with the current map element, allowing the same label to be reused without hard-coding host names.
+
+------------------------------------------------------------------------
+
 ## 💾 Media Storage Monitoring
 
 The collector monitors physical PB44/Q330 media individually and
