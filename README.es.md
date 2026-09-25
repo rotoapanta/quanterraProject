@@ -5,12 +5,14 @@
 <p align="center">
   <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white" alt="Python"></a>
   <a href="https://www.docker.com/"><img src="https://img.shields.io/badge/Docker-29.1-2496ED?logo=docker&logoColor=white" alt="Docker"></a>
-  <a href="https://www.zabbix.com/"><img src="https://img.shields.io/badge/Zabbix-7-D40000" alt="Zabbix"></a>
+  <a href="https://www.zabbix.com/"><img src="https://img.shields.io/badge/Zabbix-7.0.x-D40000" alt="Zabbix"></a>
   <a href="https://github.com/rotoapanta/quanterraProject/issues"><img src="https://img.shields.io/github/issues/rotoapanta/quanterraProject" alt="GitHub issues"></a>
   <a href="https://github.com/rotoapanta/quanterraProject"><img src="https://img.shields.io/github/repo-size/rotoapanta/quanterraProject" alt="GitHub repo size"></a>
   <a href="https://github.com/rotoapanta/quanterraProject/commits/master"><img src="https://img.shields.io/github/last-commit/rotoapanta/quanterraProject" alt="GitHub last commit"></a>
   <a href="https://www.linux.org/"><img src="https://img.shields.io/badge/Platform-Linux-orange" alt="Linux"></a>
+  <a href="https://github.com/rotoapanta/quanterraProject/releases/tag/v2.0.0-zabbix7"><img src="https://img.shields.io/badge/Version-v2.0.0--zabbix7-brightgreen" alt="Version"></a>
   <a href="https://www.linkedin.com/in/roberto-carlos-toapanta-g/"><img src="https://img.shields.io/badge/Autor-Roberto%20Toapanta-brightgreen" alt="Autor"></a>
+  <a href="https://github.com/rotoapanta/quanterraProject/fork"><img src="https://img.shields.io/github/forks/rotoapanta/quanterraProject?style=social" alt="GitHub forks"></a>
 </p>
 
 **Quanterra Q330 Collector** es un servicio de adquisición y monitoreo
@@ -21,6 +23,29 @@ El collector descubre los equipos monitorizados mediante la API de
 Zabbix, obtiene información operativa desde la interfaz HTTP del
 Q330/PB44, procesa métricas del equipo y del almacenamiento y envía la
 telemetría a Zabbix mediante el protocolo trapper.
+
+------------------------------------------------------------------------
+
+
+## 📊 Resumen del proyecto
+
+| Componente | Implementación actual |
+|------------|-----------------------|
+| Instrumentación soportada | Quanterra Q330 / PB44 |
+| Plataforma de monitoreo | Zabbix 7.0.x |
+| Templates Zabbix | 2 |
+| Items Zabbix | 54 en total (48 dispositivo + 6 collector) |
+| Triggers Zabbix | 10 en total (8 dispositivo + 2 collector) |
+| Pruebas automatizadas | 43 |
+| Entorno de ejecución | Docker |
+| Transporte de telemetría | Zabbix trapper |
+| Adquisición del dispositivo | HTTP |
+| Tag actual | `v2.0.0-zabbix7` |
+
+El proyecto monitorea tanto la **instrumentación Q330/PB44** como el
+**pipeline del collector**, proporcionando telemetría de los equipos,
+monitoreo del almacenamiento, métricas derivadas, estado de la
+adquisición y visibilidad operativa desde un único despliegue Zabbix.
 
 ------------------------------------------------------------------------
 
@@ -166,19 +191,57 @@ Los principales parámetros se configuran mediante `.env`.
 
 ## 📊 Templates Zabbix
 
-  Template                                 Items   Triggers   Macros
-  ------------------------------------- -------- ---------- --------
-  `Template Zabbix Trapper Quanterra`         48          8        7
-  `Monitoring Data Collector Health`           6          2        2
-  **Total**                               **54**     **10**    **9**
+| Template | Items | Triggers | Macros |
+|----------|------:|---------:|-------:|
+| `Template Zabbix Trapper Quanterra` | 48 | 8 | 7 |
+| `Monitoring Data Collector Health` | 6 | 2 | 2 |
+| **Total** | **54** | **10** | **9** |
 
-El archivo de importación es:
-
-``` text
-templates/quanterra_zabbix7.yaml
-```
+El archivo de importación es `templates/quanterra_zabbix7.yaml`.
 
 Se importa desde **Recolección de datos → Plantillas → Importar**.
+
+### 📈 Principales métricas Zabbix
+
+| Métrica | Key | Unidad |
+|---------|-----|--------|
+| Voltaje de entrada | `input.voltage` | `V` |
+| Temperatura del sistema | `system.temp` | `°C` |
+| Corriente principal | `main.current` | `mA` |
+| Satélites utilizados | `sat.used` | — |
+| Calidad del reloj | `clock.quality` | `%` |
+| Fase del reloj | `clock.phase` | `us` |
+| Corriente de antena GPS | `gps.antenna.current` | `mA` |
+| Voltaje UPS PB44 | `pb44.ups.voltage` | `V` |
+| Voltaje primario PB44 | `pb44.primary.voltage` | `V` |
+| Temperatura PB44 | `pb44.temperature` | `°C` |
+| Datos recibidos | `data.received.bps.minute` | `Bps` |
+| Latencia de datos | `data.latency` | `s` |
+| Latencia de estado | `status.latency` | `s` |
+| Capacidad media site 1 | `media.site1.capacity` | `MB` |
+| Capacidad media site 2 | `media.site2.capacity` | `MB` |
+| Ocupación total de media | `media.total.space.occupied` | `%` |
+| Colección Q330 completa | `q330.collect.success` | — |
+| Métricas Q330 procesadas | `q330.collect.metrics` | — |
+| Heartbeat del collector | `collector.heartbeat` | `unixtime` |
+| Duración del ciclo | `collector.cycle.duration` | `s` |
+| Dispositivos fallidos o incompletos | `collector.devices.failed` | — |
+| Ciclo del collector exitoso | `collector.cycle.success` | — |
+
+### 🚨 Triggers Zabbix
+
+| Template | Trigger | Severidad |
+|----------|---------|-----------|
+| Q330 | Voltaje de entrada bajo | Warning |
+| Q330 | Temperatura del sistema alta | Warning |
+| Q330 | Pocos satélites | Warning |
+| Q330 | Calidad del reloj baja | Warning |
+| Q330 | Uso total de media 60–80% | Warning |
+| Q330 | Uso total de media ≥80% | High |
+| Q330 | Sin datos del collector | High |
+| Q330 | Colección fallida o incompleta | Warning |
+| Collector | Sin pipeline exitoso | High |
+| Collector | Dispositivos fallidos o incompletos | Warning |
 
 ------------------------------------------------------------------------
 
