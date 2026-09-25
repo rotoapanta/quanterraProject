@@ -129,24 +129,45 @@ for site in (1, 2):
 
 
 class _Text(HTMLParser):
-    def __init__(self):
-        super().__init__(convert_charrefs=True)
-        self.parts = []
+    """Convert the relevant HTML structure into parser-friendly plain text."""
 
-    def handle_data(self, data):
+    def __init__(self) -> None:
+        """Initialize the HTML text collector."""
+        super().__init__(convert_charrefs=True)
+        self.parts: list[str] = []
+
+    def handle_data(self, data: str) -> None:
+        """Append textual HTML content to the collected output."""
         self.parts.append(data)
 
-    def handle_starttag(self, tag, attrs):
+    def handle_starttag(
+        self,
+        tag: str,
+        attrs: list[tuple[str, str | None]],
+    ) -> None:
+        """Preserve logical line boundaries for selected opening tags."""
         if tag in {'br', 'p', 'div', 'tr', 'td', 'pre'}:
             self.parts.append('\n')
 
-    def handle_endtag(self, tag):
+    def handle_endtag(self, tag: str) -> None:
+        """Preserve logical line boundaries for selected closing tags."""
         if tag in {'p', 'div', 'tr', 'td', 'pre'}:
             self.parts.append('\n')
 
 
-def _parse_duration_seconds(value):
-    """Convert Q330/PB44 duration strings such as 1m43s to seconds."""
+def _parse_duration_seconds(value: str) -> int:
+    """Convert a Q330/PB44 duration string such as ``1m43s`` to seconds.
+
+    Args:
+        value: Duration composed of optional day, hour, minute, and second
+            components.
+
+    Returns:
+        Total duration in seconds.
+
+    Raises:
+        ValueError: If the supplied duration does not match the expected format.
+    """
     value = value.strip().lower()
 
     match = re.fullmatch(
@@ -172,7 +193,25 @@ def _parse_duration_seconds(value):
     )
 
 
-def parse_stats(html, arguments=None):
+def parse_stats(
+    html: str,
+    arguments: list[str] | tuple[str, ...] | None = None,
+) -> dict[str, str | int]:
+    """Parse supported Q330/PB44 metrics from a statistics HTML document.
+
+    Args:
+        html: Raw ``stats.html`` document returned by the monitored device.
+        arguments: Optional collection of logical metric names to parse.
+            When omitted, all metrics defined in ``KEYS`` are considered.
+
+    Returns:
+        Mapping of stable Zabbix item keys to parsed values. Most device
+        values remain strings, while duration metrics are returned as seconds.
+
+    Raises:
+        ValueError: If an unknown metric is requested or no recognized
+            Q330/PB44 metrics can be extracted.
+    """
     parser = _Text()
     parser.feed(html)
     text = ''.join(parser.parts)

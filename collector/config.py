@@ -1,3 +1,4 @@
+"""Runtime configuration for the Quanterra Zabbix collector."""
 import os
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -6,6 +7,11 @@ from urllib.parse import urlsplit
 
 @dataclass(frozen=True)
 class Settings:
+    """Validated runtime configuration for the Quanterra collector.
+
+    Configuration values are loaded from environment variables and,
+    optionally, from a file containing the Zabbix API token.
+    """
     url: str
     token: str = field(repr=False)
     server: str
@@ -22,7 +28,16 @@ class Settings:
     log_file: str = 'logs/collector.log'
 
     @classmethod
-    def from_env(cls):
+    def from_env(cls) -> "Settings":
+        """Build and validate collector settings from the environment.
+
+        Returns:
+            A validated immutable ``Settings`` instance.
+
+        Raises:
+            ValueError: If required configuration is missing or invalid.
+            OSError: If the configured token file cannot be read.
+        """
         token = os.getenv('ZABBIX_TOKEN', '').strip()
         token_file = os.getenv('ZABBIX_TOKEN_FILE')
         if token_file:

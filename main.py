@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Command-line entry point for the Quanterra Zabbix collector."""
 import argparse
 import os
 import signal
@@ -8,7 +9,12 @@ from collector.config import Settings
 from collector.runtime import healthy, run_cycle, setup_logging, write_health
 
 
-def main():
+def main() -> int:
+    """Run the collector once, continuously, or as a health check.
+
+    Returns:
+        Process exit code suitable for command-line and container execution.
+    """
     parser = argparse.ArgumentParser(description='Q330 collector for Zabbix 7')
     parser.add_argument('--daemon', action='store_true', help='Repeat collection until SIGTERM/SIGINT')
     parser.add_argument('--healthcheck', action='store_true', help='Exit 0 only for a recent successful pipeline')

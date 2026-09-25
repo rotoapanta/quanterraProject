@@ -1,4 +1,4 @@
-<p align="right"><a href="README.es.md">Español</a></p>
+<p align="right"><a href="README.md">English</a></p>
 
 # <p align="center">Quanterra Q330 Collector</p>
 
@@ -10,55 +10,55 @@
   <a href="https://github.com/rotoapanta/quanterraProject"><img src="https://img.shields.io/github/repo-size/rotoapanta/quanterraProject" alt="GitHub repo size"></a>
   <a href="https://github.com/rotoapanta/quanterraProject/commits/master"><img src="https://img.shields.io/github/last-commit/rotoapanta/quanterraProject" alt="GitHub last commit"></a>
   <a href="https://www.linux.org/"><img src="https://img.shields.io/badge/Platform-Linux-orange" alt="Linux"></a>
-  <a href="https://www.linkedin.com/in/roberto-carlos-toapanta-g/"><img src="https://img.shields.io/badge/Author-Roberto%20Toapanta-brightgreen" alt="Author"></a>
+  <a href="https://www.linkedin.com/in/roberto-carlos-toapanta-g/"><img src="https://img.shields.io/badge/Autor-Roberto%20Toapanta-brightgreen" alt="Autor"></a>
 </p>
 
-**Quanterra Q330 Collector** is a Docker-based acquisition and
-monitoring service for integrating Quanterra Q330/PB44 instrumentation
-with **Zabbix 7**.
+**Quanterra Q330 Collector** es un servicio de adquisición y monitoreo
+basado en Docker para integrar instrumentación Quanterra Q330/PB44 con
+**Zabbix 7**.
 
-The collector discovers monitored devices through the Zabbix API,
-retrieves operational information from the Q330/PB44 HTTP interface,
-parses device and storage health metrics, and sends telemetry to Zabbix
-through the trapper protocol.
-
-------------------------------------------------------------------------
-
-## ✨ Features
-
--   Quanterra Q330/PB44 HTTP monitoring.
--   Zabbix 7 API-based device discovery.
--   Zabbix trapper telemetry.
--   Q330 operational and health metrics.
--   PB44 media monitoring.
--   Per-media free-space and occupied-space metrics.
--   Weighted total media storage utilization.
--   Collector self-monitoring.
--   Concurrent device collection.
--   HTTP retry handling.
--   Parser validation for incomplete and variant responses.
--   Docker healthcheck.
--   Rotating application logs.
--   API token support through Docker secrets.
--   Read-only container filesystem.
--   Automated regression tests.
--   Native Zabbix 7 templates.
+El collector descubre los equipos monitorizados mediante la API de
+Zabbix, obtiene información operativa desde la interfaz HTTP del
+Q330/PB44, procesa métricas del equipo y del almacenamiento y envía la
+telemetría a Zabbix mediante el protocolo trapper.
 
 ------------------------------------------------------------------------
 
-## 🛠️ System Requirements
+## ✨ Características
 
-  Component                  Requirement
-  -------------------------- -------------------
-  Python                     3.12+
-  Docker                     Recommended
-  Docker Compose             v2
-  Zabbix                     7.x
-  Q330/PB44 HTTP interface   TCP/6381
-  Zabbix Sender protocol     TCP/10051
-  Operating System           Linux recommended
+-   Monitoreo HTTP de Quanterra Q330/PB44.
+-   Descubrimiento mediante API de Zabbix 7.
+-   Envío mediante Zabbix trapper.
+-   Métricas operativas y de salud del Q330.
+-   Monitoreo de medios PB44.
+-   Espacio libre y ocupado por medio.
+-   Ocupación total ponderada según capacidad física.
+-   Automonitoreo del collector.
+-   Adquisición concurrente.
+-   Reintentos HTTP.
+-   Manejo de respuestas incompletas y variantes.
+-   Healthcheck de Docker.
+-   Logs con rotación.
+-   API Token mediante Docker secrets.
+-   Filesystem raíz del contenedor de solo lectura.
+-   Pruebas automatizadas de regresión.
+-   Templates nativos para Zabbix 7.
 
-Validated development environment:
+------------------------------------------------------------------------
+
+## 🛠️ Requisitos
+
+  Componente                Requisito
+  ------------------------- -------------------
+  Python                    3.12+
+  Docker                    Recomendado
+  Docker Compose            v2
+  Zabbix                    7.x
+  Interfaz HTTP Q330/PB44   TCP/6381
+  Protocolo Zabbix Sender   TCP/10051
+  Sistema operativo         Linux recomendado
+
+Entorno validado:
 
 ``` text
 Python 3.12.14
@@ -68,12 +68,12 @@ Docker Compose 2.40.3
 
 ------------------------------------------------------------------------
 
-## 🏗️ Architecture
+## 🏗️ Arquitectura
 
 ``` text
-                    Zabbix 7 API
+                    API Zabbix 7
                          │
-                         │ Device discovery
+                         │ Descubrimiento
                          ▼
               ┌──────────────────────┐
               │ Quanterra Collector  │
@@ -93,7 +93,7 @@ Docker Compose 2.40.3
 
 ------------------------------------------------------------------------
 
-## 🗂️ Project Structure
+## 🗂️ Estructura del proyecto
 
 ``` text
 quanterraProject/
@@ -127,7 +127,7 @@ quanterraProject/
 
 ------------------------------------------------------------------------
 
-## 🚀 Installation
+## 🚀 Instalación
 
 ``` bash
 git clone git@github.com:rotoapanta/quanterraProject.git
@@ -136,49 +136,35 @@ cp .env.example .env
 mkdir -p secrets
 ```
 
-Store only the Zabbix API token in:
+Guardar exclusivamente el API Token de Zabbix en:
 
 ``` text
 secrets/zabbix_token
 ```
 
-Do not add quotes or variable names to this file.
+No añadir comillas ni nombres de variables al archivo del secreto.
 
 ------------------------------------------------------------------------
 
-## ⚙️ Configuration
+## ⚙️ Configuración
 
-Main environment variables:
-
-  Variable                     Description
-  ---------------------------- ----------------------------------
-  `ZABBIX_URL`                 Zabbix API URL
-  `ZABBIX_SERVER`              Zabbix Server or Proxy
-  `ZABBIX_PORT`                Trapper port, default `10051`
-  `ZABBIX_TEMPLATE`            Template used for Q330 discovery
-  `COLLECTOR_HOST`             Collector technical host name
-  `COLLECTOR_HOST_FILTER`      Optional host rollout filter
-  `COLLECTOR_INTERVAL`         Collection interval
-  `COLLECTOR_TIMEOUT`          HTTP timeout
-  `COLLECTOR_WORKERS`          Concurrent workers
-  `COLLECTOR_HEALTH_MAX_AGE`   Maximum health-state age
-  `Q330_PORT`                  Q330/PB44 HTTP port
-
-Current default discovery template:
+El template de descubrimiento actual es:
 
 ``` text
 Template Zabbix Trapper Quanterra
 ```
 
-Collector host:
+El host técnico del collector es:
 
 ``` text
 Monitoring Data Collector
 ```
 
+Los principales parámetros se configuran mediante `.env`.
+
 ------------------------------------------------------------------------
 
-## 📊 Zabbix Templates
+## 📊 Templates Zabbix
 
   Template                                 Items   Triggers   Macros
   ------------------------------------- -------- ---------- --------
@@ -186,17 +172,20 @@ Monitoring Data Collector
   `Monitoring Data Collector Health`           6          2        2
   **Total**                               **54**     **10**    **9**
 
-Import `templates/quanterra_zabbix7.yaml` through **Data collection →
-Templates → Import**.
+El archivo de importación es:
+
+``` text
+templates/quanterra_zabbix7.yaml
+```
+
+Se importa desde **Recolección de datos → Plantillas → Importar**.
 
 ------------------------------------------------------------------------
 
-## 💾 Media Storage Monitoring
+## 💾 Monitoreo de almacenamiento
 
-The collector monitors physical PB44/Q330 media individually and
-calculates total storage utilization.
-
-Relevant metrics include:
+El collector monitorea los medios físicos del PB44/Q330 y calcula su
+utilización.
 
 ``` text
 media.site1.free.space
@@ -204,64 +193,63 @@ media.site2.free.space
 media.total.space.occupied
 ```
 
-Total media occupation is calculated using the actual capacity of each
-valid physical media device. This avoids incorrect averaging when
-installed media have different capacities. A system with only one valid
-physical media site is also supported.
+La ocupación total se calcula ponderando la capacidad real de los medios
+válidos, evitando promedios incorrectos cuando las capacidades son
+diferentes. También se soportan equipos que poseen un solo medio físico
+válido.
 
-### Storage triggers
+### Triggers de almacenamiento
 
 ``` text
-60% ≤ occupied < 80%  → WARNING
-occupied ≥ 80%        → HIGH
+60% ≤ ocupado < 80%  → WARNING
+ocupado ≥ 80%        → HIGH
 ```
 
 ------------------------------------------------------------------------
 
-## ❤️ Collector Health
+## ❤️ Salud del Collector
 
-  Key                          Purpose
-  ---------------------------- -------------------------
-  `collector.heartbeat`        Last collector activity
-  `collector.uptime`           Collector uptime
-  `collector.cycle.duration`   Cycle execution time
-  `collector.devices.total`    Devices processed
-  `collector.devices.failed`   Failed devices
-  `collector.cycle.success`    Overall cycle status
+  Key                          Propósito
+  ---------------------------- --------------------------------
+  `collector.heartbeat`        Última actividad del collector
+  `collector.uptime`           Tiempo de funcionamiento
+  `collector.cycle.duration`   Duración del ciclo
+  `collector.devices.total`    Equipos procesados
+  `collector.devices.failed`   Equipos fallidos
+  `collector.cycle.success`    Estado global del ciclo
 
-Health template: `Monitoring Data Collector Health`.
+Template: `Monitoring Data Collector Health`.
 
 ------------------------------------------------------------------------
 
 ## 🔐 Allowed Hosts
 
-Zabbix trapper items use `{$COLLECTOR.ALLOWED_HOSTS}`. This value must
-match the source IP or network actually observed by the Zabbix
+Los items trapper utilizan `{$COLLECTOR.ALLOWED_HOSTS}`. Este valor debe
+coincidir con la IP o red de origen que realmente observa Zabbix
 Server/Proxy.
 
-The current YAML default is:
+El valor por defecto actual en el YAML es:
 
 ``` text
 172.22.0.0/16
 ```
 
-Production deployments should restrict this value to the required source
-address or network.
+En producción debe restringirse a la dirección o red requerida.
 
 ------------------------------------------------------------------------
 
 ## 📝 Logging
 
-The collector uses Python logging and writes runtime information to
-stdout/stderr and the configured log file. Log rotation is supported.
+El collector utiliza `logging` de Python y registra información de
+ejecución en stdout/stderr y en el archivo configurado. Se soporta
+rotación de logs.
 
 ``` text
 logs/collector.log
 /app/logs/collector.log
 ```
 
-Docker Compose persists application logs through the `collector_logs`
-volume.
+Docker Compose conserva los logs mediante el volumen `collector_logs`.
 
 ------------------------------------------------------------------------
 
@@ -282,7 +270,7 @@ docker compose ps
 docker compose logs -f collector
 ```
 
-Stop with:
+Para detener:
 
 ``` bash
 docker compose down
@@ -290,7 +278,7 @@ docker compose down
 
 ------------------------------------------------------------------------
 
-## 🧪 Tests
+## 🧪 Pruebas
 
 ``` bash
 docker compose run --rm \
@@ -302,7 +290,7 @@ docker compose run --rm \
   -m unittest discover -s tests -v
 ```
 
-Current validated result:
+Resultado validado:
 
 ``` text
 Ran 43 tests
@@ -311,7 +299,7 @@ OK
 
 ------------------------------------------------------------------------
 
-## 📦 Dependencies
+## 📦 Dependencias
 
 ``` text
 requests==2.32.5
@@ -321,37 +309,37 @@ PyYAML==6.0.2
 
 ------------------------------------------------------------------------
 
-## 🔒 Security
+## 🔒 Seguridad
 
--   Non-root container user.
--   Read-only root filesystem.
--   Dropped Linux capabilities.
+-   Usuario no root.
+-   Filesystem raíz de solo lectura.
+-   Capabilities Linux eliminadas.
 -   `no-new-privileges`.
--   Docker secret for the Zabbix API token.
--   No published application ports.
--   Temporary `/tmp` filesystem.
--   `.env` and `secrets/` excluded from Git.
+-   API Token mediante Docker secret.
+-   Sin puertos de aplicación publicados.
+-   `/tmp` temporal.
+-   `.env` y `secrets/` excluidos de Git.
 
-Never commit the Zabbix API token or production `.env` file.
+Nunca almacenar el API Token ni el `.env` de producción en Git.
 
 ------------------------------------------------------------------------
 
-## 🔍 Main Data Flow
+## 🔍 Flujo principal
 
 ``` text
-Zabbix API
+API Zabbix
     │
     ▼
-Discover Q330 hosts
+Descubrir Q330
     │
     ▼
-Query HTTP/6381
+Consultar HTTP/6381
     │
     ▼
-Parse Q330/PB44 telemetry
+Procesar Q330/PB44
     │
     ▼
-Calculate derived metrics
+Calcular métricas derivadas
     │
     ▼
 Zabbix Sender
@@ -362,17 +350,17 @@ Zabbix Server :10051
 
 ------------------------------------------------------------------------
 
-## 💬 Feedback / Support
+## 💬 Contacto / Soporte
 
 robertocarlos.toapanta@gmail.com
 
-## 👥 Author
+## 👥 Autor
 
 -   [@rotoapanta](https://github.com/rotoapanta)
 
 ------------------------------------------------------------------------
 
-## 🔗 Links
+## 🔗 Enlaces
 
 [![GitHub](https://img.shields.io/badge/GitHub-rotoapanta-181717?style=for-the-badge&logo=github)](https://github.com/rotoapanta)
 

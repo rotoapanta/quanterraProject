@@ -1,3 +1,4 @@
+"""Collector runtime orchestration, health state, and logging utilities."""
 import json
 import logging
 from logging.handlers import RotatingFileHandler
@@ -11,14 +12,25 @@ logger = logging.getLogger(__name__)
 STARTED = time.monotonic()
 
 
-def setup_logging(path):
+def setup_logging(path: str) -> None:
+    """Configure console and rotating-file logging for the collector.
+
+    Args:
+        path: Destination path for the rotating collector log file.
+    """
     Path(path).parent.mkdir(parents=True, exist_ok=True)
     logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(name)s %(message)s',
                         handlers=[logging.StreamHandler(), RotatingFileHandler(
                             path, maxBytes=5_000_000, backupCount=5, encoding='utf-8')], force=True)
 
 
-def write_health(path, ok):
+def write_health(path: str, ok: bool) -> None:
+    """Atomically persist the collector health state.
+
+    Args:
+        path: Destination path for the health JSON file.
+        ok: Whether the most recent collector pipeline completed operationally.
+    """
     target = Path(path)
     target.parent.mkdir(parents=True, exist_ok=True)
     temporary = target.with_suffix('.tmp')
@@ -26,7 +38,16 @@ def write_health(path, ok):
     temporary.replace(target)
 
 
-def healthy(path, max_age):
+def healthy(path: str, max_age: int) -> bool:
+    """Return whether the persisted collector health state is recent and valid.
+
+    Args:
+        path: Path to the collector health JSON file.
+        max_age: Maximum accepted health-record age in seconds.
+
+    Returns:
+        ``True`` only when the latest health record is successful and recent.
+    """
     try:
         data = json.loads(Path(path).read_text())
         age = time.time() - float(data['completed_at'])
@@ -35,7 +56,7 @@ def healthy(path, max_age):
         return False
 
 
-def add_media_occupied(values):
+def add_media_occupied(values: dict[str, object]) -> None:
     """Add per-site and total media occupied percentages.
 
     A Q330/PB44 reports capacity=0 and free=0 for an absent media site.
@@ -84,7 +105,20 @@ def add_media_occupied(values):
         values.pop(total_key, None)
 
 
-def run_cycle(settings):
+def run_cycle(settings: object) -> bool:
+    """Execute one complete discovery, collection, and Zabbix delivery cycle.
+
+    Device failures are represented in Zabbix metrics without necessarily
+    making the collector process itself unhealthy. A pipeline-level failure
+    returns ``False`` and is recorded in the health file.
+
+    Args:
+        settings: Validated collector runtime configuration.
+
+    Returns:
+        ``True`` when every discovered device completed successfully;
+        otherwise ``False``.
+    """
     started = time.monotonic()
     ok = False
     try:

@@ -11,12 +11,35 @@ logger = logging.getLogger(__name__)
 
 @dataclass(frozen=True)
 class Device:
+    """Monitored device discovered from the configured Zabbix template.
+
+    Attributes:
+        host: Zabbix technical host name.
+        address: IP address or DNS name used for HTTP collection.
+        family: Device adapter family used for metric collection.
+    """
+
     host: str
     address: str
     family: str = 'q330'
 
 
-def discover_devices(settings):
+def discover_devices(settings: object) -> list[Device]:
+    """Discover monitored devices from the configured Zabbix template.
+
+    Args:
+        settings: Collector settings containing Zabbix API credentials,
+            template selection, timeout, host filter, and collector host.
+
+    Returns:
+        Devices visible through the configured template and optional host
+        filter.
+
+    Raises:
+        ValueError: If the template cannot be uniquely resolved, no devices
+            are available, the host filter matches nothing, or the collector
+            host is incorrectly linked to the device template.
+    """
     api = ZabbixAPI(url=settings.url, token=settings.token, timeout=settings.timeout)
     templates = api.template.get(output=['templateid'], filter={'host': settings.template})
     if len(templates) != 1:
@@ -55,7 +78,12 @@ def discover_devices(settings):
     return devices
 
 
-def get_values(ip, arguments=None, timeout=20, port=6381):
+def get_values(
+    ip: str,
+    arguments: object | None = None,
+    timeout: int = 20,
+    port: int = 6381,
+) -> dict[str, object]:
     """Fetch and parse PB44/Q330 statistics with bounded retries."""
     if not ip or any(char in ip for char in '/?#@'):
         raise ValueError('Invalid device address')
@@ -114,7 +142,10 @@ def get_values(ip, arguments=None, timeout=20, port=6381):
 ADAPTERS = {'q330': get_values}
 
 
-def iter_collected_devices(devices, settings):
+def iter_collected_devices(
+    devices: list[Device],
+    settings: object,
+) -> object:
     """Yield each device result as soon as its concurrent collection finishes."""
     with ThreadPoolExecutor(max_workers=settings.workers) as executor:
         futures = {
@@ -143,7 +174,10 @@ def iter_collected_devices(devices, settings):
             yield device, values
 
 
-def collect_devices(devices, settings):
+def collect_devices(
+    devices: list[Device],
+    settings: object,
+) -> dict[str, dict[str, object]]:
     """Collect all devices while preserving the legacy dictionary interface."""
     return {
         device.host: values
