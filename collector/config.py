@@ -10,7 +10,7 @@ class Settings:
     token: str = field(repr=False)
     server: str
     collector_host: str = 'Monitoring Data Collector'
-    template: str = 'Quanterra Q330 by collector'
+    template: str = 'Template Zabbix Trapper Quanterra'
     host_filter: str = ''
     port: int = 10051
     device_port: int = 6381

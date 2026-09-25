@@ -94,6 +94,156 @@ class ParserTests(unittest.TestCase):
         self.assertEqual(values['q330.serial'], '010000AABBCC')
 
 
+    def test_advanced_health_metrics(self):
+        html = """
+        Clock Phase: -2 usec
+        Antenna Current: 18 ma
+        In View: 11
+        Checksum Errors: 0
+
+        PLL Status
+        State: Lock
+        Vco Control: 2199
+
+        Boom positions: Ch1: -48 Ch2: 1 Ch3: 1 Ch4: 20 Ch5: 20 Ch6: 20
+
+        upsvolts=11.315
+        primaryvolts=11.427
+        degc=33.727
+
+        Data Gaps minute=1 Hour=2 Day=3
+        Received Bps minute=974 Hour=1024.5 Day=1100
+        Throughput minute=1.00 Hour=0.95 Day=0.85
+        Sequence Errors minute=4 Hour=5 Day=6
+
+        Data Latency: 1m43s
+        Status Latency: 8s
+        Packet Buffer Used: 396
+        Packets Re-Sent: 189
+        """
+
+        values = parse_stats(html)
+
+        expected = {
+            'clock.phase': '-2',
+            'gps.antenna.current': '18',
+            'gps.sat.in.view': '11',
+            'gps.checksum.errors': '0',
+            'gps.pll.state': 'Lock',
+            'gps.vco.control': '2199',
+
+            'boom.ch1': '-48',
+            'boom.ch2': '1',
+            'boom.ch3': '1',
+            'boom.ch4': '20',
+            'boom.ch5': '20',
+            'boom.ch6': '20',
+
+            'pb44.ups.voltage': '11.315',
+            'pb44.primary.voltage': '11.427',
+            'pb44.temperature': '33.727',
+
+            'data.gaps.minute': '1',
+            'data.gaps.hour': '2',
+            'data.gaps.day': '3',
+
+            'data.received.bps.minute': '974',
+            'data.received.bps.hour': '1024.5',
+            'data.received.bps.day': '1100',
+
+            'data.throughput.minute': '1.00',
+            'data.throughput.hour': '0.95',
+            'data.throughput.day': '0.85',
+
+            'data.sequence.errors.minute': '4',
+            'data.sequence.errors.hour': '5',
+            'data.sequence.errors.day': '6',
+
+            'data.latency': 103,
+            'status.latency': 8,
+            'packet.buffer.used': '396',
+            'packets.resent': '189',
+        }
+
+        self.assertEqual(values, expected)
+        self.assertEqual(len(values), 31)
+
+    def test_advanced_health_metrics_are_optional(self):
+        html = """
+        Clock Phase: 0 us
+        Antenna Current: 17 ma
+        In View: 11
+        Checksum Errors: 0
+
+        PLL Status
+        State: Lock
+        Vco Control: 2142
+
+        Boom positions: Ch1: 1 Ch2: 2 Ch3: 3 Ch4: 4 Ch5: 5 Ch6: 6
+
+        upsvolts=11.345
+        primaryvolts=11.726
+        degc=35.914
+
+        Packet Buffer Used: 0
+        Packets Re-Sent: 0
+        """
+
+        values = parse_stats(html)
+
+        # Simula un equipo que no publica las ventanas de calidad/latencia.
+        for key in (
+            'data.gaps.minute',
+            'data.gaps.hour',
+            'data.gaps.day',
+            'data.received.bps.minute',
+            'data.received.bps.hour',
+            'data.received.bps.day',
+            'data.throughput.minute',
+            'data.throughput.hour',
+            'data.throughput.day',
+            'data.sequence.errors.minute',
+            'data.sequence.errors.hour',
+            'data.sequence.errors.day',
+            'data.latency',
+            'status.latency',
+        ):
+            self.assertNotIn(key, values)
+
+        self.assertEqual(values['gps.pll.state'], 'Lock')
+        self.assertEqual(values['packet.buffer.used'], '0')
+        self.assertEqual(values['packets.resent'], '0')
+
+    def test_latency_duration_conversion(self):
+        cases = (
+            ('Data Latency: 8s', 8),
+            ('Data Latency: 1m43s', 103),
+            ('Data Latency: 2h3m4s', 7384),
+            ('Data Latency: 1d2h3m4s', 93784),
+        )
+
+        for html, expected in cases:
+            with self.subTest(html=html):
+                values = parse_stats(html)
+                self.assertEqual(values['data.latency'], expected)
+
+    def test_boom_channels_do_not_cross_other_lines(self):
+        html = """
+        Ch1: 999 Ch2: 999 Ch3: 999
+        Boom positions: Ch1: -20 Ch2: -18 Ch3: -31 Ch4: 20 Ch5: 20 Ch6: 20
+        Ch4: 999 Ch5: 999 Ch6: 999
+        """
+
+        values = parse_stats(html)
+
+        self.assertEqual(values['boom.ch1'], '-20')
+        self.assertEqual(values['boom.ch2'], '-18')
+        self.assertEqual(values['boom.ch3'], '-31')
+        self.assertEqual(values['boom.ch4'], '20')
+        self.assertEqual(values['boom.ch5'], '20')
+        self.assertEqual(values['boom.ch6'], '20')
+
+
 class MediaOccupiedTests(unittest.TestCase):
     """Tests for media occupied percentage derived by the collector."""
 
@@ -165,6 +315,103 @@ class MediaOccupiedTests(unittest.TestCase):
         )
         self.assertNotIn(
             "media.site2.space.occupied",
+            values,
+        )
+
+
+    def test_total_media_vces(self):
+        """VCES: one media almost full, but total storage is below 50%."""
+        from collector.runtime import add_media_occupied
+
+        values = {
+            "media.site1.capacity": "15264.500",
+            "media.site1.free.space": "99.998",
+            "media.site2.capacity": "15264.000",
+            "media.site2.free.space": "5.012",
+        }
+
+        add_media_occupied(values)
+
+        self.assertEqual(
+            values["media.site1.space.occupied"],
+            0.002,
+        )
+        self.assertEqual(
+            values["media.site2.space.occupied"],
+            94.988,
+        )
+        self.assertEqual(
+            values["media.total.space.occupied"],
+            47.494,
+        )
+
+    def test_total_media_boni_different_capacities(self):
+        """BONI: total occupation must be weighted by actual capacity."""
+        from collector.runtime import add_media_occupied
+
+        values = {
+            "media.site1.capacity": "15264.500",
+            "media.site1.free.space": "25.952",
+            "media.site2.capacity": "30520.000",
+            "media.site2.free.space": "50.154",
+        }
+
+        add_media_occupied(values)
+
+        self.assertEqual(
+            values["media.site1.space.occupied"],
+            74.048,
+        )
+        self.assertEqual(
+            values["media.site2.space.occupied"],
+            49.846,
+        )
+        self.assertEqual(
+            values["media.total.space.occupied"],
+            57.915,
+        )
+
+    def test_total_media_single_present_site(self):
+        """CASC: an absent second media must not affect total occupation."""
+        from collector.runtime import add_media_occupied
+
+        values = {
+            "media.site1.capacity": "15264.500",
+            "media.site1.free.space": "99.553",
+            "media.site2.capacity": "0.000",
+            "media.site2.free.space": "0.000",
+        }
+
+        add_media_occupied(values)
+
+        self.assertEqual(
+            values["media.site1.space.occupied"],
+            0.447,
+        )
+        self.assertNotIn(
+            "media.site2.space.occupied",
+            values,
+        )
+        self.assertEqual(
+            values["media.total.space.occupied"],
+            0.447,
+        )
+
+    def test_total_media_not_generated_without_valid_media(self):
+        """No valid physical media means no synthetic total value."""
+        from collector.runtime import add_media_occupied
+
+        values = {
+            "media.site1.capacity": "0.000",
+            "media.site1.free.space": "0.000",
+            "media.site2.capacity": "invalid",
+            "media.site2.free.space": "50",
+        }
+
+        add_media_occupied(values)
+
+        self.assertNotIn(
+            "media.total.space.occupied",
             values,
         )
 
@@ -453,7 +700,7 @@ class PipelineTests(unittest.TestCase):
         )
 
         self.assertIn(
-            'last(/Quanterra Q330 by collector/system.temp)>{$Q330.TEMP.MAX}',
+            'last(/Template Zabbix Trapper Quanterra/system.temp)>{$Q330.TEMP.MAX}',
             expression
         )
 
@@ -624,65 +871,73 @@ class PipelineTests(unittest.TestCase):
             for item in template['items']
         }
 
-        # FREE SPACE remains available as telemetry, but must no longer
-        # generate capacity alarms.
+        # Per-site metrics remain available only as diagnostic telemetry.
         for site in (1, 2):
-            free_key = f'media.site{site}.free.space'
+            for suffix in ('free.space', 'space.occupied'):
+                key = f'media.site{site}.{suffix}'
 
-            with self.subTest(key=free_key):
-                self.assertEqual(
-                    items[free_key].get('triggers', []),
-                    [],
-                )
-
-        # Capacity alarms are based exclusively on OCCUPIED percentage.
-        for site in (1, 2):
-            key = f'media.site{site}.space.occupied'
-            other_site = 2 if site == 1 else 1
-            other_key = f'media.site{other_site}.space.occupied'
-
-            with self.subTest(key=key):
-                triggers = items[key].get('triggers', [])
-
-                self.assertEqual(len(triggers), 2)
-
-                warning = next(
-                    trigger for trigger in triggers
-                    if trigger['priority'] == 'WARNING'
-                )
-                high = next(
-                    trigger for trigger in triggers
-                    if trigger['priority'] == 'HIGH'
-                )
-
-                expected_warning = (
-                    f"last(/{template['template']}/{key})>=60 and "
-                    f"last(/{template['template']}/{key})<80"
-                )
-
-                expected_high = (
-                    f"last(/{template['template']}/{key})>=80"
-                )
-
-                self.assertEqual(
-                    warning['expression'],
-                    expected_warning,
-                )
-
-                self.assertEqual(
-                    high['expression'],
-                    expected_high,
-                )
-
-                for trigger in triggers:
-                    expression = trigger['expression']
-
-                    self.assertIn(key, expression)
-                    self.assertNotIn(other_key, expression)
-                    self.assertNotIn(
-                        'q330.collect.success',
-                        expression,
+                with self.subTest(key=key):
+                    self.assertEqual(
+                        items[key].get('triggers', []),
+                        [],
                     )
+
+        # Operational storage alarms are based only on the
+        # capacity-weighted total occupation.
+        key = 'media.total.space.occupied'
+
+        self.assertIn(key, items)
+
+        triggers = items[key].get('triggers', [])
+
+        self.assertEqual(len(triggers), 2)
+
+        warning = next(
+            trigger for trigger in triggers
+            if trigger['priority'] == 'WARNING'
+        )
+
+        high = next(
+            trigger for trigger in triggers
+            if trigger['priority'] == 'HIGH'
+        )
+
+        expected_warning = (
+            f"last(/{template['template']}/{key})>=60 and "
+            f"last(/{template['template']}/{key})<80"
+        )
+
+        expected_high = (
+            f"last(/{template['template']}/{key})>=80"
+        )
+
+        self.assertEqual(
+            warning['expression'],
+            expected_warning,
+        )
+
+        self.assertEqual(
+            high['expression'],
+            expected_high,
+        )
+
+        for trigger in triggers:
+            expression = trigger['expression']
+
+            self.assertIn(key, expression)
+            self.assertNotIn(
+                'media.site1.space.occupied',
+                expression,
+            )
+            self.assertNotIn(
+                'media.site2.space.occupied',
+                expression,
+            )
+            self.assertNotIn(
+                'q330.collect.success',
+                expression,
+            )
+
 
     def test_health_missing_stale_corrupt_and_future(self):
         path = self.settings.health_file
@@ -730,6 +985,7 @@ class PipelineTests(unittest.TestCase):
             'q330.collect.metrics',
             'media.site1.space.occupied',
             'media.site2.space.occupied',
+            'media.total.space.occupied',
         }
         self.assertEqual(
             {i['key'] for i in device['items']},

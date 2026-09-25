@@ -4,9 +4,9 @@ zabbix_export:
   - uuid: 24f4d6860dad4e4fa6761babf9d30698
     name: Templates/Seismology
   templates:
-  - uuid: 140f452dc3b348c18ee67ab75ce4ad78
-    template: Quanterra Q330 by collector
-    name: Quanterra Q330 by collector
+  - uuid: 096f02080cdc4e3d9dc83e4bc4e7607c
+    template: Template Zabbix Trapper Quanterra
+    name: Template Zabbix Trapper Quanterra
     groups:
     - name: Templates/Seismology
     items:
@@ -49,8 +49,8 @@ zabbix_export:
       units: V
       triggers:
       - uuid: 6f013aa831db4b3caa2733c056739133
-        expression: last(/Quanterra Q330 by collector/input.voltage)<{$Q330.VOLTAGE.MIN}
-          and nodata(/Quanterra Q330 by collector/input.voltage,{$COLLECTOR.NODATA})=0
+        expression: last(/Template Zabbix Trapper Quanterra/input.voltage)<{$Q330.VOLTAGE.MIN}
+          and nodata(/Template Zabbix Trapper Quanterra/input.voltage,{$COLLECTOR.NODATA})=0
         name: 'Q330: Input voltage low'
         priority: WARNING
     - uuid: b6dd5b77e767457ba6132a50102b0d3f
@@ -65,8 +65,8 @@ zabbix_export:
       units: °C
       triggers:
       - uuid: 55d0e279840d451b9844035a8af7aecb
-        expression: last(/Quanterra Q330 by collector/system.temp)>{$Q330.TEMP.MAX}
-          and nodata(/Quanterra Q330 by collector/system.temp,{$COLLECTOR.NODATA})=0
+        expression: last(/Template Zabbix Trapper Quanterra/system.temp)>{$Q330.TEMP.MAX}
+          and nodata(/Template Zabbix Trapper Quanterra/system.temp,{$COLLECTOR.NODATA})=0
         name: 'Q330: System temperature high'
         priority: WARNING
     - uuid: fd626b1282b84e4ab61e6587bdc19cc9
@@ -90,8 +90,8 @@ zabbix_export:
       allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
       triggers:
       - uuid: 23bc6f77eaab4c448ab9b6626ad05056
-        expression: last(/Quanterra Q330 by collector/sat.used)<{$Q330.SAT.MIN} and
-          nodata(/Quanterra Q330 by collector/sat.used,{$COLLECTOR.NODATA})=0
+        expression: last(/Template Zabbix Trapper Quanterra/sat.used)<{$Q330.SAT.MIN} and
+          nodata(/Template Zabbix Trapper Quanterra/sat.used,{$COLLECTOR.NODATA})=0
         name: 'Q330: Too few satellites'
         priority: WARNING
     - uuid: 09b9d5d40fc1449f9f79a68c6bfa9453
@@ -106,8 +106,8 @@ zabbix_export:
       units: '%'
       triggers:
       - uuid: d272366681194e56b64598196b3d9472
-        expression: last(/Quanterra Q330 by collector/clock.quality)<{$Q330.CLOCK.MIN}
-          and nodata(/Quanterra Q330 by collector/clock.quality,{$COLLECTOR.NODATA})=0
+        expression: last(/Template Zabbix Trapper Quanterra/clock.quality)<{$Q330.CLOCK.MIN}
+          and nodata(/Template Zabbix Trapper Quanterra/clock.quality,{$COLLECTOR.NODATA})=0
         name: 'Q330: Clock quality low'
         priority: WARNING
     - uuid: 8e3b386aaa7c42f086570759aa9b1d6c
@@ -160,15 +160,6 @@ zabbix_export:
       value_type: FLOAT
       allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
       units: '%'
-      triggers:
-      - uuid: 48d9175db35a492891a2fcee8783e1c1
-        expression: last(/Quanterra Q330 by collector/media.site1.space.occupied)>=60 and last(/Quanterra Q330 by collector/media.site1.space.occupied)<80
-        name: Media Site 1 Space Usage 60-80%
-        priority: WARNING
-      - uuid: 989856e94aea44d78379231233f8c555
-        expression: last(/Quanterra Q330 by collector/media.site1.space.occupied)>=80
-        name: Media Site 1 Space Usage >=80%
-        priority: HIGH
     - uuid: 9eaf6384f9d6433cbbdc0b1af07bbd26
       name: Media site 2 space occupied
       type: TRAP
@@ -179,15 +170,314 @@ zabbix_export:
       value_type: FLOAT
       allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
       units: '%'
+    - uuid: f127b42c323e47948821903022f12bc2
+      name: Media total space occupied
+      type: TRAP
+      key: media.total.space.occupied
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+      units: '%'
       triggers:
-      - uuid: 4b57951b0a124be7b78953de595754ec
-        expression: last(/Quanterra Q330 by collector/media.site2.space.occupied)>=60 and last(/Quanterra Q330 by collector/media.site2.space.occupied)<80
-        name: Media Site 2 Space Usage 60-80%
+      - uuid: 1d7c0015a26245eeaa8591f8d579b17f
+        expression: last(/Template Zabbix Trapper Quanterra/media.total.space.occupied)>=60 and last(/Template Zabbix Trapper Quanterra/media.total.space.occupied)<80
+        name: Media Total Space Usage 60-80%
         priority: WARNING
-      - uuid: 374fa259fc204a7d93e2c032ec1f265e
-        expression: last(/Quanterra Q330 by collector/media.site2.space.occupied)>=80
-        name: Media Site 2 Space Usage >=80%
+      - uuid: 1c70891f863a491eab0ca3ee4d0429c1
+        expression: last(/Template Zabbix Trapper Quanterra/media.total.space.occupied)>=80
+        name: Media Total Space Usage >=80%
         priority: HIGH
+    - uuid: 1628186ff3e5476387ddd05ed648d029
+      name: Clock phase
+      type: TRAP
+      key: clock.phase
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+      units: us
+    - uuid: 8838c192392c498eb91b515b0557f664
+      name: GPS antenna current
+      type: TRAP
+      key: gps.antenna.current
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+      units: mA
+    - uuid: 40e60dd36c8a4f4f9359a7a59fc5cee2
+      name: GPS satellites in view
+      type: TRAP
+      key: gps.sat.in.view
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: UNSIGNED
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+    - uuid: 6825cbde1f93484995e6bb3854f56084
+      name: GPS checksum errors
+      type: TRAP
+      key: gps.checksum.errors
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: UNSIGNED
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+    - uuid: 60c40b7387ea49369604a5a989585cd6
+      name: GPS PLL state
+      type: TRAP
+      key: gps.pll.state
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: CHAR
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+    - uuid: 6c13d353d2da406fb767c31430326d7e
+      name: GPS VCO control
+      type: TRAP
+      key: gps.vco.control
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+    - uuid: d5029fbdcf674b129fdad499f2de542e
+      name: Boom channel 1 position
+      type: TRAP
+      key: boom.ch1
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+    - uuid: 3015f37c780a4b9bbaea254ba3ea4060
+      name: Boom channel 2 position
+      type: TRAP
+      key: boom.ch2
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+    - uuid: 705cb51995004070947cfaa22e6d7677
+      name: Boom channel 3 position
+      type: TRAP
+      key: boom.ch3
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+    - uuid: bd9dce35c60d48a687b529958f807d6d
+      name: Boom channel 4 position
+      type: TRAP
+      key: boom.ch4
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+    - uuid: 91db459aac0c434f85f3466511dbec28
+      name: Boom channel 5 position
+      type: TRAP
+      key: boom.ch5
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+    - uuid: 161500c7628d4bedb0fb57ffad470339
+      name: Boom channel 6 position
+      type: TRAP
+      key: boom.ch6
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+    - uuid: 78dff4d886ea4d56a78d5fb6f4d69d0c
+      name: PB44 UPS voltage
+      type: TRAP
+      key: pb44.ups.voltage
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+      units: V
+    - uuid: 9be8a389a0e34f7e8fd1ac7f965cc70a
+      name: PB44 primary voltage
+      type: TRAP
+      key: pb44.primary.voltage
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+      units: V
+    - uuid: 2768ddb321e14cf89bf0cd950ea773b4
+      name: PB44 temperature
+      type: TRAP
+      key: pb44.temperature
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+      units: °C
+    - uuid: 7d29008d971049bd848053ccfbe37e98
+      name: Data gaps minute
+      type: TRAP
+      key: data.gaps.minute
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: UNSIGNED
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+    - uuid: 00a048a17afa44e580c48e5f191d8c23
+      name: Data gaps hour
+      type: TRAP
+      key: data.gaps.hour
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: UNSIGNED
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+    - uuid: a446830aac9d4d1b82214d3648ab65db
+      name: Data gaps day
+      type: TRAP
+      key: data.gaps.day
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: UNSIGNED
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+    - uuid: 464bd264851143bb881db8038fc90fd8
+      name: Received Bps minute
+      type: TRAP
+      key: data.received.bps.minute
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+      units: Bps
+    - uuid: 6a1a5bd0a12a41739cb298335a154a3f
+      name: Received Bps hour
+      type: TRAP
+      key: data.received.bps.hour
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+      units: Bps
+    - uuid: 6c39331cc8694383bd8f79fddb348fc6
+      name: Received Bps day
+      type: TRAP
+      key: data.received.bps.day
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+      units: Bps
+    - uuid: 2a705da073a0446492fdd4c7b772a4bb
+      name: Data throughput minute
+      type: TRAP
+      key: data.throughput.minute
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+    - uuid: c60e3498687d4da69236883935ac16b0
+      name: Data throughput hour
+      type: TRAP
+      key: data.throughput.hour
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+    - uuid: 5164635571ac425092c1414fac96d411
+      name: Data throughput day
+      type: TRAP
+      key: data.throughput.day
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: FLOAT
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+    - uuid: 4272a0b2c6374502b9749be8a5f8cdfb
+      name: Sequence errors minute
+      type: TRAP
+      key: data.sequence.errors.minute
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: UNSIGNED
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+    - uuid: 93bf1dc6f1904841b40265e09628d1e5
+      name: Sequence errors hour
+      type: TRAP
+      key: data.sequence.errors.hour
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: UNSIGNED
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+    - uuid: be41bbd50d6a4632becfcd5b1624e743
+      name: Sequence errors day
+      type: TRAP
+      key: data.sequence.errors.day
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: UNSIGNED
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+    - uuid: 618c562c75fa42afb7b87258bb4f474d
+      name: Data latency
+      type: TRAP
+      key: data.latency
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: UNSIGNED
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+      units: s
+    - uuid: 429c5549fcdd4f7cb6fe0de5a5eef10c
+      name: Status latency
+      type: TRAP
+      key: status.latency
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: UNSIGNED
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+      units: s
+    - uuid: ce9f2a2cb3e04cfba43c955a5e21aed4
+      name: Packet buffer used
+      type: TRAP
+      key: packet.buffer.used
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: UNSIGNED
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
+    - uuid: 8697465d05ea4c77bca00935c768543e
+      name: Packets resent
+      type: TRAP
+      key: packets.resent
+      delay: '0'
+      history: 30d
+      trends: 365d
+      value_type: UNSIGNED
+      allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
     - uuid: c6bf6a8b568941febdaecec070d236b2
       name: Complete Q330 collection
       type: TRAP
@@ -199,11 +489,11 @@ zabbix_export:
       allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
       triggers:
       - uuid: 556b040f052648b28c094d635ad9d9bc
-        expression: nodata(/Quanterra Q330 by collector/q330.collect.success,{$COLLECTOR.NODATA})=1
+        expression: nodata(/Template Zabbix Trapper Quanterra/q330.collect.success,{$COLLECTOR.NODATA})=1
         name: 'Q330: No collector data'
         priority: HIGH
       - uuid: ea5ce9b2cbde46e98bea161f939811e7
-        expression: last(/Quanterra Q330 by collector/q330.collect.success)=0
+        expression: last(/Template Zabbix Trapper Quanterra/q330.collect.success)=0
         name: 'Q330: Collection failed or incomplete'
         priority: WARNING
     - uuid: fd5882bacf634063b81405d4e0a280a0
@@ -217,7 +507,7 @@ zabbix_export:
       allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
     macros:
     - macro: '{$COLLECTOR.ALLOWED_HOSTS}'
-      value: 127.0.0.1
+      value: 172.22.0.0/16
       description: Set the source IP/CIDR seen by Zabbix for this collector.
     - macro: '{$COLLECTOR.NODATA}'
       value: 5m
@@ -312,7 +602,7 @@ zabbix_export:
       allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
     macros:
     - macro: '{$COLLECTOR.ALLOWED_HOSTS}'
-      value: 127.0.0.1
+      value: 172.22.0.0/16
       description: Set the source IP/CIDR seen by Zabbix for this collector.
     - macro: '{$COLLECTOR.NODATA}'
       value: 5m

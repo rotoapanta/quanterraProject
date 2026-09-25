@@ -36,11 +36,17 @@ def healthy(path, max_age):
 
 
 def add_media_occupied(values):
-    """Add media occupied percentage only for physically present media.
+    """Add per-site and total media occupied percentages.
 
     A Q330/PB44 reports capacity=0 and free=0 for an absent media site.
-    Such a site must not be represented as 100% occupied.
+    Such a site is excluded from the total storage calculation.
+
+    Total occupation is capacity-weighted so media sites with different
+    capacities are represented correctly.
     """
+    total_capacity = 0.0
+    total_used = 0.0
+
     for site in (1, 2):
         capacity_key = f'media.site{site}.capacity'
         free_key = f'media.site{site}.free.space'
@@ -50,6 +56,7 @@ def add_media_occupied(values):
             capacity = float(values[capacity_key])
             free = float(values[free_key])
         except (KeyError, TypeError, ValueError):
+            values.pop(occupied_key, None)
             continue
 
         if capacity <= 0:
@@ -60,7 +67,21 @@ def add_media_occupied(values):
             values.pop(occupied_key, None)
             continue
 
-        values[occupied_key] = round(100.0 - free, 3)
+        occupied = round(100.0 - free, 3)
+        values[occupied_key] = occupied
+
+        total_capacity += capacity
+        total_used += capacity * occupied / 100.0
+
+    total_key = 'media.total.space.occupied'
+
+    if total_capacity > 0:
+        values[total_key] = round(
+            total_used / total_capacity * 100.0,
+            3,
+        )
+    else:
+        values.pop(total_key, None)
 
 
 def run_cycle(settings):
@@ -77,6 +98,47 @@ def run_cycle(settings):
         optional_keys = media_keys | {
             'media.site1.capacity',
             'media.site2.capacity',
+
+            # Advanced timing / GPS health.
+            'clock.phase',
+            'gps.antenna.current',
+            'gps.sat.in.view',
+            'gps.checksum.errors',
+            'gps.pll.state',
+            'gps.vco.control',
+
+            # Sensor boom positions.
+            'boom.ch1',
+            'boom.ch2',
+            'boom.ch3',
+            'boom.ch4',
+            'boom.ch5',
+            'boom.ch6',
+
+            # PB44 power / environment.
+            'pb44.ups.voltage',
+            'pb44.primary.voltage',
+            'pb44.temperature',
+
+            # Data quality.
+            'data.gaps.minute',
+            'data.gaps.hour',
+            'data.gaps.day',
+            'data.received.bps.minute',
+            'data.received.bps.hour',
+            'data.received.bps.day',
+            'data.throughput.minute',
+            'data.throughput.hour',
+            'data.throughput.day',
+            'data.sequence.errors.minute',
+            'data.sequence.errors.hour',
+            'data.sequence.errors.day',
+
+            # Transport / performance.
+            'data.latency',
+            'status.latency',
+            'packet.buffer.used',
+            'packets.resent',
         }
         required_keys = set(KEYS.values()) - optional_keys
 
