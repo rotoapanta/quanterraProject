@@ -49,7 +49,7 @@ zabbix_export:
       units: V
       triggers:
       - uuid: 6f013aa831db4b3caa2733c056739133
-        expression: last(/Template Zabbix Trapper Quanterra/input.voltage)<{$Q330.VOLTAGE.MIN}
+        expression: max(/Template Zabbix Trapper Quanterra/input.voltage,15m)<{$Q330.VOLTAGE.MIN}
           and nodata(/Template Zabbix Trapper Quanterra/input.voltage,{$COLLECTOR.NODATA})=0
         name: 'Q330: Input voltage low'
         priority: WARNING
@@ -65,7 +65,7 @@ zabbix_export:
       units: °C
       triggers:
       - uuid: 55d0e279840d451b9844035a8af7aecb
-        expression: last(/Template Zabbix Trapper Quanterra/system.temp)>{$Q330.TEMP.MAX}
+        expression: min(/Template Zabbix Trapper Quanterra/system.temp,15m)>{$Q330.TEMP.MAX}
           and nodata(/Template Zabbix Trapper Quanterra/system.temp,{$COLLECTOR.NODATA})=0
         name: 'Q330: System temperature high'
         priority: WARNING
@@ -90,7 +90,7 @@ zabbix_export:
       allowed_hosts: '{$COLLECTOR.ALLOWED_HOSTS}'
       triggers:
       - uuid: 23bc6f77eaab4c448ab9b6626ad05056
-        expression: last(/Template Zabbix Trapper Quanterra/sat.used)<{$Q330.SAT.MIN} and
+        expression: max(/Template Zabbix Trapper Quanterra/sat.used,15m)<{$Q330.SAT.MIN} and
           nodata(/Template Zabbix Trapper Quanterra/sat.used,{$COLLECTOR.NODATA})=0
         name: 'Q330: Too few satellites'
         priority: WARNING
@@ -106,7 +106,7 @@ zabbix_export:
       units: '%'
       triggers:
       - uuid: d272366681194e56b64598196b3d9472
-        expression: last(/Template Zabbix Trapper Quanterra/clock.quality)<{$Q330.CLOCK.MIN}
+        expression: max(/Template Zabbix Trapper Quanterra/clock.quality,15m)<{$Q330.CLOCK.MIN}
           and nodata(/Template Zabbix Trapper Quanterra/clock.quality,{$COLLECTOR.NODATA})=0
         name: 'Q330: Clock quality low'
         priority: WARNING
@@ -493,7 +493,7 @@ zabbix_export:
         name: 'Q330: No collector data'
         priority: HIGH
       - uuid: ea5ce9b2cbde46e98bea161f939811e7
-        expression: last(/Template Zabbix Trapper Quanterra/q330.collect.success)=0
+        expression: max(/Template Zabbix Trapper Quanterra/q330.collect.success,5m)=0
         name: 'Q330: Collection failed or incomplete'
         priority: WARNING
     - uuid: fd5882bacf634063b81405d4e0a280a0

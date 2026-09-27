@@ -700,7 +700,7 @@ class PipelineTests(unittest.TestCase):
         )
 
         self.assertIn(
-            'last(/Template Zabbix Trapper Quanterra/system.temp)>{$Q330.TEMP.MAX}',
+            'min(/Template Zabbix Trapper Quanterra/system.temp,15m)>{$Q330.TEMP.MAX}',
             expression
         )
 
